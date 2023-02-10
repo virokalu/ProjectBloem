@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -14,8 +14,9 @@ class WelcomeScreen extends StatelessWidget {
           children: [
             FittedBox(
               //color: Colors.blueGrey,
-              child: Image.asset("images/welcome.png"),
               fit: BoxFit.fill,
+              //color: Colors.blueGrey,
+              child: Image.asset("images/welcome.png"),
             )
           ],
         ),
@@ -25,17 +26,20 @@ class WelcomeScreen extends StatelessWidget {
         color: Colors.white,
         child: const Column(
           children: [
-          Text(
-          'Get The Best floriculture Products',
-          textAlign:  TextAlign.center,
-          style:  TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.normal,
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+            'Get The Best floriculture Products',
+            textAlign:  TextAlign.center,
+            style:  TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w900,
 
 
-          ),
+            ),
 
         ),
+          ),
         ],
       ),
       ),
