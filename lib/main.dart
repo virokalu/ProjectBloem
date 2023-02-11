@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_bloem/screens/welcome_screen/welcome_screen.dart';
 
 void main() {
-  return runApp( MaterialApp(home: MyApp()), // use MaterialApp
+  return runApp( const MaterialApp(home: MyApp()), // use MaterialApp
   );
 }
 class MyApp extends StatelessWidget {
