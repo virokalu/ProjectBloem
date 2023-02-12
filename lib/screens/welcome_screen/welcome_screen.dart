@@ -12,50 +12,64 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(bottom: 250),
-        child: PageView(
-          children: [
-            FittedBox(
-              //color: Colors.blueGrey,
-              fit: BoxFit.fill,
-              //color: Colors.blueGrey,
-              child: Image.asset("images/welcome.png"),
-            )
-          ],
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.65,
+        width: MediaQuery.of(context).size.width,
+        child: Container(
+          alignment: Alignment.center,
+          //padding: const EdgeInsets.only(bottom: 250),
+          child: PageView(
+            children: [
+              FittedBox(
+                //color: Colors.blueGrey,
+                fit: BoxFit.fitWidth,
+                //color: Colors.blueGrey,
+                child: Image.asset("images/welcome.png"),
+              )
+            ],
+          ),
         ),
       ),
       bottomSheet: Container(
-        height: 250,
+        alignment: Alignment.center,
+        height: MediaQuery.of(context).size.height * 0.35,
+        width: MediaQuery.of(context).size.width,
         color: Colors.white,
         child: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 45, 6),
+              padding: EdgeInsets.fromLTRB(30, 20, 30, 6),
+              child: SizedBox(
+                width: 350.0,
+                child: Text(
+                  'Get The Best floriculture Products',
+                  textAlign:  TextAlign.left,
+                  style:  TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold,
 
-              child: Text('Get The Best floriculture Products',
-                textAlign:  TextAlign.left,
-                style:  TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.w500,
 
+                  ),
 
                 ),
-
               ),
             ),
             const Padding(
               padding: EdgeInsets.fromLTRB(30, 1, 30, 6),
-              child: Text(
-                'We meet you the greatest floricultural products out of all the individual and mass producers island wide.',
-                textAlign:  TextAlign.left,
-                style:  TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w300,
+              child: SizedBox(
+                width: 350.0,
+                child: Text(
+                  'We meet you the greatest floricultural products out of all the individual and mass producers island wide.',
+                  textAlign:  TextAlign.left,
+                  style:  TextStyle(
 
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+
+
+                  ),
 
                 ),
-
               ),
             ),
             Padding(
@@ -63,6 +77,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: TextButton(
                 style: greenButtonStyle,
                 onPressed: () { },
+                //###########################################fuction need to add here##########################################
                 child: const Text(
                   'Let’s Continue',
                   style: TextStyle(
