@@ -1,12 +1,12 @@
 import "package:flutter/material.dart";
 
-class button_text extends StatelessWidget {
+class ButtonText extends StatelessWidget {
   var height,width,size;
 
   final String text;
   final IconData icon;
 
-  button_text({required this.text, required this.icon});
+  ButtonText({super.key, required this.text, required this.icon});
 
 
   @override
@@ -16,49 +16,42 @@ class button_text extends StatelessWidget {
     height = size.height;
     width = size.width;
 
-    return Container(
-     // height: height/5,
-      //color: Color(0xFF4cd964),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.arrow_back),
-                color: Color(0xFF4cd964),
-              ),
-              Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.home),
-                color: Color(0xFF4cd964),
-              ),
-            ],
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon,size: 50,),
-                Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+    return Column(
+      children: [
+        Row(
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.arrow_back),
+              color: const Color(0xFF4cd964),
             ),
-          ),
-          //SizedBox(height: height*75),
-          Container(
+            const Spacer(),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.home),
+              color: const Color(0xFF4cd964),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon,size: 50,),
+            Text(
+              text,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+        //SizedBox(height: height*75),
+        Container(
 
-          ),
-        ],
-      ),
-
+        ),
+      ],
     );
   }
 }
