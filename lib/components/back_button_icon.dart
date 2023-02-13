@@ -1,45 +1,76 @@
+
+
 import "package:flutter/material.dart";
+import "package:project_bloem/screens/homo_screen/home_screen.dart";
+
+import "color_components.dart";
 
 class ButtonText extends StatelessWidget {
-  var height,width,size;
+
 
   final String text;
   final IconData icon;
 
-  ButtonText({super.key, required this.text, required this.icon});
+  const ButtonText({super.key, required this.text, required this.icon});
 
 
   @override
   Widget build(BuildContext context) {
 
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+
 
     return Column(
       children: [
         Row(
           children: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.arrow_back),
-              color: const Color(0xFF4cd964),
+            Ink(
+            decoration: BoxDecoration(
+
+              border: Border.all(color: HexColor.fromHex('#4CD964'), width: 2),
+              borderRadius: BorderRadius.circular(35.0)
+    ),
+              width: 60,
+              child:IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back,),
+                color: HexColor.fromHex('#4CD964'),
+
+              ),
+
+
             ),
+
+
             const Spacer(),
             IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.home),
-              color: const Color(0xFF4cd964),
-            ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                );
+              },
+              icon: const Icon(Icons.home_rounded),
+              color: HexColor.fromHex('#33363F'),
+    ),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon,size: 50,),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+              child: Icon(
+                icon,
+                size: 30,
+                color: HexColor.fromHex('#33363F'),
+              ),
+            ),
             Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
+                color: HexColor.fromHex('#33363F'),
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
