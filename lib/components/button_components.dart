@@ -14,3 +14,12 @@ final ButtonStyle greenButtonStyle = TextButton.styleFrom(
     borderRadius: BorderRadius.all(Radius.circular(10.0)),
   ),
 );
+final ButtonStyle circularIconStyle = TextButton.styleFrom(
+  foregroundColor: Colors.black,
+  //backgroundColor: HexColor.fromHex('#4CD964'),
+  minimumSize:  const Size(60, 60),
+  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+  ),
+);

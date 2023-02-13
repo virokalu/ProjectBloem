@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_bloem/screens/homo_screen/home_screen.dart';
 import '../../components/button_components.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -47,8 +48,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   style:  TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.bold,
-
-
                   ),
 
                 ),
@@ -65,8 +64,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
                     fontSize: 18,
                     fontWeight: FontWeight.w300,
-
-
                   ),
 
                 ),
@@ -76,7 +73,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               padding: const EdgeInsets.fromLTRB(30, 35, 30, 0),
               child: TextButton(
                 style: greenButtonStyle,
-                onPressed: () { },
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  );
+                },
                 //###########################################fuction need to add here##########################################
                 child: const Text(
                   'Let’s Continue',
