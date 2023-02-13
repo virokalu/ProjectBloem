@@ -86,7 +86,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ), //forget password link
-            SizedBox(height: height / 4),
+            SizedBox(height: height / 6),
             const Text(
               "Don't have an account ?",
               textAlign: TextAlign.center,

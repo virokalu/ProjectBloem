@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_bloem/screens/login_screen/login.dart';
+import 'package:project_bloem/screens/welcome_screen/welcome_screen.dart';
 
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         //brightness: Brightness.dark,
         primarySwatch: Colors.blue,
       ),
-      home : const LoginPage(),
+      home : const WelcomeScreen(),
     );
   }
 }

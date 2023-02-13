@@ -11,7 +11,7 @@ class IconRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
-      padding: const EdgeInsets.symmetric(vertical: 14),
+      padding: const EdgeInsets.symmetric(vertical: 5),
 
       child: SafeArea(
           top: false,
@@ -78,5 +78,92 @@ class IconRow extends StatelessWidget {
     );
   }
 }
+class SearchBarFilter extends StatelessWidget {
+  const SearchBarFilter({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+
+      children: [
+        SizedBox(width: getProportionateScreenWidth(30)),
+        Container(
+
+          width: SizeConfig.screenWidth * 0.7,
+
+          decoration: BoxDecoration(
+            color: HexColor.fromHex('#F3F4F9'),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: TextField(
+
+            //onChanged: () { },
+            //################################################Onchange#######################################
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(30),
+                  vertical: getProportionateScreenWidth(20)),
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              hintText: "Search product",
+              hintStyle: TextStyle(color: HexColor.fromHex('#86869E')),
+              prefixIcon: Icon(
+                  Icons.search,
+                  color: HexColor.fromHex('#86869E',
+                  )
+              ),
+            ),
+          ),
+
+        ),
+        IconButton(
+          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+          //###############################################Filter ICon#################################
+          onPressed: () { },
+          icon: const Icon(Icons.menu),
+          color: HexColor.fromHex('#33363F'),
+        ),
+
+      ],
+    );
+  }
+}
+
+
+class SectionTitle extends StatelessWidget {
+  const SectionTitle({
+    Key? key,
+    required this.title,
+    required this.press,
+  }) : super(key: key);
+
+  final String title;
+  final GestureTapCallback press;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: getProportionateScreenWidth(18),
+            color: Colors.black,
+          ),
+        ),
+        GestureDetector(
+          onTap: press,
+          child: const Text(
+            "See More",
+            style: TextStyle(color: Color(0xFFBBBBBB)),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 
 
