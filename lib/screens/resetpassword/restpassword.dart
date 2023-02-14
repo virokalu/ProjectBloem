@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import '../../components/back_button_icon.dart';
 
 class ResetPassword extends StatelessWidget {
-  var size,width,height;
 
-  ResetPassword({super.key});
+
+  const ResetPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    var size = MediaQuery.of(context).size;
+    var height = size.height;
+    var width = size.width;
     return SafeArea(
       child: Scaffold(
         body: Container(
