@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:project_bloem/screens/user_profile/profile.dart';
+import 'package:project_bloem/screens/welcome_screen/welcome_screen.dart';
 
 
 void main() => runApp(
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 
-      home : const UserProfile(),
+      home : const WelcomeScreen(),
     );
   }
 }
