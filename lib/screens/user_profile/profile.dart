@@ -21,6 +21,7 @@ class UserProfile extends StatelessWidget {
             child: ListView(
               children: [
                 const ButtonText(text: " My Profile", icon: Icons.person_outline),
+                SizedBox(height: height/20),
                 userdetail(name: "       manoj lakshan vijayathunga", image: "images/background1.jpg"),
                 const SizedBox(height: 20,),
                 const Divider(color: Color.fromARGB(255, 243, 236, 236)),
