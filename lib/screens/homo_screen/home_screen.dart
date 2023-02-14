@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/product_cards.dart';
 
+import '../../components/color_components.dart';
 import '../../components/size.dart';
 import 'home_components/home_components.dart';
 
@@ -76,10 +77,10 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding:
-                    EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
-                    //################################################see more function###################################
+                    EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+
                     child:
-                    Column(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -101,8 +102,10 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         //#####################################card start Here##########################################
 
-                        for(int i=0;i<3;i++)
-                          const CardBox(),
+
+                        CategoryCardBox(colorName: HexColor.fromHex('#FFFAEB')),
+                        CategoryCardBox(colorName: HexColor.fromHex('#FEF0F0')),
+                        CategoryCardBox(colorName: HexColor.fromHex('#F1EFF6')),
 
 
 
