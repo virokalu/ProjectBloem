@@ -5,13 +5,12 @@ class IconWithText extends StatelessWidget {
   final IconData icon;
   final String text,address;
 
-  IconWithText({required this.icon,required this.text,required this.address});
+  const IconWithText({super.key,required this.icon,required this.text,required this.address});
 
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
+    return Row(
         children: [
           Expanded(
            child: IconButton(
@@ -27,7 +26,7 @@ class IconWithText extends StatelessWidget {
           ),
          
         ],
-      ),
+
     );
   }
 }
