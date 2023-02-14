@@ -10,6 +10,9 @@ class IconWithText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size,width,height;
+    size = MediaQuery.of(context).size;
+    width = size.width;
     return Row(
         children: [
           Expanded(
@@ -18,6 +21,7 @@ class IconWithText extends StatelessWidget {
               icon: Icon(icon),
            ),
           ),
+          SizedBox(width: width/3,),
           Expanded(
             child: Text(
               text,
