@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:project_bloem/components/product_cards.dart';
 
 import '../../components/size.dart';
 import 'home_components/home_components.dart';
@@ -41,14 +42,15 @@ class HomeScreen extends StatelessWidget {
                 //################################################see more function###################################
                 child: SectionTitle(title: "Recommended Listing", press: () {}),
               ),
-              SizedBox(height: getProportionateScreenWidth(20)),
+              SizedBox(height: getProportionateScreenWidth(5)),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
                     //#####################################card start Here##########################################
 
-
+                    for(int i=0;i<2;i++)
+                      const CardBox(),
 
 
 
@@ -62,12 +64,64 @@ class HomeScreen extends StatelessWidget {
                     //         .shrink(); // here by default width and height is 0
                     //   },
                     // ),
-                    SizedBox(width: getProportionateScreenWidth(20)),
+                      SizedBox(width: getProportionateScreenWidth(20)),
                   ],
                 ),
               )
             ],
           ),
+
+              SizedBox(height: getProportionateScreenHeight(20)),
+              Column(
+                children: [
+                  Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
+                    //################################################see more function###################################
+                    child:
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    Text(
+                      "Categories Here",
+                      style: TextStyle(
+                        fontSize: getProportionateScreenWidth(22),
+                        color: Colors.black,
+
+                      ),
+                    ),
+                    ],
+                  ),
+                  ),
+                  SizedBox(height: getProportionateScreenWidth(5)),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        //#####################################card start Here##########################################
+
+                        for(int i=0;i<3;i++)
+                          const CardBox(),
+
+
+
+                        // ...List.generate(
+                        //   demoProducts.length,
+                        //       (index) {
+                        //     if (demoProducts[index].isPopular)
+                        //       return ProductCard(product: demoProducts[index]);
+                        //
+                        //     return SizedBox
+                        //         .shrink(); // here by default width and height is 0
+                        //   },
+                        // ),
+                        SizedBox(width: getProportionateScreenWidth(20)),
+                      ],
+                    ),
+                  )
+                ],
+              ),
 
 
 
