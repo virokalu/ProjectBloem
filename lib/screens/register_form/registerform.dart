@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
 
-class RegisterPage extends StatelessWidget {
-  var size,width,height;
+import '../../components/button_components.dart';
 
-  RegisterPage({super.key});
+class RegisterPage extends StatelessWidget {
+
+
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    var size = MediaQuery.of(context).size;
+    var height = size.height;
+    var width = size.width;
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -18,15 +20,17 @@ class RegisterPage extends StatelessWidget {
           child: ListView(
             children: [
 
-              ButtonText(text: "Create Account", icon: Icons.account_circle_outlined),
+              const ButtonText(text: "Create Account", icon: Icons.account_circle_outlined),
 
-              SizedBox(height: height/15),
+              SizedBox(height: height/30),
               SizedBox(
                 height: height/10,
                 child: TextFormField(
                   decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.person),
                       labelText: "preferred username",
+                      filled: true,
+                      fillColor: Colors.white38,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                       )
@@ -41,6 +45,8 @@ class RegisterPage extends StatelessWidget {
                   decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.person_pin_sharp),
                       labelText: "Full Name",
+                      filled: true,
+                      fillColor: Colors.white38,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                       )
@@ -49,24 +55,24 @@ class RegisterPage extends StatelessWidget {
                 ),
               ),
 
-              Container(
-                child: SizedBox(
-                  height: height/10,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.mail_outline_rounded),
-                        labelText: "Email",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        )
-                    ),
-
+              SizedBox(
+                height: height/10,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.mail_outline_rounded),
+                      labelText: "Email",
+                      filled: true,
+                      fillColor: Colors.white38,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      )
                   ),
+
                 ),
               ),
 
               SizedBox(
-                height: 56.0,
+                height: height/10,
                 child: TextFormField(
                   decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock),
@@ -82,7 +88,7 @@ class RegisterPage extends StatelessWidget {
               ),
 
               SizedBox(
-                height: 56.0,
+                height: height/10,
                 child: TextFormField(
                   decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock),
@@ -96,25 +102,16 @@ class RegisterPage extends StatelessWidget {
 
                 ),
               ),
-              const SizedBox(height:40.0),
               TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: const Color(0xFF000000),
-                  backgroundColor: const Color(0xFF4cd964),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  fixedSize: const Size(327,56),
-                  textStyle: const TextStyle(
-                    fontSize: 16.0,
-                    fontFamily: 'Poppins',
-                  ),
-                ),
+                style: greenButtonStyle,
+                //################################################Create Account#######################################
                 onPressed: () {},
                 child: const Text(
                   "Create Account",
+                  style: TextStyle(color: Colors.white, fontSize: 16.0,
+                    fontFamily: 'Poppins',),
                 ),
-              ),//login button
+              ),
             ],
           ),
         ),
