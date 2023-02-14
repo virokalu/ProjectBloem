@@ -12,7 +12,7 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var width = size.width;
-    //var height = size.height;
+    var height = size.height;
 
     return SafeArea(
         child: Scaffold(
@@ -22,6 +22,7 @@ class UserProfile extends StatelessWidget {
 
               children: const [
                 ButtonText(text: " My Profile", icon: Icons.person_outline),
+                SizedBox(height: 30,),
                 UserDetail(name: "       manoj lakshan vijayathunga", image: "images/background1.jpg"),
                 SizedBox(height: 20,),
                 Divider(color: Color.fromARGB(255, 243, 236, 236)),

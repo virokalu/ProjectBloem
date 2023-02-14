@@ -27,7 +27,11 @@ class UserDetail extends StatelessWidget {
           Column(
             children: [
               Text(name,
-                //textAlign: TextAlign.justif,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Poppins',
+                  fontSize: 15,
+                ),
               ),
               Row(
                 children: [
