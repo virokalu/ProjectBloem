@@ -3,11 +3,12 @@ import 'package:project_bloem/components/back_button_icon.dart';
 
 import '../../components/button_components.dart';
 import '../../components/color_components.dart';
+import '../../components/size.dart';
 
-class RegisterPage extends StatelessWidget {
+class PlaceListing extends StatelessWidget {
 
 
-  const RegisterPage({super.key});
+  const PlaceListing({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +22,28 @@ class RegisterPage extends StatelessWidget {
           child: ListView(
             children: [
 
-              const ButtonText(text: "Create Account", icon: Icons.account_circle_outlined),
+              const BackButtonNHome(),
 
-              SizedBox(height: height/30),
+              SizedBox(height: height/100),
+
+              Text(
+                "Add Title",
+                style: TextStyle(
+                  fontSize: getProportionateScreenWidth(18),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               SizedBox(
                 height: height/10,
                 child: TextFormField(
                   decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.person),
-                      labelText: "preferred username",
+                      labelText: "Title",
                       filled: true,
                       fillColor: HexColor.fromHex('#F3F1F1'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none
+                        borderSide: BorderSide.none
                       )
                   ),
 
@@ -48,10 +57,9 @@ class RegisterPage extends StatelessWidget {
                       prefixIcon: const Icon(Icons.person_pin_sharp),
                       labelText: "Full Name",
                       filled: true,
-                      fillColor: HexColor.fromHex('#F3F1F1'),
+                      fillColor: Colors.white38,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none
                       )
                   ),
 
@@ -65,10 +73,9 @@ class RegisterPage extends StatelessWidget {
                       prefixIcon: const Icon(Icons.mail_outline_rounded),
                       labelText: "Email",
                       filled: true,
-                      fillColor: HexColor.fromHex('#F3F1F1'),
+                      fillColor: Colors.white38,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none
                       )
                   ),
 
@@ -82,10 +89,9 @@ class RegisterPage extends StatelessWidget {
                       prefixIcon: const Icon(Icons.lock),
                       labelText: "password",
                       filled: true,
-                      fillColor: HexColor.fromHex('#F3F1F1'),
+                      fillColor: Colors.white38,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none
                       )
                   ),
 
@@ -99,10 +105,9 @@ class RegisterPage extends StatelessWidget {
                       prefixIcon: const Icon(Icons.lock),
                       labelText: "Confirm Password",
                       filled: true,
-                      fillColor: HexColor.fromHex('#F3F1F1'),
+                      fillColor: Colors.white38,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none
                       )
                   ),
 
