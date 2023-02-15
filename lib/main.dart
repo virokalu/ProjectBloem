@@ -2,9 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:project_bloem/screens/homo_screen/home_screen.dart';
 import 'package:project_bloem/screens/selling/selling_page.dart';
-import 'package:project_bloem/screens/user_profile/profile.dart';
 
 
 

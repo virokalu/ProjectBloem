@@ -12,7 +12,6 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var width = size.width;
-    var height = size.height;
 
     return SafeArea(
         child: Scaffold(
