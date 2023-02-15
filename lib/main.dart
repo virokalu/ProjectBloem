@@ -4,6 +4,7 @@ import 'package:project_bloem/screens/selling/selling_page.dart';
 import 'package:project_bloem/screens/user_profile/profile.dart';
 
 
+
 void main() => runApp(
   DevicePreview(
     builder: (context) => const MyApp(), // Wrap your app
@@ -23,7 +24,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 
+
       home : const SellingPage(),
+
     );
+
   }
 }

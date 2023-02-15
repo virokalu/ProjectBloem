@@ -53,6 +53,8 @@ class ResetPassword extends StatelessWidget {
                 onPressed: () {},
                 child: const Text(
                   "Reset Password",
+                  style: TextStyle(color: Colors.white, fontSize: 16.0,
+                    fontFamily: 'Poppins',),
                 ),
               ),//login button
 
