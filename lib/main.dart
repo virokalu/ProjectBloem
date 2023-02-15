@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:project_bloem/screens/selling/selling_page.dart';
+import 'package:project_bloem/screens/place_a_listing/place_a_listing.dart';
+
+import 'components/size.dart';
 
 
 
@@ -17,7 +19,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return MaterialApp(
+
       scrollBehavior: AppScrollBehavior(),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -27,7 +31,7 @@ class MyApp extends StatelessWidget {
       ),
 
 
-      home : const SellingPage(),
+      home : const PlaceListing(),
 
     );
 
