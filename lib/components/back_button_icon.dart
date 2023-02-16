@@ -86,3 +86,57 @@ class ButtonText extends StatelessWidget {
     );
   }
 }
+
+class BackButtonNHome extends StatelessWidget {
+
+  const BackButtonNHome({super.key});
+
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    return Column(
+      children: [
+        Row(
+          children: [
+            Ink(
+              decoration: BoxDecoration(
+
+                  border: Border.all(color: HexColor.fromHex('#4CD964'), width: 2),
+                  borderRadius: BorderRadius.circular(35.0)
+              ),
+              width: 60,
+              child:IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back,),
+                color: HexColor.fromHex('#4CD964'),
+
+              ),
+
+
+            ),
+
+
+            const Spacer(),
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                );
+              },
+              icon: const Icon(Icons.home_rounded),
+              color: HexColor.fromHex('#33363F'),
+            ),
+          ],
+        ),
+
+        //SizedBox(height: height*75),
+
+      ],
+    );
+  }
+}
