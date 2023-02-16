@@ -36,9 +36,10 @@ class LoginPage extends StatelessWidget {
                     prefixIcon: const Icon(Icons.person),
                     labelText: "username/email",
                     filled: true,
-                    fillColor: Colors.white38,
+                    fillColor: HexColor.fromHex('#F3F1F1'),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none
                     )
                 ),
 
@@ -52,9 +53,10 @@ class LoginPage extends StatelessWidget {
                     prefixIcon: const Icon(Icons.lock),
                     labelText: "password",
                     filled: true,
-                    fillColor: Colors.white38,
+                    fillColor: HexColor.fromHex('#F3F1F1'),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none
                     )
                 ),
 
