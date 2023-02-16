@@ -18,7 +18,6 @@ class ButtonText extends StatelessWidget {
   Widget build(BuildContext context) {
 
 
-
     return Column(
       children: [
         Row(

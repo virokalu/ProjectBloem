@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
 import 'package:project_bloem/components/product_cards.dart';
 
-import '../../components/color_components.dart';
 import '../../components/size.dart';
 
 class SellingPage extends StatelessWidget {
@@ -36,7 +35,7 @@ class SellingPage extends StatelessWidget {
                         const SellingCard(),
                         const SellingCard(),
                         const SellingCard(),
-                        
+
                         SizedBox(width: getProportionateScreenWidth(20)),
                       ],
                     ),
