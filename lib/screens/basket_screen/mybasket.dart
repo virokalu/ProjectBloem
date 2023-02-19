@@ -41,8 +41,8 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                   vertical: width / 90, horizontal: height / 90),
               child: Column(
                 children: [
-                  const ButtonText(
-                      text: "My Basket", icon: Icons.shopping_cart),
+                  const ButtonText(text: "My Basket", icon: Icons.shopping_cart),
+                  const SizedBox(height: 20),
                   SizedBox(
                     height: height * 0.38,
                     child: SingleChildScrollView(
@@ -52,13 +52,9 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(
-                                  height: height / 7,
-                                  width: width / 7,
-                                  child: const Image(
-                                    image: AssetImage('images/112.jpg'),
-                                    fit: BoxFit.fill,
-                                  ),
+                                const CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage('images/background1.jpg'),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -110,10 +106,10 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                                 SizedBox(
                                   height: height / 7,
                                   width: width / 7,
-                                  child: const Image(
-                                    image: AssetImage('images/112.jpg'),
-                                    fit: BoxFit.fill,
-                                  ),
+                                  child: const CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage('images/background1.jpg'),
+                                ),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -163,10 +159,10 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                                 SizedBox(
                                   height: height / 7,
                                   width: width / 7,
-                                  child: const Image(
-                                    image: AssetImage('images/112.jpg'),
-                                    fit: BoxFit.fill,
-                                  ),
+                                  child: const CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage('images/background1.jpg'),
+                                ),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -216,10 +212,10 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                                 SizedBox(
                                   height: height / 7,
                                   width: width / 7,
-                                  child: const Image(
-                                    image: AssetImage('images/112.jpg'),
-                                    fit: BoxFit.fill,
-                                  ),
+                                  child: const CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage('images/background1.jpg'),
+                                ),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -269,10 +265,10 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                                 SizedBox(
                                   height: height / 7,
                                   width: width / 7,
-                                  child: const Image(
-                                    image: AssetImage('images/112.jpg'),
-                                    fit: BoxFit.fill,
-                                  ),
+                                  child: const CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage('images/background1.jpg'),
+                                ),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -322,10 +318,10 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                                 SizedBox(
                                   height: height / 7,
                                   width: width / 7,
-                                  child: const Image(
-                                    image: AssetImage('images/112.jpg'),
-                                    fit: BoxFit.fill,
-                                  ),
+                                  child: const CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage('images/background1.jpg'),
+                                ),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -375,10 +371,10 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                                 SizedBox(
                                   height: height / 7,
                                   width: width / 7,
-                                  child: const Image(
-                                    image: AssetImage('images/112.jpg'),
-                                    fit: BoxFit.fill,
-                                  ),
+                                  child: const CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage('images/background1.jpg'),
+                                ),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -490,3 +486,4 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
     );
   }
 }
+

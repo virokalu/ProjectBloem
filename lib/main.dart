@@ -2,6 +2,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:project_bloem/screens/basket_screen/mybasket.dart';
+import 'package:project_bloem/screens/homo_screen/home_screen.dart';
+import 'package:project_bloem/screens/login_screen/login.dart';
+import 'package:project_bloem/screens/place_a_listing/place_a_listing.dart';
+import 'package:project_bloem/screens/register_form/registerform.dart';
+import 'package:project_bloem/screens/resetpassword/restpassword.dart';
+import 'package:project_bloem/screens/selling/selling_page.dart';
+import 'package:project_bloem/screens/user_profile/profile.dart';
+import 'package:project_bloem/screens/welcome_screen/welcome_screen.dart';
 import 'components/size.dart';
 
 
@@ -25,7 +33,21 @@ class MyApp extends StatelessWidget {
           //brightness: Brightness.dark,
           primarySwatch: Colors.blue,
         ),
-        home: const MyBasketScreen());
+        //home: const UserProfile());
+        initialRoute: '/',
+        routes: {
+          '/':(context) => const WelcomeScreen(),
+          '/mybusket' :(context) => const MyBasketScreen(),
+          '/home' :(context) => const HomeScreen(),
+          '/login' :(context) => const LoginPage(),
+          '/listing' :(context) => const PlaceListing(),
+          '/register' :(context) => const RegisterPage(),
+          '/resetpassword' :(context) => const ResetPassword(),
+          '/selling' :(context) => const SellingPage(),
+          '/profile' :(context) => const UserProfile(),
+          //'/welcome' :(context) => const WelcomeScreen(),
+        },
+    );
   }
 }
 
