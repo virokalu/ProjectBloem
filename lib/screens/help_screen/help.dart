@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../components/back_button_icon.dart';
+import '../../components/size.dart';
 
 class HelpScreen extends StatefulWidget{
   const HelpScreen({super.key});
@@ -24,6 +25,8 @@ class _HelpScreenState extends State<HelpScreen> {
             child: ListView(
               children: [
                 const ButtonText(text: "Help", icon: Icons.help_center),
+                SizedBox(height: getProportionateScreenHeight(18),),
+
                 SingleChildScrollView(
                   child:ExpansionPanelList(
                     expansionCallback: (panelIndex, isExpanded) {

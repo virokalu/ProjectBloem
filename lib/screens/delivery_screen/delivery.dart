@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../../components/back_button_icon.dart';
+import '../../components/size.dart';
 
 class DeliveryScreen extends StatefulWidget{
   const DeliveryScreen({super.key});
@@ -28,6 +29,9 @@ class _DeliveryScreenState extends State<DeliveryScreen>{
             child: ListView(
               children: [
                 const ButtonText(text: "Delivery", icon: Icons.delivery_dining),
+
+                SizedBox(height: getProportionateScreenHeight(18),),
+
                 SingleChildScrollView(
                   child:ExpansionPanelList(
                     expansionCallback: (panelIndex, isExpanded) {
