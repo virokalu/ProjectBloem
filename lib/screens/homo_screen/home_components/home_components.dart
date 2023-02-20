@@ -21,7 +21,9 @@ class IconRow extends StatelessWidget {
               Column(
                 children: [
                   TextButton(
-                    onPressed: () => {},
+                    onPressed: () => {
+                      Navigator.pushNamed(context, '/profile'),
+                    },
                     style: circularIconStyle,
                     //padding: EdgeInsets.all(10.0),
                     child: const Column( // Replace with a Row for horizontal icon + text
@@ -49,7 +51,9 @@ class IconRow extends StatelessWidget {
               Column(
                 children: [
                   TextButton(
-                    onPressed: () => {},
+                    onPressed: () => {
+                      Navigator.pushNamed(context, '/mybusket'),
+                    },
                     style: circularIconStyle,
                     //padding: EdgeInsets.all(10.0),
                     child: Column( // Replace with a Row for horizontal icon + text
@@ -164,6 +168,5 @@ class SectionTitle extends StatelessWidget {
     );
   }
 }
-
 
 
