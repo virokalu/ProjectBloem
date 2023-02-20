@@ -301,7 +301,15 @@ class _PlaceListingState extends State<PlaceListing> {
                       ),
                     ),
                     //################################################Cash on Delivery#######################################
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container();
+
+                        },
+                      );
+                    },
                     child: const Icon(
                       Icons.contact_support,
                       color: Colors.black,
@@ -346,7 +354,15 @@ class _PlaceListingState extends State<PlaceListing> {
                       ),
                     ),
                     //################################################Activat the chat#######################################
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container();
+
+                          },
+                      );
+                    },
                     child: const Icon(
                       Icons.contact_support,
                       color: Colors.black,
