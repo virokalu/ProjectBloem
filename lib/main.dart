@@ -34,20 +34,21 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         //home: const Card()
-        home: const WishListScreen());
-    // initialRoute: '/',
-    // routes: {
-    //   '/':(context) => const WelcomeScreen(),
-    //   '/mybusket' :(context) => const MyBasketScreen(),
-    //   '/home' :(context) => const HomeScreen(),
-    //   '/login' :(context) => const LoginPage(),
-    //   '/listing' :(context) => const PlaceListing(),
-    //   '/register' :(context) => const RegisterPage(),
-    //   '/resetpassword' :(context) => const ResetPassword(),
-    //   '/selling' :(context) => const SellingPage(),
-    //   '/profile' :(context) => const UserProfile(),
-    //   //'/welcome' :(context) => const WelcomeScreen(),
-    // },
+        //home: const WishListScreen());
+    initialRoute: '/',
+    routes: {
+      '/':(context) => const WelcomeScreen(),
+      '/mybusket' :(context) => const MyBasketScreen(),
+      '/home' :(context) => const HomeScreen(),
+      '/login' :(context) => const LoginPage(),
+      '/listing' :(context) => const PlaceListing(),
+      '/register' :(context) => const RegisterPage(),
+      '/resetpassword' :(context) => const ResetPassword(),
+      '/selling' :(context) => const SellingPage(),
+      '/profile' :(context) => const UserProfile(),
+      '/wishlist' :(context) => const WishListScreen(),
+    },
+    );
   }
 }
 
