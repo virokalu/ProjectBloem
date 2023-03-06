@@ -26,22 +26,19 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
   void registerUser() async{
-    if(emailController.text.isNotEmpty && nameController.text.isNotEmpty && passController.text.isNotEmpty && fulNameController.text.isNotEmpty){
+    var regBody = {
+      "username":nameController.text,
+      "fullname":fulNameController.text,
+      "email":emailController.text,
+      "password":passController.text
+    };
 
-      var regBody = {
-        "username":nameController.text,
-        "fullname":fulNameController.text,
-        "email":emailController.text,
-        "password":passController.text
-      };
-
-      var response = await http.post(Uri.parse(registration),
+    var response = await http.post(Uri.parse(registration),
         headers: {"Content-Type":"application/json"},
         body: jsonEncode(regBody)
-      );
-      var jsonResponse = jsonDecode(response.body);
-      print(jsonResponse['status']);
-    }
+    );
+    var jsonResponse = jsonDecode(response.body);
+    print(jsonResponse['status']);
   }
 
   @override

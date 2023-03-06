@@ -1,2 +1,2 @@
-const url = 'http://192.168.1.3:3000/';
+const url = 'http://10.0.2.2:3000/';
 const registration = "${url}registration";
