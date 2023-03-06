@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
 
 import '../../components/button_components.dart';
+import 'package:http/http.dart' as http;
+import 'package:project_bloem/models/config.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -19,6 +23,26 @@ class _RegisterPageState extends State<RegisterPage> {
   final conformPassController = TextEditingController();
   final fulNameController = TextEditingController();
   bool passToggle = true;
+
+
+  void registerUser() async{
+    if(emailController.text.isNotEmpty && nameController.text.isNotEmpty && passController.text.isNotEmpty && fulNameController.text.isNotEmpty){
+
+      var regBody = {
+        "username":nameController.text,
+        "fullname":fulNameController.text,
+        "email":emailController.text,
+        "password":passController.text
+      };
+
+      var response = await http.post(Uri.parse(registration),
+        headers: {"Content-Type":"application/json"},
+        body: jsonEncode(regBody)
+      );
+      var jsonResponse = jsonDecode(response.body);
+      print(jsonResponse['status']);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +67,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: nameController,
                     decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.person),
-                        labelText: "preferred username",
+                        labelText: "Preferred Username",
                         filled: true,
                         fillColor: Colors.white38,
                         border: OutlineInputBorder(
@@ -53,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Username";
+                        return "Enter Your Username";
                       }
                       
                       return null;
@@ -104,7 +128,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Email";
+                        return "Enter Your Email";
                       }
                       bool emailValid = RegExp(
                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"
@@ -125,7 +149,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: passController,
                     decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.lock),
-                        labelText: "password",
+                        labelText: "Password",
                         filled: true,
                         fillColor: Colors.white38,
                         border: OutlineInputBorder(
@@ -135,7 +159,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Email";
+                        return "Enter Your Password";
                       }
                       
                       return null;
@@ -160,7 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Email";
+                        return "Re-Enter Your Password";
                       }
                       else if(passController.text != conformPassController.text){
                         passController.clear();
@@ -179,13 +203,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   onPressed: () {
                     if(_formField.currentState!.validate()){
                       //print("success");
-                      emailController.clear();
-                      nameController.clear();
-                      passController.clear();
-                      conformPassController.clear();
-                      fulNameController.clear();
-                      Navigator.pushNamed(context, '/login');
+                      registerUser();
+
+
                     }
+
+
                   },
                   child: const Text(
                     "Create Account",
