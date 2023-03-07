@@ -15,8 +15,10 @@ import '../../components/color_components.dart';
 class _LoginPageState extends State<LoginPage> {
 
   final _formField = GlobalKey<FormState>();
-  final userNameContraller = TextEditingController();
-  final passwordContraller = TextEditingController();
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +44,11 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: height / 10,
                 child: TextFormField(
-                  controller: userNameContraller,
+                  controller: userNameController,
                   //###############################################usernameform##################################
                   decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.person),
-                      labelText: "username/email",
+                      labelText: "Username/Email",
                       filled: true,
                       fillColor: Colors.white38,
                       border: OutlineInputBorder(
@@ -67,11 +69,11 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: height / 10,
                 child: TextFormField(
-                  controller: passwordContraller,
+                  controller: passwordController,
                   //############################################password#############################################
                   decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock),
-                      labelText: "password",
+                      labelText: "Password",
                       filled: true,
                       fillColor: Colors.white38,
                       border: OutlineInputBorder(
@@ -94,10 +96,9 @@ class _LoginPageState extends State<LoginPage> {
                 //################################################login#######################################
                 onPressed: () {
                   if(_formField.currentState!.validate()){
-                    userNameContraller.clear();
-                    passwordContraller.clear();
-                    Navigator.pushNamed(context, '/home',
-                  );
+                    userNameController.clear();
+                    passwordController.clear();
+                    Navigator.pushNamed(context, '/home');
                   }
                 },
                 child: const Text(
@@ -118,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 },
                 child: const Text(
-                  "Forget password?",
+                  "Forget Password?",
                   style: TextStyle(
                     decoration: TextDecoration.underline,
                   ),

@@ -1,11 +1,17 @@
+import 'dart:async';
 import 'dart:convert';
+//import 'dart:html';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
+import 'package:project_bloem/screens/login_screen/login.dart';
 
 import '../../components/button_components.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_bloem/models/config.dart';
+
+import '../../components/color_components.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -25,7 +31,9 @@ class _RegisterPageState extends State<RegisterPage> {
   bool passToggle = true;
 
 
-  void registerUser() async{
+
+  Future<void> registerUser(BuildContext context) async{
+    final completer = Completer<void>();
     var regBody = {
       "username":nameController.text,
       "fullname":fulNameController.text,
@@ -38,7 +46,68 @@ class _RegisterPageState extends State<RegisterPage> {
         body: jsonEncode(regBody)
     );
     var jsonResponse = jsonDecode(response.body);
-    print(jsonResponse['status']);
+    //print(jsonResponse['status']);
+    if(jsonResponse['status']){
+      Navigator.pushNamed(context, '/login');
+    }else if(!jsonResponse['status']){
+      var myEmail="email";
+      var myUser="user";
+      if(jsonResponse['exist'].contains(myEmail)){
+
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.warning,
+          //dialogBackgroundColor: Colors.black,
+          animType: AnimType.topSlide,
+
+          showCloseIcon: true,
+          title: "Email Already Exist",
+          desc: "${emailController.text} Already in use. Please Try Another or Login",
+          btnCancelOnPress: (){
+            emailController.clear();
+            completer.complete();
+
+          },
+          btnOkOnPress: (){
+            Navigator.pushNamed(context, '/login');
+
+            //print("Inside Login");
+            completer.complete();
+          },
+          btnOkText: "Login",
+          btnCancelText: "OK",
+          btnOkColor: HexColor.fromHex('#4CD964'),
+        )..show();
+        return completer.future;
+
+
+        //print(jsonResponse['exist']);
+
+      }else if(jsonResponse['exist'].contains(myUser)){
+        AwesomeDialog(
+            context: context,
+            dialogType: DialogType.warning,
+            animType: AnimType.topSlide,
+            showCloseIcon: true,
+            title: "Username Already Exist",
+            desc: "Username is Already in Use Please try Another One",
+            btnCancelOnPress: (){
+              nameController.clear();
+
+            },
+            btnCancelText: "OK",
+          btnCancelColor: HexColor.fromHex('#4CD964'),
+
+
+        ).show();
+        return completer.future;
+        //print(jsonResponse['exist']);
+
+      }else{
+
+      }
+    }
+
   }
 
   @override
@@ -200,7 +269,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   onPressed: () {
                     if(_formField.currentState!.validate()){
                       //print("success");
-                      registerUser();
+                      registerUser(context);
 
 
                     }

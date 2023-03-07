@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../components/back_button_icon.dart';
-import '../../components/button_components.dart';
+//import '../../components/button_components.dart';
 
 class WishListScreen extends StatefulWidget {
   const WishListScreen({super.key});
@@ -15,13 +15,13 @@ class _WishListScreenState extends State<WishListScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    double priceOne = 1000;
-    double priceTwo = 1000;
-    double priceThree = 1000;
-    double priceFour = 1000;
-    double priceFive = 1000;
-    double priceSix = 1000;
-    double priceSeven = 1000;
+    // double priceOne = 1000;
+    // double priceTwo = 1000;
+    // double priceThree = 1000;
+    // double priceFour = 1000;
+    // double priceFive = 1000;
+    // double priceSix = 1000;
+    // double priceSeven = 1000;
 
     return SafeArea(
       child: Scaffold(
@@ -114,7 +114,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                   ),
                                   Text(
                                     "Rs.2000",
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 18.0,
                                     ),
                                   )
