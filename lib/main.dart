@@ -33,9 +33,9 @@ class MyApp extends StatelessWidget {
           //brightness: Brightness.dark,
           primarySwatch: Colors.blue,
         ),
-        //home: const Card()
+
         //home: const WishListScreen());
-    initialRoute: '/',
+    initialRoute: '/login',
     routes: {
       '/':(context) => const WelcomeScreen(),
       '/mybusket' :(context) => const MyBasketScreen(),
