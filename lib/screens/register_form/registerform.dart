@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
-import 'package:project_bloem/screens/login_screen/login.dart';
+//import 'package:project_bloem/screens/login_screen/login.dart';
 
 import '../../components/button_components.dart';
 import 'package:http/http.dart' as http;
@@ -48,12 +48,14 @@ class _RegisterPageState extends State<RegisterPage> {
     var jsonResponse = jsonDecode(response.body);
     //print(jsonResponse['status']);
     if(jsonResponse['status']){
+      // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, '/login');
     }else if(!jsonResponse['status']){
       var myEmail="email";
       var myUser="user";
       if(jsonResponse['exist'].contains(myEmail)){
 
+        // ignore: use_build_context_synchronously
         AwesomeDialog(
           context: context,
           dialogType: DialogType.warning,
@@ -77,20 +79,21 @@ class _RegisterPageState extends State<RegisterPage> {
           btnOkText: "Login",
           btnCancelText: "OK",
           btnOkColor: HexColor.fromHex('#4CD964'),
-        )..show();
+        ).show();
         return completer.future;
 
 
         //print(jsonResponse['exist']);
 
       }else if(jsonResponse['exist'].contains(myUser)){
+        // ignore: use_build_context_synchronously
         AwesomeDialog(
             context: context,
             dialogType: DialogType.warning,
             animType: AnimType.topSlide,
             showCloseIcon: true,
             title: "Username Already Exist",
-            desc: "Username is Already in Use Please try Another One",
+            desc: "${nameController.text} is Already in Use Please try Another One",
             btnCancelOnPress: (){
               nameController.clear();
 
@@ -102,8 +105,6 @@ class _RegisterPageState extends State<RegisterPage> {
         ).show();
         return completer.future;
         //print(jsonResponse['exist']);
-
-      }else{
 
       }
     }
@@ -143,7 +144,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Your Username";
+                        return "";
                       }
                       
                       return null;
@@ -168,7 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Your Full Name";
+                        return "";
                       }
                       
                       return null;
@@ -194,7 +195,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Your Email";
+                        return "";
                       }
                       bool emailValid = RegExp(
                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"
@@ -225,7 +226,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Your Password";
+                        return "";
                       }
                       
                       return null;

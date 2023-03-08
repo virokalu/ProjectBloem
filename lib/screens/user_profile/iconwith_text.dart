@@ -29,7 +29,7 @@ class IconWithText extends StatelessWidget {
               icon: Icon(icon),
            ),
           ),
-          SizedBox(width: width/3,),
+          SizedBox(width: width/5,),
           Expanded(
             child: Text(
               text,
