@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         ),
 
         //home: const WishListScreen());
-    initialRoute: '/login',
+    initialRoute: '/',
     routes: {
       '/':(context) => const WelcomeScreen(),
       '/mybusket' :(context) => const MyBasketScreen(),

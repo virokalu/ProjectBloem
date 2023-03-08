@@ -32,6 +32,8 @@ dependencies:
     sdk: flutter
   http: ^0.13.5
   awesome_dialog: ^3.0.2
+  shared_preferences:
+  jwt_decoder:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
