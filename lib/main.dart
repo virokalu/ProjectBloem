@@ -15,7 +15,6 @@ import 'package:project_bloem/screens/user_profile/profile.dart';
 import 'package:project_bloem/screens/welcome_screen/welcome_screen.dart';
 import 'components/size.dart';
 
-
 void main() => runApp(
       DevicePreview(
         builder: (context) => const MyApp(), // Wrap your app

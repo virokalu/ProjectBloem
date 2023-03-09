@@ -1,8 +1,15 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:project_bloem/screens/register_form/registerform.dart';
 import '../../components/back_button_icon.dart';
 import '../../components/button_components.dart';
 import '../../components/color_components.dart';
+import 'package:project_bloem/models/config.dart';
+import 'package:http/http.dart' as http;
 
 
   class LoginPage extends StatefulWidget {
@@ -15,8 +22,83 @@ import '../../components/color_components.dart';
 class _LoginPageState extends State<LoginPage> {
 
   final _formField = GlobalKey<FormState>();
-  final userNameContraller = TextEditingController();
-  final passwordContraller = TextEditingController();
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
+  late SharedPreferences prefs;
+
+  @override
+  void initState(){
+    super.initState();
+    initSharedPref();
+
+  }
+  void initSharedPref() async{
+    prefs = await SharedPreferences.getInstance();
+  }
+
+
+  Future<void> loginUser(BuildContext context) async {
+    final completer = Completer<void>();
+    var reqBody = {
+      "username": userNameController.text,
+      "password": passwordController.text
+    };
+    var response = await http.post(Uri.parse(login),
+        headers: {"Content-Type":"application/json"},
+        body: jsonEncode(reqBody)
+    );
+    var jsonResponse = jsonDecode(response.body);
+
+    //print(jsonResponse('token'));
+
+
+    if(jsonResponse['status']){
+      final myToken = jsonResponse['token'];
+
+      prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isLoggedIn', true);
+      prefs.setString('myToken', myToken);
+
+
+      // ignore: use_build_context_synchronously
+
+
+      // Redirect to previous screen or home screen
+      // ignore: use_build_context_synchronously
+      Navigator.popUntil(context, ModalRoute.withName(Navigator.defaultRouteName));
+
+
+    }else if(!jsonResponse['status']){
+      // ignore: use_build_context_synchronously
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.warning,
+        //dialogBackgroundColor: Colors.black,
+        animType: AnimType.topSlide,
+
+        showCloseIcon: true,
+        title: "Incorrect Username/Password",
+        desc: "Incorrect Username/Password, Please Try Again!",
+
+        btnOkOnPress: (){
+
+          userNameController.clear();
+          passwordController.clear();
+
+          //print("Inside Login");
+          completer.complete();
+        },
+        btnOkText: "OK",
+
+        btnOkColor: HexColor.fromHex('#4CD964'),
+      ).show();
+      return completer.future;
+    }
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +124,11 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: height / 10,
                 child: TextFormField(
-                  controller: userNameContraller,
+                  controller: userNameController,
                   //###############################################usernameform##################################
                   decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.person),
-                      labelText: "username/email",
+                      labelText: "Username",
                       filled: true,
                       fillColor: Colors.white38,
                       border: OutlineInputBorder(
@@ -56,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Username";
+                        return "";
                       }
                       
                       return null;
@@ -67,11 +149,11 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: height / 10,
                 child: TextFormField(
-                  controller: passwordContraller,
+                  controller: passwordController,
                   //############################################password#############################################
                   decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock),
-                      labelText: "password",
+                      labelText: "Password",
                       filled: true,
                       fillColor: Colors.white38,
                       border: OutlineInputBorder(
@@ -81,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Password";
+                        return "";
                       }
                       
                       return null;
@@ -94,10 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                 //################################################login#######################################
                 onPressed: () {
                   if(_formField.currentState!.validate()){
-                    userNameContraller.clear();
-                    passwordContraller.clear();
-                    Navigator.pushNamed(context, '/home',
-                  );
+                    loginUser(context);
                   }
                 },
                 child: const Text(
@@ -118,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 },
                 child: const Text(
-                  "Forget password?",
+                  "Forget Password?",
                   style: TextStyle(
                     decoration: TextDecoration.underline,
                   ),
@@ -155,5 +234,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+
 }
 
