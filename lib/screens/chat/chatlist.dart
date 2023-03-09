@@ -102,7 +102,6 @@ class _ChatListState extends State<ChatList> {
   
   @override
   Widget build(BuildContext context) {
-    var width= MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

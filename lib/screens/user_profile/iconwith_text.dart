@@ -12,7 +12,7 @@ class IconWithText extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var width = size.width;
-    return Container(
+    return SizedBox(
       height: 60,
       child: InkWell(
         onTap: () {

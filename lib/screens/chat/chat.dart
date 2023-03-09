@@ -3,6 +3,7 @@ import 'package:project_bloem/screens/chat/replycard.dart';
 import '../../Model/chatmodel.dart';
 import '../../Model/messagemodel.dart';
 import 'ownmessagecard.dart';
+// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 
@@ -17,7 +18,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final _textController = TextEditingController();
-  ScrollController _scrollcontroller = ScrollController();
+  final ScrollController _scrollcontroller = ScrollController();
   List<MessageModel> messages = [];
 ////////////////////////////////////////////////////////////////////////////////
   bool show = false;
@@ -42,11 +43,11 @@ class _ChatPageState extends State<ChatPage> {
   });
     socket.connect();
     socket.onConnect((data) { 
-        print("connected");
+        //print("connected");
         socket.on("message", (msg) {
-          print("<======= RECIVED MESSAGE ============>");
-            print(msg);
-          print("<=======================================>");
+          //print("<======= RECIVED MESSAGE ============>");
+            //print(msg);
+          //print("<=======================================>");
 
           setMessage('destination',msg["message"]);//render receiver message in chat
         });
@@ -58,9 +59,9 @@ class _ChatPageState extends State<ChatPage> {
     setMessage("source",message);//render sender's message in chat
 
     var x = {"message": message,"sourceId": sourceId,"targetId": targetId};
-    print("<======= SENDING MESSAGE ============>");
-    print(x);
-    print("<=======================================>");
+    //print("<======= SENDING MESSAGE ============>");
+    //print(x);
+    //print("<=======================================>");
     socket.emit("message",
       x
     );
@@ -75,6 +76,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -88,7 +90,7 @@ class _ChatPageState extends State<ChatPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.arrow_back,size: 24),
+                const Icon(Icons.arrow_back,size: 24),
                 CircleAvatar(
                   backgroundImage: AssetImage(widget.chatmodel.img),//if use stf use widget before call final variables
                   radius: 20,
@@ -101,14 +103,14 @@ class _ChatPageState extends State<ChatPage> {
             widget.chatmodel.name,
           ),
           actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.call)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.call)),
             PopupMenuButton<String>(
               onSelected: (value) {
-                print(value);
+                //print(value);
               },
               itemBuilder: (BuildContext context){
                 return [
-                  PopupMenuItem(
+                  const PopupMenuItem(
                     child: Text('block'),
                   ),
                 ];
@@ -116,23 +118,23 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ],
         ),
-        body: Container(
+        body: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height-200,
                 child: ListView.builder(
                   controller: _scrollcontroller,
                   itemCount: messages.length,
                   itemBuilder: (context, index){
                     if(messages[index].type == 'source'){
-                      print("send");
+                     // print("send");
                       return OwnMessageCard(message: messages[index].message);
                     }
                     else{
-                      print("receive");
+                      //print("receive");
                       return ReplyCard(message: messages[index].message);
                     }
                   },
@@ -142,10 +144,10 @@ class _ChatPageState extends State<ChatPage> {
                 alignment: Alignment.bottomCenter,
                 child: Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width-55,
                         child : Card(
-                            margin: EdgeInsets.only(left: 2,right: 2,bottom: 8),
+                            margin: const EdgeInsets.only(left: 2,right: 2,bottom: 8),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25),
                             ),
@@ -158,7 +160,7 @@ class _ChatPageState extends State<ChatPage> {
                             border: InputBorder.none,
                             hintText: "Type a message",
                             suffixIcon: IconButton(
-                              icon: Icon(Icons.attach_file), 
+                              icon: const Icon(Icons.attach_file), 
                               onPressed: (){
                                 showModalBottomSheet(
                                   backgroundColor: Colors.transparent,
@@ -167,7 +169,7 @@ class _ChatPageState extends State<ChatPage> {
                                 );
                               },
                             ),
-                            prefixIcon: Icon(Icons.message),
+                            prefixIcon: const Icon(Icons.message),
                           ),
                         ),
                         ),
@@ -177,9 +179,9 @@ class _ChatPageState extends State<ChatPage> {
                       child: CircleAvatar(
                         radius: 25,
                         child: IconButton(
-                          icon: Icon(Icons.send),
+                          icon: const Icon(Icons.send),
                           onPressed: (){
-                            _scrollcontroller.animateTo(_scrollcontroller.position.maxScrollExtent, duration: Duration(milliseconds: 3000), curve: Curves.easeOut);
+                            _scrollcontroller.animateTo(_scrollcontroller.position.maxScrollExtent, duration: const Duration(milliseconds: 3000), curve: Curves.easeOut);
                             sendMessage(_textController.text,widget.sourceId,widget.chatmodel.id);
                             _textController.clear;
                           },
@@ -196,11 +198,11 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
   Widget bottomesheet(){
-    return Container(
+    return SizedBox(
       height: 270,
       width: MediaQuery.of(context).size.width,
       child: Card(
-        margin: EdgeInsets.all(18),
+        margin: const EdgeInsets.all(18),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -208,16 +210,16 @@ class _ChatPageState extends State<ChatPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 createIcon(Colors.indigo,Icons.insert_drive_file,"Document"),
-                SizedBox(width: 70),
+                const SizedBox(width: 70),
                 createIcon(Colors.purple,Icons.insert_photo,"Gallary"),
               ],
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 createIcon(Colors.green.shade600,Icons.location_pin,"Location"),
-                SizedBox(width: 70,),
+                const SizedBox(width: 70,),
                 createIcon(Colors.blue,Icons.person,"Contact"),
               ],
             )
