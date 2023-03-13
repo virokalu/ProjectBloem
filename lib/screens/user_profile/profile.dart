@@ -19,27 +19,90 @@ class UserProfile extends StatelessWidget {
             margin: EdgeInsets.all(width/30),
             child: ListView(
 
-              children: const [
-                ButtonText(text: " My Profile", icon: Icons.person_outline),
-                SizedBox(height: 30,),
-                UserDetail(name: "       manoj lakshan vijayathunga", image: "images/background1.jpg"),
-                SizedBox(height: 20,),
-                Divider(color: Color.fromARGB(255, 243, 236, 236)),
+              children:  [
+                const ButtonText(text: "My Profile", icon: Icons.person_outline),
+                const SizedBox(height: 30,),
+                const ProfileCard(username: "manoj lakshan vijayathunga",fullName: "images/background1.jpggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"),
+                const SizedBox(height: 10,),
+                const Divider(color: Color.fromARGB(255, 243, 236, 236)),
 
-                IconWithText(icon: Icons.monitor_heart_rounded, text: "Wish List", address: "address"),
-                Divider(color: Color.fromARGB(255, 243, 236, 236)),
-                IconWithText(icon: Icons.chat, text: "Chat", address: "address"),
-                Divider(color: Color.fromARGB(255, 243, 236, 236)),
-                IconWithText(icon: Icons.sell, text: "Shell", address: "address"),
-                Divider(color: Color.fromARGB(255, 243, 236, 236)),
-                IconWithText(icon: Icons.settings, text: "Setting", address: "address"),
-                Divider(color: Color.fromARGB(255, 243, 236, 236)),
-                IconWithText(icon: Icons.help, text: "Help", address: "address"),
-                Divider(color: Color.fromARGB(255, 243, 236, 236)),
-                IconWithText(icon: Icons.error, text: "About Us", address: "address"),
-                Divider(color: Color.fromARGB(255, 243, 236, 236)),
-                IconWithText(icon: Icons.logout, text: "Logout", address: "address"),
-                Divider(color: Color.fromARGB(255, 243, 236, 236)),
+                ClickableBar(
+                  icon: Icons.favorite_border,
+                  name: 'WishList',
+                  onPressed: () {
+                    // Do something when the bar is clicked
+                  },
+                ),
+
+                //IconWithText(icon: Icons.monitor_heart_rounded, text: "Wish List", address: "address"),
+                const Divider(color: Color.fromARGB(255, 243, 236, 236)),
+
+                ClickableBar(
+                  icon: Icons.chat,
+                  name: 'chat',
+                  onPressed: () {
+                    // Do something when the bar is clicked
+                  },
+                ),
+                //IconWithText(icon: Icons.chat, text: "Chat", address: "address"),
+                const Divider(color: Color.fromARGB(255, 243, 236, 236)),
+
+                ClickableBar(
+                  icon: Icons.sell ,
+                  name: 'Sell',
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/selling');
+                    // Do something when the bar is clicked
+                  },
+                ),
+                //IconWithText(icon: Icons.sell, text: "Shell", address: "address"),
+                const Divider(color: Color.fromARGB(255, 243, 236, 236)),
+
+                ClickableBar(
+                  icon: Icons.settings,
+                  name: 'Setting',
+                  onPressed: () {
+
+                    Navigator.pushNamed(context, '/setting');
+                    // Do something when the bar is clicked
+                  },
+                ),
+                //IconWithText(icon: Icons.settings, text: "Setting", address: "address"),
+                const Divider(color: Color.fromARGB(255, 243, 236, 236)),
+
+                ClickableBar(
+                  icon: Icons.help,
+                  name: 'Help',
+                  onPressed: () {
+
+                    Navigator.pushNamed(context, '/help');
+                    // Do something when the bar is clicked
+                  },
+                ),
+                //IconWithText(icon: Icons.help, text: "Help", address: "address"),
+                const Divider(color: Color.fromARGB(255, 243, 236, 236)),
+
+                ClickableBar(
+                  icon: Icons.error,
+                  name: 'About Us',
+                  onPressed: () {
+
+                    Navigator.pushNamed(context, '/about us');
+                    // Do something when the bar is clicked
+                  },
+                ),
+                //IconWithText(icon: Icons.error, text: "About Us", address: "address"),
+                const Divider(color: Color.fromARGB(255, 243, 236, 236)),
+
+                ClickableBar(
+                  icon: Icons.logout,
+                  name: 'Logout',
+                  onPressed: () {
+                    // Do something when the bar is clicked
+                  },
+                ),
+                //IconWithText(icon: Icons.logout, text: "Logout", address: "address"),
+                const Divider(color: Color.fromARGB(255, 243, 236, 236)),
               ],
             ),
           ),

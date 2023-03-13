@@ -50,8 +50,28 @@ class _RegisterPageState extends State<RegisterPage> {
     var jsonResponse = jsonDecode(response.body);
     //print(jsonResponse['status']);
     if(jsonResponse['status']){
+
       // ignore: use_build_context_synchronously
-      Navigator.pushNamed(context, '/login');
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        //dialogBackgroundColor: Colors.black,
+        animType: AnimType.topSlide,
+
+        showCloseIcon: true,
+        title: "Success!",
+        desc: "Logged in Successfully",
+
+        btnOkOnPress: (){
+          Navigator.pushNamed(context, '/login');
+          //print("Inside Login");
+          completer.complete();
+        },
+        btnOkText: "OK",
+
+        btnOkColor: HexColor.fromHex('#4CD964'),
+      ).show();
+
     }else if(!jsonResponse['status']){
       var myEmail="email";
       var myUser="user";
@@ -282,6 +302,31 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: const Text(
                     "Create Account",
                     style: TextStyle(color: Colors.white, fontSize: 16.0,
+                      fontFamily: 'Poppins',),
+                  ),
+                ),
+
+                SizedBox(height: height / 30),
+
+                const Text(
+                  "Already have an account? ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.black54,
+                  ),
+                ), //text
+
+                TextButton(
+                  style: greenButtonBorderStyle,
+                  //############################navigate to registration form##########################################
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/login');
+                  },
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      color: HexColor.fromHex('#4CD964'), fontSize: 16.0,
                       fontFamily: 'Poppins',),
                   ),
                 ),
