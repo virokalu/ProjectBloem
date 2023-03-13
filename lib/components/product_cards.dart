@@ -16,7 +16,9 @@ class CardBox extends StatelessWidget {
       child: SizedBox(
         width: getProportionateScreenWidth(170),
         child: GestureDetector(
-          onTap: (){},
+          onTap: (){
+            Navigator.pushNamed(context, '/itemview');
+          },
           //######################################on tap navigation############################
           // onTap: () => Navigator.pushNamed(
           //   context,
