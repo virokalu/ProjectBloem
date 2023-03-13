@@ -23,7 +23,7 @@ class _ItemViewState extends State<ItemView> {
                 backgroundColor: Colors.white,
               );
             }, 
-            child: Text("press"),
+            child: const Text("press"),
           ),
       ),
     );
@@ -38,8 +38,8 @@ class _ItemViewState extends State<ItemView> {
         child: ListView(
           children: [Column(
             children: [
-              Text("Card Holder name"),
-              SizedBox(height: 20,),
+              const Text("Card Holder name"),
+              const SizedBox(height: 20,),
               TextFormField(
                 decoration: InputDecoration(
                   hintText: "Manoj Lakshan",
@@ -48,9 +48,9 @@ class _ItemViewState extends State<ItemView> {
                   )
                 ),
               ),
-              SizedBox(height: 20,),
-              Text("Card Number"),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
+              const Text("Card Number"),
+              const SizedBox(height: 20,),
               TextFormField(
                 decoration: InputDecoration(
                   hintText: "1234 5678 9012",
@@ -60,14 +60,14 @@ class _ItemViewState extends State<ItemView> {
                 ),
                 keyboardType: TextInputType.number,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
                     child: Column(
                       children: [
-                        Text("Date"),
-                        SizedBox(height: 20,),
+                        const Text("Date"),
+                        const SizedBox(height: 20,),
                         TextFormField(
                           decoration: InputDecoration(
                             hintText: "04/03",
@@ -75,17 +75,17 @@ class _ItemViewState extends State<ItemView> {
                               borderRadius: BorderRadius.circular(20),
                             )
                           ),
-                          keyboardType: TextInputType.numberWithOptions(),
+                          keyboardType: const TextInputType.numberWithOptions(),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(width: 80),
+                  const SizedBox(width: 80),
                   Expanded(
                     child: Column(
                       children: [
-                        Text("CCV"),
-                        SizedBox(height: 20,),
+                        const Text("CCV"),
+                        const SizedBox(height: 20,),
                         TextFormField(
                           decoration: InputDecoration(
                             hintText: "123",
@@ -100,7 +100,7 @@ class _ItemViewState extends State<ItemView> {
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Row(
                 children: [
                   Expanded(
@@ -114,7 +114,7 @@ class _ItemViewState extends State<ItemView> {
                           ),
                     ),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Expanded(
                     child: TextButton(
                           style: greenButtonBorderStyle,
