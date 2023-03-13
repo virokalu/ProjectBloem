@@ -39,7 +39,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void dispose() {
-    print("Component unmounted");
+    //print("Component unmounted");
     socket.dispose();
     super.dispose();
   }
@@ -49,17 +49,18 @@ class _ChatPageState extends State<ChatPage> {
       "transports": ["websocket"],
       "autoconnect": false,
   });
-    print("Cumhere"); 
-    print(socket);
+    //print("Cumhere"); 
+    //print(socket);
     socket.connect();
     socket.onConnect((data) { 
-        print("connected");
+        //print("connected");
         socket.on("message", (msg) {
-          print("<======= RECIVED MESSAGE ============>");
-          print(msg);
-          print("<=======================================>");
-          if (widget.sourceId != msg["sourceId"])
+          //print("<======= RECIVED MESSAGE ============>");
+          //print(msg);
+          //print("<=======================================>");
+          if (widget.sourceId != msg["sourceId"]) {
             setMessage('destination',msg["message"], msg["sourceId"], msg["targetId"]);//render receiver message in chat
+          }
         });
     });
     socket.emit("passId",widget.chatmodel.id);
@@ -68,18 +69,19 @@ class _ChatPageState extends State<ChatPage> {
   void sendMessage(String message,int sourceId,int targetId){
     setMessage("source",message, sourceId, targetId);//render sender's message in chat
 
-    var x = {"message": message,"sourceId": sourceId,"targetId": targetId};
-    print("<======= SENDING MESSAGE ============>");
-    print(x);
-    print("<=======================================>");
+    //var x = {"message": message,"sourceId": sourceId,"targetId": targetId};
+    //print("<======= SENDING MESSAGE ============>");
+    //print(x);
+    //print("<=======================================>");
     socket.emit("message",
-      x
-    );
+       {"message": message,"sourceId": sourceId,"targetId": targetId},
+     );
+    
   }
 
   void setMessage(String type, String message, int sourceId, int targetId){
     MessageModel messagemodel = MessageModel(type: type,message: message, sourceId: sourceId ,targetId: targetId, key: messages.length+1);
-    print("Added message " + message);
+    //print("Added message " + message);
     setState(() {
         messages.add(messagemodel);
     });
@@ -140,7 +142,7 @@ class _ChatPageState extends State<ChatPage> {
                   controller: _scrollcontroller,
                   itemCount: messages.length,
                   itemBuilder: (context, index){
-                    print(index);
+                    //print(index);
                     if(messages[index].type == 'source'){
                       return OwnMessageCard(message: messages[index].message);
                     } else {
