@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:project_bloem/screens/basket_screen/mybasket.dart';
-import 'package:project_bloem/screens/chat/chat.dart';
 import 'package:project_bloem/screens/chat/chatlist.dart';
 import 'package:project_bloem/screens/delivery_screen/delivery.dart';
 import 'package:project_bloem/screens/homo_screen/home_screen.dart';
@@ -36,7 +35,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         //home: const UserProfile());
-        initialRoute: '/',
+        initialRoute: '/profile',
         routes: {
           '/':(context) => const WelcomeScreen(),
           '/mybusket' :(context) => const MyBasketScreen(),

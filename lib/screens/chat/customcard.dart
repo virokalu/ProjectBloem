@@ -30,7 +30,7 @@ class CustomeCard extends StatelessWidget {
         ),
         subtitle: Row(
           children: [
-            const Icon(Icons.done_all),
+            //const Icon(Icons.done_all),
             const SizedBox(width: 3),
             Text(
               chatModel.currentpage,
@@ -40,7 +40,7 @@ class CustomeCard extends StatelessWidget {
             )
           ]
         ),
-        trailing: Text(chatModel.time),
+        //trailing: Text(chatModel.time),
       ),
     );
   }

@@ -61,11 +61,31 @@ class _LoginPageState extends State<LoginPage> {
 
 
       // ignore: use_build_context_synchronously
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        //dialogBackgroundColor: Colors.black,
+        animType: AnimType.topSlide,
+
+        showCloseIcon: true,
+        title: "Success!",
+        desc: "Logged in Successfully",
+
+        btnOkOnPress: (){
+          Navigator.pushNamed(context, '/home');
 
 
+
+          //print("Inside Login");
+          completer.complete();
+        },
+        btnOkText: "OK",
+
+        btnOkColor: HexColor.fromHex('#4CD964'),
+      ).show();
       // Redirect to previous screen or home screen
       // ignore: use_build_context_synchronously
-      Navigator.popUntil(context, ModalRoute.withName(Navigator.defaultRouteName));
+
 
 
     }else if(!jsonResponse['status']){

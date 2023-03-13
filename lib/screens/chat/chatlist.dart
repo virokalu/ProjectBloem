@@ -102,34 +102,36 @@ class _ChatListState extends State<ChatList> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: HexColor.fromHex('#4CD964'),
+          leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.arrow_back,),
+                  //color: HexColor.fromHex('#4CD964'),
+    
+                ),
+          actions: [
+            IconButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  );
                 },
-                icon: const Icon(Icons.arrow_back,),
-                color: HexColor.fromHex('#4CD964'),
-
-              ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
-                );
-              },
-              icon: const Icon(Icons.home_rounded),
-              color: HexColor.fromHex('#33363F'),
-    ),
-        ],
+                icon: const Icon(Icons.home_rounded),
+                color: HexColor.fromHex('#33363F'),
       ),
-      body: ListView.builder(
-                itemCount: chats.length,
-               itemBuilder: (context, index) => CustomeCard(chatModel: chats[index],),
-           ),
+          ],
+        ),
+        body: ListView.builder(
+                  itemCount: chats.length,
+                 itemBuilder: (context, index) => CustomeCard(chatModel: chats[index],),
+             ),
+      ),
     );
   }
 }

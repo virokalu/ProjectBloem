@@ -1,5 +1,8 @@
 class MessageModel{
   late String type;
   late String message;
-  MessageModel({required this.type, required this.message});
+  late int sourceId;
+  late int targetId;
+  late int key;
+  MessageModel({required this.type, required this.message, required this.sourceId, required this.targetId, required this.key});
 }
