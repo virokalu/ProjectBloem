@@ -6,6 +6,7 @@ import 'package:project_bloem/screens/chat/chat.dart';
 import 'package:project_bloem/screens/chat/chatlist.dart';
 import 'package:project_bloem/screens/delivery_screen/delivery.dart';
 import 'package:project_bloem/screens/homo_screen/home_screen.dart';
+import 'package:project_bloem/screens/item_view/itemview.dart';
 import 'package:project_bloem/screens/login_screen/login.dart';
 import 'package:project_bloem/screens/place_a_listing/place_a_listing.dart';
 import 'package:project_bloem/screens/register_form/registerform.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
           '/profile' :(context) => const UserProfile(),
           '/chat' :(context) => const ChatList(),
           '/delivery':(context) => const DeliveryScreen(),
+          '/itemview':(context) => const ItemView(),
         },
     );
   }
