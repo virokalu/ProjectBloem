@@ -40,9 +40,11 @@ class _RegisterPageState extends State<RegisterPage> {
       "email":emailController.text,
       "password":passController.text
     };
-
+    //print(registration);
     var response = await http.post(Uri.parse(registration),
-        headers: {"Content-Type":"application/json"},
+        headers: {"Content-Type":"application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
         body: jsonEncode(regBody)
     );
     var jsonResponse = jsonDecode(response.body);
