@@ -3,13 +3,16 @@ import 'package:project_bloem/screens/user_profile/user_details.dart';
 import '../../components/back_button_icon.dart';
 import 'iconwith_text.dart';
 
-class UserProfile extends StatelessWidget {
-
-
+class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<UserProfile> createState() => _UserProfileState();
+}
+
+class _UserProfileState extends State<UserProfile> {
+  @override
+   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var width = size.width;
 
@@ -110,3 +113,4 @@ class UserProfile extends StatelessWidget {
     );
   }
 }
+
