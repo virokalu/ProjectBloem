@@ -30,7 +30,7 @@ class UserProfile extends StatelessWidget {
                   icon: Icons.favorite_border,
                   name: 'WishList',
                   onPressed: () {
-                    // Do something when the bar is clicked
+                    Navigator.pushNamed(context, '/mybusket');
                   },
                 ),
 
@@ -41,7 +41,7 @@ class UserProfile extends StatelessWidget {
                   icon: Icons.chat,
                   name: 'chat',
                   onPressed: () {
-                    // Do something when the bar is clicked
+                    Navigator.pushNamed(context, '/chat');
                   },
                 ),
                 //IconWithText(icon: Icons.chat, text: "Chat", address: "address"),
@@ -98,7 +98,7 @@ class UserProfile extends StatelessWidget {
                   icon: Icons.logout,
                   name: 'Logout',
                   onPressed: () {
-                    // Do something when the bar is clicked
+                    Navigator.pushNamed(context, '/login');
                   },
                 ),
                 //IconWithText(icon: Icons.logout, text: "Logout", address: "address"),
