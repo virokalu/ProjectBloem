@@ -4,7 +4,7 @@
         android:label="project_bloem"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:userCleartextTraffic="true">
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
