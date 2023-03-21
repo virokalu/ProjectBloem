@@ -62,8 +62,6 @@ class _LoginPageState extends State<LoginPage> {
       preference.setString('username', jsonResponse['username']);
       preference.setString('token', jsonResponse['token']);
 
-
-
       // ignore: use_build_context_synchronously
       AwesomeDialog(
         context: context,
