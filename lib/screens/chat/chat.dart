@@ -44,6 +44,8 @@ class _ChatPageState extends State<ChatPage> {
     super.dispose();
   }
 
+  
+
   void connect(){
     socket = IO.io("http://localhost:3001",<String, dynamic>{
       "transports": ["websocket"],
