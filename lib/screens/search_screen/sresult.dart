@@ -327,7 +327,6 @@ class _searchResultScreenState extends State<searchResultScreen>{
                     )
                   )
                 )
-
               ],
             ),
           ),
