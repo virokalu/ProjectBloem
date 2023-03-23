@@ -1,7 +1,17 @@
+import 'dart:async';
+import 'dart:convert';
+//import 'dart:html';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
+//import 'package:project_bloem/screens/login_screen/login.dart';
 
 import '../../components/button_components.dart';
+import 'package:http/http.dart' as http;
+import 'package:project_bloem/models/config.dart';
+
+import '../../components/color_components.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -19,6 +29,109 @@ class _RegisterPageState extends State<RegisterPage> {
   final conformPassController = TextEditingController();
   final fulNameController = TextEditingController();
   bool passToggle = true;
+
+
+
+  Future<void> registerUser(BuildContext context) async{
+    final completer = Completer<void>();
+    var regBody = {
+      "username":nameController.text,
+      "fullname":fulNameController.text,
+      "email":emailController.text,
+      "password":passController.text
+    };
+    //print(registration);
+    var response = await http.post(Uri.parse(registration),
+        headers: {"Content-Type":"application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
+        body: jsonEncode(regBody)
+    );
+    var jsonResponse = jsonDecode(response.body);
+    //print(jsonResponse['status']);
+    if(jsonResponse['status']){
+
+      // ignore: use_build_context_synchronously
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        //dialogBackgroundColor: Colors.black,
+        animType: AnimType.topSlide,
+
+        showCloseIcon: true,
+        title: "Success!",
+        desc: "Logged in Successfully",
+
+        btnOkOnPress: (){
+          Navigator.pushNamed(context, '/login');
+          //print("Inside Login");
+          completer.complete();
+        },
+        btnOkText: "OK",
+
+        btnOkColor: HexColor.fromHex('#4CD964'),
+      ).show();
+
+    }else if(!jsonResponse['status']){
+      var myEmail="email";
+      var myUser="user";
+      if(jsonResponse['exist'].contains(myEmail)){
+
+        // ignore: use_build_context_synchronously
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.warning,
+          //dialogBackgroundColor: Colors.black,
+          animType: AnimType.topSlide,
+
+          showCloseIcon: true,
+          title: "Email Already Exist",
+          desc: "${emailController.text} Already in use. Please Try Another or Login",
+          btnCancelOnPress: (){
+            emailController.clear();
+            completer.complete();
+
+          },
+          btnOkOnPress: (){
+            Navigator.pushNamed(context, '/login');
+
+            //print("Inside Login");
+            completer.complete();
+          },
+          btnOkText: "Login",
+          btnCancelText: "OK",
+          btnOkColor: HexColor.fromHex('#4CD964'),
+        ).show();
+        return completer.future;
+
+
+        //print(jsonResponse['exist']);
+
+      }else if(jsonResponse['exist'].contains(myUser)){
+        // ignore: use_build_context_synchronously
+        AwesomeDialog(
+            context: context,
+            dialogType: DialogType.warning,
+            animType: AnimType.topSlide,
+            showCloseIcon: true,
+            title: "Username Already Exist",
+            desc: "${nameController.text} is Already in Use Please try Another One",
+            btnCancelOnPress: (){
+              nameController.clear();
+
+            },
+            btnCancelText: "OK",
+          btnCancelColor: HexColor.fromHex('#4CD964'),
+
+
+        ).show();
+        return completer.future;
+        //print(jsonResponse['exist']);
+
+      }
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +156,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: nameController,
                     decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.person),
-                        labelText: "preferred username",
+                        labelText: "Preferred Username",
                         filled: true,
                         fillColor: Colors.white38,
                         border: OutlineInputBorder(
@@ -53,7 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Username";
+                        return "";
                       }
                       
                       return null;
@@ -78,7 +191,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Your Full Name";
+                        return "";
                       }
                       
                       return null;
@@ -104,7 +217,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Email";
+                        return "";
                       }
                       bool emailValid = RegExp(
                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"
@@ -125,7 +238,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: passController,
                     decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.lock),
-                        labelText: "password",
+                        labelText: "Password",
                         filled: true,
                         fillColor: Colors.white38,
                         border: OutlineInputBorder(
@@ -135,7 +248,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Email";
+                        return "";
                       }
                       
                       return null;
@@ -160,7 +273,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     validator: (value){
                       if(value!.isEmpty){
-                        return "Enter Email";
+                        return "Re-Enter Your Password";
                       }
                       else if(passController.text != conformPassController.text){
                         passController.clear();
@@ -179,17 +292,41 @@ class _RegisterPageState extends State<RegisterPage> {
                   onPressed: () {
                     if(_formField.currentState!.validate()){
                       //print("success");
-                      emailController.clear();
-                      nameController.clear();
-                      passController.clear();
-                      conformPassController.clear();
-                      fulNameController.clear();
-                      Navigator.pushNamed(context, '/login');
+                      registerUser(context);
+
+
                     }
+
+
                   },
                   child: const Text(
                     "Create Account",
                     style: TextStyle(color: Colors.white, fontSize: 16.0,
+                      fontFamily: 'Poppins',),
+                  ),
+                ),
+
+                SizedBox(height: height / 30),
+
+                const Text(
+                  "Already have an account? ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.black54,
+                  ),
+                ), //text
+
+                TextButton(
+                  style: greenButtonBorderStyle,
+                  //############################navigate to registration form##########################################
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/login');
+                  },
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      color: HexColor.fromHex('#4CD964'), fontSize: 16.0,
                       fontFamily: 'Poppins',),
                   ),
                 ),

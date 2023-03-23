@@ -43,6 +43,9 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        // Enable HTTP requests
+        //manifestPlaceholders = [            applicationName: "ProjectBloem"        ]
     }
 
     buildTypes {
