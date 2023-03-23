@@ -8,6 +8,8 @@ class ProfileCard extends StatelessWidget {
 
   const ProfileCard({super.key, required this.username, required this.fullName});
 
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,7 +52,7 @@ class ProfileCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '@${username.substring(0, 22)}',
+                    username,
                     style:  const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -59,8 +61,10 @@ class ProfileCard extends StatelessWidget {
                     maxLines: 1,
                   ),
                   const SizedBox(height: 5),
+
+
                   Text(
-                    fullName.length > 27 ? '${fullName.substring(0, 27)}...' : fullName,
+                    fullName,
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[700],

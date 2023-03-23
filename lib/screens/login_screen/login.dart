@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:project_bloem/screens/register_form/registerform.dart';
 import '../../components/back_button_icon.dart';
@@ -21,20 +22,24 @@ import 'package:http/http.dart' as http;
 
 class _LoginPageState extends State<LoginPage> {
 
+    late SharedPreferences preference;
+
+
+    @override
+    void initState(){
+      super.initState();
+      init();
+    }
+    Future init() async{
+      preference = await SharedPreferences.getInstance();
+    }
+
   final _formField = GlobalKey<FormState>();
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
-  late SharedPreferences prefs;
 
-  @override
-  void initState(){
-    super.initState();
-    initSharedPref();
 
-  }
-  void initSharedPref() async{
-    prefs = await SharedPreferences.getInstance();
-  }
+
 
 
   Future<void> loginUser(BuildContext context) async {
@@ -49,16 +54,13 @@ class _LoginPageState extends State<LoginPage> {
     );
     var jsonResponse = jsonDecode(response.body);
 
-    //print(jsonResponse('token'));
-
 
     if(jsonResponse['status']){
-      final myToken = jsonResponse['token'];
 
-      prefs = await SharedPreferences.getInstance();
-      prefs.setBool('isLoggedIn', true);
-      prefs.setString('myToken', myToken);
 
+      preference.setString('fullname', jsonResponse['fullname']);
+      preference.setString('username', jsonResponse['username']);
+      preference.setString('token', jsonResponse['token']);
 
       // ignore: use_build_context_synchronously
       AwesomeDialog(
@@ -71,11 +73,9 @@ class _LoginPageState extends State<LoginPage> {
         title: "Success!",
         desc: "Logged in Successfully",
 
-        btnOkOnPress: (){
-          Navigator.pushNamed(context, '/home');
+        btnOkOnPress: () {
 
-
-
+          Navigator.pushNamedAndRemoveUntil(context, '/profile',(route)=>false);
           //print("Inside Login");
           completer.complete();
         },
@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
       ).show();
       // Redirect to previous screen or home screen
       // ignore: use_build_context_synchronously
-
+      //Navigator.pop(context);
 
 
     }else if(!jsonResponse['status']){
@@ -213,7 +213,9 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 //#################################################need to navigate to forget password#########
-                onPressed: () {
+                onPressed: (){
+
+
 
                 },
                 child: const Text(
@@ -239,6 +241,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: greenButtonBorderStyle,
                 //############################navigate to registration form##########################################
                 onPressed: () {
+
                   Navigator.pushNamed(context, '/register');
                 },
                 child: Text(
