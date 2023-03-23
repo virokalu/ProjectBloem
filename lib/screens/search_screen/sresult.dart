@@ -320,13 +320,13 @@ class _searchResultScreenState extends State<searchResultScreen>{
                                     )
                                 ),
                               ],
-                            )
+                            ),
                         ),
                         const Divider(height: 0.1,),
                       ],
-                    )
-                  )
-                )
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
