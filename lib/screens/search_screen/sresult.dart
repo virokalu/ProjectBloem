@@ -27,7 +27,7 @@ class _searchResultScreenState extends State<searchResultScreen>{
 
             child: Column(
               children: [
-                const ButtonText(text: "Search Results", icon: Icons.search_sharp),
+                const BackButtonNHome(),
                 SizedBox(
                   height: height * 0.75,
                   child: SingleChildScrollView(
