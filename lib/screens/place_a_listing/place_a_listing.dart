@@ -458,7 +458,6 @@ class _PlaceListingState extends State<PlaceListing> {
                       ),
                     ),
                   ),
-
                 ],
               ),
 
