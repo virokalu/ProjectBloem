@@ -39,9 +39,6 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
 
-
-
-
   Future<void> loginUser(BuildContext context) async {
     final completer = Completer<void>();
     var reqBody = {
@@ -61,6 +58,9 @@ class _LoginPageState extends State<LoginPage> {
       preference.setString('fullname', jsonResponse['fullname']);
       preference.setString('username', jsonResponse['username']);
       preference.setString('token', jsonResponse['token']);
+      String? token=preference.getString('token');
+
+      print(token);
 
       // ignore: use_build_context_synchronously
       AwesomeDialog(

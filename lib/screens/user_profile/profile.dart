@@ -14,9 +14,6 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
 
   late SharedPreferences preference;
-  String fullname="";
-  String username="";
-
 
   @override
   void initState(){
@@ -28,8 +25,11 @@ class _UserProfileState extends State<UserProfile> {
     //String? fullname=preference.getString('fullname');
     //String? username=preference.getString('username');
     String? token=preference.getString('token');
+    //print(token);
 
     if(token==null){
+      //print(token);
+
       // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, '/login');
     }
