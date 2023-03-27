@@ -30,11 +30,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  image_picker: ^0.8.4+4
+  flutter_native_image:
   http: ^0.13.5
   awesome_dialog: ^3.0.2
   shared_preferences:
   jwt_decoder:
   api_cache_manager:
+  path:
+  path_provider:
+  mime:
+  flutter_image_compress:
+
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

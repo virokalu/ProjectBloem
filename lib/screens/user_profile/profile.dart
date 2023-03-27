@@ -25,16 +25,16 @@ class _UserProfileState extends State<UserProfile> {
   }
   Future init() async{
     preference = await SharedPreferences.getInstance();
-    String? fullname=preference.getString('fullname');
-    String? username=preference.getString('username');
+    //String? fullname=preference.getString('fullname');
+    //String? username=preference.getString('username');
     String? token=preference.getString('token');
 
     if(token==null){
       // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, '/login');
     }
-    setState(() =>this.username=username!);
-    setState(() =>this.fullname=fullname!);
+    //setState(() =>this.username=username!);
+    //setState(() =>this.fullname=fullname!);
 
   }
 
@@ -52,7 +52,7 @@ class _UserProfileState extends State<UserProfile> {
             children:  [
               const ButtonText(text: "My Profile", icon: Icons.person_outline),
               const SizedBox(height: 30,),
-              ProfileCard(username: username,fullName:fullname),
+              const ProfileCard(),
               const SizedBox(height: 10,),
               const Divider(color: Color.fromARGB(255, 243, 236, 236)),
 
@@ -129,6 +129,7 @@ class _UserProfileState extends State<UserProfile> {
                 name: 'Logout',
                 onPressed: () {
                   preference.remove('token');
+                  preference.remove('imgPath');
                   Navigator.pushNamed(context, '/login');
                 },
               ),
