@@ -1,11 +1,16 @@
 
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import "package:flutter/material.dart";
 import "package:image_picker/image_picker.dart";
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../components/color_components.dart';
+import 'package:http/http.dart' as http;
 
 
 class ProfileCard extends StatefulWidget {
@@ -88,59 +93,61 @@ class _ProfileCardState extends State<ProfileCard> {
                     setState(() => profileimg=newImage.path);
                     preference.setString('imgPath', newImage.path);
 
-                    // var imageModel = {
-                    //   "username" : username,
-                    //   "img": jsonEncode(imageFile)
-                    // };
-                    // var response = await http.post(Uri.parse(profileImg),
-                    //     headers: {"Content-Type":"application/json"},
-                    //     body: jsonEncode(imageModel)
-                    // );
-                    // var jsonResponse = jsonDecode(response.body);
-                    // if(jsonResponse['status']){
-                    //   // ignore: use_build_context_synchronously
-                    //   AwesomeDialog(
-                    //     context: context,
-                    //     dialogType: DialogType.success,
-                    //     //dialogBackgroundColor: Colors.black,
-                    //     animType: AnimType.topSlide,
-                    //
-                    //     showCloseIcon: true,
-                    //     title: "Success!",
-                    //     desc: "Profile Image Changed",
-                    //
-                    //     btnOkOnPress: () {
-                    //
-                    //     },
-                    //     btnOkText: "OK",
-                    //
-                    //     btnOkColor: HexColor.fromHex('#4CD964'),
-                    //   ).show();
-                    //
-                    // }else{
-                    //
-                    //   // ignore: use_build_context_synchronously
-                    //   AwesomeDialog(
-                    //     context: context,
-                    //     dialogType: DialogType.warning,
-                    //     //dialogBackgroundColor: Colors.black,
-                    //     animType: AnimType.topSlide,
-                    //
-                    //     showCloseIcon: true,
-                    //     title: "Fails!",
-                    //     desc: "Profile Image Doesn't Changed Successfully",
-                    //
-                    //     btnOkOnPress: () {
-                    //
-                    //     },
-                    //     btnOkText: "OK",
-                    //
-                    //     btnOkColor: HexColor.fromHex('#4CD964'),
-                    //   ).show();
-                    //
-                    //
-                    //
-                    // }
+                    var imageModel = {
+                      "username" : username,
+                      "img": http.MultipartFile.fromPath('img', imageFile.path),
+
+                    };
+                    print(imageModel['img']);
+                    var response = await http.post(Uri.parse(imageModel as String),
+                        headers: {"Content-Type":"application/json"},
+                        body: jsonEncode(imageModel)
+                    );
+                    var jsonResponse = jsonDecode(response.body);
+                    if(jsonResponse['status']){
+                      // ignore: use_build_context_synchronously
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.success,
+                        //dialogBackgroundColor: Colors.black,
+                        animType: AnimType.topSlide,
+
+                        showCloseIcon: true,
+                        title: "Success!",
+                        desc: "Profile Image Changed",
+
+                        btnOkOnPress: () {
+
+                        },
+                        btnOkText: "OK",
+
+                        btnOkColor: HexColor.fromHex('#4CD964'),
+                      ).show();
+
+                    }else{
+
+                      // ignore: use_build_context_synchronously
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.warning,
+                        //dialogBackgroundColor: Colors.black,
+                        animType: AnimType.topSlide,
+
+                        showCloseIcon: true,
+                        title: "Fails!",
+                        desc: "Profile Image Doesn't Changed Successfully",
+
+                        btnOkOnPress: () {
+
+                        },
+                        btnOkText: "OK",
+
+                        btnOkColor: HexColor.fromHex('#4CD964'),
+                      ).show();
+
+
+
+                    }
 
                     // Add your onTap logic here
                   },

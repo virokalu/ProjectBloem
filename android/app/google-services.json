@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "698241380744",
+    "project_id": "projectbloem-1e1c5",
+    "storage_bucket": "projectbloem-1e1c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698241380744:android:4039ece264c877f3ab8a3d",
+        "android_client_info": {
+          "package_name": "com.example.project_bloem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "698241380744-66chu4q7k6u1k4n6j2asb9mm02j3l8da.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfuuDZIwA9RSjIYw25ESxrVXzcN6kSppw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "698241380744-66chu4q7k6u1k4n6j2asb9mm02j3l8da.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

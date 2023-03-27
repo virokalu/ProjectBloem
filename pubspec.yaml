@@ -41,6 +41,8 @@ dependencies:
   path_provider:
   mime:
   flutter_image_compress:
+  cloud_firestore:
+  firebase_core:
 
 
 
