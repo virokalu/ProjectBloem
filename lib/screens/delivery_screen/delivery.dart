@@ -49,7 +49,7 @@ class _DeliveryScreenState extends State<DeliveryScreen>{
                             );
                           },
                           body: Container(
-                              padding: const EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(2),
                               child: const Text("Pronto Lanka (Pvt) Ltd.\n https://www.prontolanka.lk/\n(+94) 112 102 700\ninfopronto@transnational-grp.com")
                           ),
                           isExpanded: expanded[0]
@@ -63,7 +63,7 @@ class _DeliveryScreenState extends State<DeliveryScreen>{
                             );
                           },
                           body: Container(
-                              padding: const EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(2),
                               child: const Text("Domestic Express (Pvt) Ltd.\nhttps://www.domex.lk/\n (+94) 011 7 759 759\n info@domex.lk")
                           ),
                           isExpanded: expanded[1]
@@ -76,6 +76,5 @@ class _DeliveryScreenState extends State<DeliveryScreen>{
           ),
         )
     );
-
   }
 }

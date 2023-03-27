@@ -5,15 +5,14 @@ import '../../components/button_components.dart';
 import '../../components/color_components.dart';
 import '../../components/size.dart';
 
-var _currencies = [
-  "Food",
-  "Transport",
-  "Personal",
-  "Shopping",
-  "Medical",
-  "Rent",
-  "Movie",
-  "Salary"
+var _values = [
+  "Cut Flowers",
+  "Foliage Plants",
+  "Pot Plants",
+  "Landscaping Plants",
+  "Bedded Plants",
+  "Propagatory Plants / Nursery Plants",
+  "Other",
 ];
 
 class PlaceListing extends StatefulWidget {
@@ -40,7 +39,7 @@ class _PlaceListingState extends State<PlaceListing> {
     }
     bool isCheckedCashDev = false;
     bool isCheckedChat = false;
-    String currentSelectedValue=_currencies[0];
+    String currentSelectedValue=_values[0];
     var size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
@@ -54,57 +53,6 @@ class _PlaceListingState extends State<PlaceListing> {
               const BackButtonNHome(),
 
               SizedBox(height: height/100),
-
-              Text(
-                "Add Title",
-                style: TextStyle(
-                  fontSize: getProportionateScreenWidth(18),
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: height/100),
-              SizedBox(
-                height: height/12,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "Title",
-                      filled: true,
-                      fillColor: HexColor.fromHex('#F3F1F1'),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none
-                      )
-                  ),
-
-                ),
-              ),
-
-              Text(
-                "Add Description",
-                style: TextStyle(
-                  fontSize: getProportionateScreenWidth(18),
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: height/100),
-              SizedBox(
-                height: height/12,
-                child: TextFormField(
-
-                  decoration: InputDecoration(
-                      labelText: "Description",
-                      filled: true,
-                      fillColor: HexColor.fromHex('#F3F1F1'),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none
-                      )
-                  ),
-
-                ),
-              ),
 
               Text(
                 "Select the Category",
@@ -154,7 +102,7 @@ class _PlaceListingState extends State<PlaceListing> {
                       decoration: InputDecoration(
                           filled: true,
                           fillColor: HexColor.fromHex('#F3F1F1'),
-                          labelText: "category",
+                          labelText: "Category",
                           //labelStyle: textStyle,
                           //errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
                           hintText: 'Please select expense',
@@ -175,7 +123,7 @@ class _PlaceListingState extends State<PlaceListing> {
                               currentSelectedValue = value!;
                             });
                           },
-                          items: _currencies.map((String value) {
+                          items: _values.map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),
@@ -185,6 +133,83 @@ class _PlaceListingState extends State<PlaceListing> {
                       ),
                     );
                   },
+                ),
+              ),
+
+              Text(
+                "Add Common Name",
+                style: TextStyle(
+                  fontSize: getProportionateScreenWidth(18),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: height/100),
+              SizedBox(
+                height: height/12,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      labelText: "Common Name",
+                      filled: true,
+                      fillColor: HexColor.fromHex('#F3F1F1'),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide.none
+                      )
+                  ),
+
+                ),
+              ),
+
+              Text(
+                "Add Scientific Name",
+                style: TextStyle(
+                  fontSize: getProportionateScreenWidth(18),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: height/100),
+              SizedBox(
+                height: height/12,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      labelText: "Scientific Name",
+                      filled: true,
+                      fillColor: HexColor.fromHex('#F3F1F1'),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide.none
+                      )
+                  ),
+
+                ),
+              ),
+
+              Text(
+                "Add Description",
+                style: TextStyle(
+                  fontSize: getProportionateScreenWidth(18),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: height/100),
+              SizedBox(
+                height: height/12,
+                child: TextFormField(
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  expands: true,
+                  decoration: InputDecoration(
+                      labelText: "Description",
+                      filled: true,
+                      fillColor: HexColor.fromHex('#F3F1F1'),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide.none
+                      ),
+                  ),
                 ),
               ),
 
@@ -259,11 +284,8 @@ class _PlaceListingState extends State<PlaceListing> {
                                 borderSide: BorderSide.none
                             )
                         ),
-
                       ),
-                    )
-
-
+                    ),
                   ],
                 ),
               ),
@@ -366,14 +388,11 @@ class _PlaceListingState extends State<PlaceListing> {
                     child: const Icon(
                       Icons.contact_support,
                       color: Colors.black,
-
                       size: 30.0,
                     ),
                   ),
-
                 ],
               ),
-
 
               Text(
                 "Item Specifications",
@@ -455,7 +474,6 @@ class _PlaceListingState extends State<PlaceListing> {
                       ),
                     ),
                   ),
-
                 ],
               ),
 
