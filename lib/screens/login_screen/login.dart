@@ -51,15 +51,26 @@ class _LoginPageState extends State<LoginPage> {
     );
     var jsonResponse = jsonDecode(response.body);
 
-
     if(jsonResponse['status']){
 
+      var username = jsonResponse['username'];
+      var imgBody = {
+        "username" : username,
+      };
+      var responseImg = await http.post(Uri.parse(profileGetImg),
+          headers: {"Content-Type":"application/json"},
+          body: jsonEncode(imgBody)
+      );
+      var jsonResponseImg = jsonDecode(responseImg.body);
+      if(jsonResponseImg['status']){
+        preference.setString('imgPath', jsonResponseImg['img']);
+
+      }
 
       preference.setString('fullname', jsonResponse['fullname']);
       preference.setString('username', jsonResponse['username']);
       preference.setString('token', jsonResponse['token']);
       //String? token=preference.getString('token');
-
       //print(token);
 
       // ignore: use_build_context_synchronously

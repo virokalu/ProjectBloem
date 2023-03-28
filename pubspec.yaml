@@ -43,6 +43,9 @@ dependencies:
   flutter_image_compress:
   cloud_firestore:
   firebase_core:
+  file_picker:
+  image_cropper:
+  firebase_storage:
 
 
 

@@ -4,13 +4,17 @@ import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import "package:flutter/material.dart";
+import 'package:image_cropper/image_cropper.dart';
 import "package:image_picker/image_picker.dart";
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/color_components.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_storage/firebase_storage.dart' as storage;
+
+import '../../models/config.dart';
+
 
 
 class ProfileCard extends StatefulWidget {
@@ -21,6 +25,7 @@ class ProfileCard extends StatefulWidget {
 }
 
 class _ProfileCardState extends State<ProfileCard> {
+
 
   late SharedPreferences preference;
   String fullname="";
@@ -82,28 +87,41 @@ class _ProfileCardState extends State<ProfileCard> {
                   onTap: () async {
                     //final File file;
 
-                    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+                    final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
                     if (image== null) return;
 
-                    final directory = await getApplicationSupportDirectory();
-                    final name = basename(image.path);
-                    final imageFile = File('${directory.path}/$name');
-                    final newImage = await File(image.path).copy(imageFile.path);
+                    //final directory = await getApplicationSupportDirectory();
+                    //final name = basename(image.path);
+                    //final imageFile = File('${directory.path}/$name');
+                    //final newImage = await File(image.path).copy(imageFile.path);
 
-                    setState(() => profileimg=newImage.path);
-                    preference.setString('imgPath', newImage.path);
+                    //Crop the image using ImageCropper
+                    var cropFile = await ImageCropper().cropImage(
+                        sourcePath: image.path,
+                        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1));
+                    if (cropFile== null) return;
 
-                    var imageModel = {
+                    final ref = storage.FirebaseStorage.instance.ref()
+                        .child('profileImg').child(username + basename(cropFile.path));
+                    
+                    final result = await ref.putFile(File(cropFile.path));
+                    final fileUrl = await result.ref.getDownloadURL();
+
+
+                    //setState(() => pickedfile=image);
+                    //preference.setString('imgPath', newImage.path);
+
+                    var imgBody = {
                       "username" : username,
-                      "img": http.MultipartFile.fromPath('img', imageFile.path),
-
+                      "img": fileUrl,
                     };
-                    print(imageModel['img']);
-                    var response = await http.post(Uri.parse(imageModel as String),
+                    var response = await http.post(Uri.parse(profileImg),
                         headers: {"Content-Type":"application/json"},
-                        body: jsonEncode(imageModel)
+                        body: jsonEncode(imgBody)
                     );
                     var jsonResponse = jsonDecode(response.body);
+
+
                     if(jsonResponse['status']){
                       // ignore: use_build_context_synchronously
                       AwesomeDialog(
@@ -117,6 +135,9 @@ class _ProfileCardState extends State<ProfileCard> {
                         desc: "Profile Image Changed",
 
                         btnOkOnPress: () {
+
+                          setState(() => profileimg=fileUrl);
+                          preference.setString('imgPath', fileUrl);
 
                         },
                         btnOkText: "OK",
