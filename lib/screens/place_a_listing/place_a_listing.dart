@@ -292,6 +292,7 @@ class _PlaceListingState extends State<PlaceListing> {
 
               Row(
                 children: [
+
                   Checkbox(
                     checkColor: Colors.white,
                     fillColor: MaterialStateProperty.resolveWith(getColor),
