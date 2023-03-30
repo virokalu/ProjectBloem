@@ -17,6 +17,7 @@ import '../../models/config.dart';
 
 
 
+
 class ProfileCard extends StatefulWidget {
   const ProfileCard({Key? key}) : super(key: key);
 
@@ -90,12 +91,16 @@ class _ProfileCardState extends State<ProfileCard> {
                     final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
                     if (image== null) return;
 
+
+
                     //final directory = await getApplicationSupportDirectory();
                     //final name = basename(image.path);
                     //final imageFile = File('${directory.path}/$name');
                     //final newImage = await File(image.path).copy(imageFile.path);
 
                     //Crop the image using ImageCropper
+
+
                     var cropFile = await ImageCropper().cropImage(
                         sourcePath: image.path,
                         aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1));
@@ -103,7 +108,6 @@ class _ProfileCardState extends State<ProfileCard> {
 
                     final ref = storage.FirebaseStorage.instance.ref()
                         .child('profileImg').child(username + basename(cropFile.path));
-                    
                     final result = await ref.putFile(File(cropFile.path));
                     final fileUrl = await result.ref.getDownloadURL();
 

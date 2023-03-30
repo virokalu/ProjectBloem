@@ -72,6 +72,7 @@ class MyApp extends StatelessWidget {
           '/delivery':(context) => const DeliveryScreen(),
           '/itemview':(context) => const ItemView(),
           '/help':(context) => const HelpScreen(),
+          '/addListing':(context) => const PlaceListing(),
         },
     );
   }

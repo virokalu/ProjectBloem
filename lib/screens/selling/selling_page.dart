@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
 import 'package:project_bloem/components/product_cards.dart';
+import 'package:project_bloem/screens/user_profile/iconwith_text.dart';
 
 import '../../components/size.dart';
 
@@ -84,48 +85,72 @@ class SellingPage extends StatelessWidget {
                     
                     children: [
                       const Divider(color: Color.fromARGB(255, 243, 236, 236)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          //Icon(Icons.add),
-                          IconButton(onPressed: (){}, icon: const Icon(Icons.add)),
-                          const Text(
-                            "Create Listing",
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      //   children: [
+                      //     //Icon(Icons.add),
+                      //     IconButton(onPressed: (){}, icon: const Icon(Icons.add)),
+                      //     const Text(
+                      //       "Create Listing",
+                      //       style: TextStyle(
+                      //         fontFamily: 'Poppins',
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      ClickableBar(
+                        icon: Icons.add,
+                        name: 'Create Listing',
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/addListing');
+                        },
+                      ),
+                      //IconWithText(icon: Icons.chat, text: "Chat", address: "address"),
+
+                      const Divider(color: Color.fromARGB(255, 243, 236, 236)),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      //   children: [
+                      //     IconButton(onPressed: (){}, icon: const Icon(Icons.summarize_outlined)),
+                      //     const Text(
+                      //       "Summary",
+                      //       style: TextStyle(
+                      //         fontFamily: 'Poppins',
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      ClickableBar(
+                        icon: Icons.summarize_outlined,
+                        name: 'Summary',
+                        onPressed: () {
+                          //Navigator.pushNamed(context, '/chat');
+                        },
                       ),
                       const Divider(color: Color.fromARGB(255, 243, 236, 236)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          IconButton(onPressed: (){}, icon: const Icon(Icons.summarize_outlined)),
-                          const Text(
-                            "Summary",
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      //   children: [
+                      //     IconButton(onPressed: (){}, icon: const Icon(Icons.delivery_dining_sharp)),
+                      //     const Text(
+                      //       "Delivery",
+                      //       style: TextStyle(
+                      //         fontFamily: 'Poppins',
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      ClickableBar(
+                        icon: Icons.delivery_dining_sharp,
+                        name: 'Delivery',
+                        onPressed: () {
+                          //Navigator.pushNamed(context, '/chat');
+                        },
                       ),
-                      const Divider(color: Color.fromARGB(255, 243, 236, 236)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          IconButton(onPressed: (){}, icon: const Icon(Icons.delivery_dining_sharp)),
-                          const Text(
-                            "Delivery",
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
+
                     ],
                   ),
             ],

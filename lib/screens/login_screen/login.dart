@@ -161,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: const Icon(Icons.person),
                       labelText: "Username",
                       filled: true,
-                      fillColor: Colors.white38,
+                      fillColor: HexColor.fromHex('#F3F1F1'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                       )
@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   validator: (value){
                       if(value!.isEmpty){
-                        return "";
+                        return "required";
                       }
                       
                       return null;
@@ -186,15 +186,18 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: const Icon(Icons.lock),
                       labelText: "Password",
                       filled: true,
-                      fillColor: Colors.white38,
+                      fillColor: HexColor.fromHex('#F3F1F1'),
+
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
+
+                          //borderSide: BorderSide.none
                       )
                   ),
 
                   validator: (value){
                       if(value!.isEmpty){
-                        return "";
+                        return "required";
                       }
                       
                       return null;

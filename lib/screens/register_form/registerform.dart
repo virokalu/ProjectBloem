@@ -158,7 +158,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         prefixIcon: const Icon(Icons.person),
                         labelText: "Preferred Username",
                         filled: true,
-                        fillColor: Colors.white38,
+                        fillColor: HexColor.fromHex('#F3F1F1'),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )
@@ -183,7 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         prefixIcon: const Icon(Icons.person_pin_sharp),
                         labelText: "Full Name",
                         filled: true,
-                        fillColor: Colors.white38,
+                        fillColor: HexColor.fromHex('#F3F1F1'),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )
@@ -209,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         prefixIcon: const Icon(Icons.mail_outline_rounded),
                         labelText: "Email",
                         filled: true,
-                        fillColor: Colors.white38,
+                        fillColor: HexColor.fromHex('#F3F1F1'),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )
@@ -240,7 +240,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         prefixIcon: const Icon(Icons.lock),
                         labelText: "Password",
                         filled: true,
-                        fillColor: Colors.white38,
+                        fillColor: HexColor.fromHex('#F3F1F1'),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )
@@ -253,7 +253,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       
                       return null;
                     },
-          
+
+
                   ),
                 ),
           
@@ -265,7 +266,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         prefixIcon: const Icon(Icons.lock),
                         labelText: "Confirm Password",
                         filled: true,
-                        fillColor: Colors.white38,
+                        fillColor: HexColor.fromHex('#F3F1F1'),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )
