@@ -47,6 +47,7 @@ dependencies:
   file_picker:
   image_cropper:
   firebase_storage:
+  image_cropper_for_web:
 
 
 

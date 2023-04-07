@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
 
@@ -6,6 +8,7 @@ import '../../components/color_components.dart';
 import '../../components/size.dart';
 
 var _values = [
+  "Select a Category",
   "Cut Flowers",
   "Foliage Plants",
   "Pot Plants",
@@ -15,6 +18,7 @@ var _values = [
   "Other",
 ];
 
+
 class PlaceListing extends StatefulWidget {
   const PlaceListing({Key? key}) : super(key: key);
 
@@ -23,6 +27,17 @@ class PlaceListing extends StatefulWidget {
 }
 
 class _PlaceListingState extends State<PlaceListing> {
+
+  final _formField = GlobalKey<FormState>();
+  String? category;
+  final nameController = TextEditingController();
+  String? sciName;
+  final desController = TextEditingController();
+  final priceController = TextEditingController();
+  bool cashOnDelivery=false;
+  bool chatActivate=false;
+  String? itemSpecific;
+
   @override
   Widget build(BuildContext context) {
 
@@ -47,7 +62,9 @@ class _PlaceListingState extends State<PlaceListing> {
       child: Scaffold(
         body: Container(
           margin: EdgeInsets.all(width/30),
-          child: ListView(
+          child: Form(
+            key: _formField,
+            child:ListView(
             children: [
 
               const BackButtonNHome(),
@@ -108,13 +125,15 @@ class _PlaceListingState extends State<PlaceListing> {
                           hintText: 'Please select expense',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
-                              borderSide: BorderSide.none
+                              //borderSide: BorderSide.none
 
                           )
                       ),
                       isEmpty: currentSelectedValue == '',
                       child: DropdownButtonHideUnderline(
+
                         child: DropdownButton<String>(
+
                           value: currentSelectedValue,
                           isDense: true,
                           onChanged: (String? value) {
@@ -146,23 +165,31 @@ class _PlaceListingState extends State<PlaceListing> {
               ),
               SizedBox(height: height/100),
               SizedBox(
-                height: height/12,
+                height: height/10,
                 child: TextFormField(
+                  controller: nameController,
                   decoration: InputDecoration(
                       labelText: "Common Name",
                       filled: true,
                       fillColor: HexColor.fromHex('#F3F1F1'),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none
+                          //borderSide: BorderSide.none
                       )
                   ),
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "required";
+                    }
+
+                    return null;
+                  },
 
                 ),
               ),
 
               Text(
-                "Add Scientific Name",
+                "Add Scientific Name (optional)",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(18),
                   color: Colors.black,
@@ -171,15 +198,16 @@ class _PlaceListingState extends State<PlaceListing> {
               ),
               SizedBox(height: height/100),
               SizedBox(
-                height: height/12,
+                height: height/10,
                 child: TextFormField(
+                  //controller: ,
                   decoration: InputDecoration(
                       labelText: "Scientific Name",
                       filled: true,
                       fillColor: HexColor.fromHex('#F3F1F1'),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none
+                          //borderSide: BorderSide.none
                       )
                   ),
 
@@ -196,8 +224,9 @@ class _PlaceListingState extends State<PlaceListing> {
               ),
               SizedBox(height: height/100),
               SizedBox(
-                height: height/12,
+                height: height/10,
                 child: TextFormField(
+                  controller: desController,
                   maxLines: null,
                   keyboardType: TextInputType.multiline,
                   expands: true,
@@ -207,14 +236,21 @@ class _PlaceListingState extends State<PlaceListing> {
                       fillColor: HexColor.fromHex('#F3F1F1'),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none
+                          //borderSide: BorderSide.none
                       ),
                   ),
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "required";
+                    }
+
+                    return null;
+                  },
                 ),
               ),
 
               SizedBox(
-                height: height/12,
+                height: height/10,
 
                 child: Row(
 
@@ -244,6 +280,7 @@ class _PlaceListingState extends State<PlaceListing> {
                     SizedBox(width: width/30),
                     TextButton(
                       style: TextButton.styleFrom(
+
                         foregroundColor: Colors.black,
                         backgroundColor: HexColor.fromHex('#F3F1F1'),
                         minimumSize:  const Size(60, 60),
@@ -252,6 +289,7 @@ class _PlaceListingState extends State<PlaceListing> {
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         ),
                       ),
+
                       //################################################Add Images#######################################
                       onPressed: () {},
                       child: const Icon(
@@ -273,6 +311,7 @@ class _PlaceListingState extends State<PlaceListing> {
                     SizedBox(
                       width: width/4,
                       child: TextFormField(
+                        controller: priceController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                             labelText: "Price",
@@ -281,9 +320,17 @@ class _PlaceListingState extends State<PlaceListing> {
                             fillColor: HexColor.fromHex('#F3F1F1'),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide.none
+                                //borderSide: BorderSide.none
                             )
                         ),
+                        validator: (value){
+                          if(value!.isEmpty){
+                            return "required";
+                          }
+
+                          return null;
+                        },
+
                       ),
                     ),
                   ],
@@ -416,7 +463,7 @@ class _PlaceListingState extends State<PlaceListing> {
                           fillColor: HexColor.fromHex('#F3F1F1'),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
-                              borderSide: BorderSide.none
+                              //borderSide: BorderSide.none
                           )
                       ),
 
@@ -452,7 +499,14 @@ class _PlaceListingState extends State<PlaceListing> {
                     child: TextButton(
                       style: greenButtonStyle,
                       //################################################save#######################################
-                      onPressed: () {},
+                      onPressed: () {
+                        if(_formField.currentState!.validate()){
+                          print("success");
+                          //registerUser(context);
+
+
+                        }
+                      },
                       child: const Text(
                         "Save",
                         style: TextStyle(color: Colors.white, fontSize: 16.0,
@@ -481,6 +535,7 @@ class _PlaceListingState extends State<PlaceListing> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

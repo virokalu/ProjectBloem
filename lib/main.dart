@@ -75,6 +75,7 @@ class MyApp extends StatelessWidget {
           '/itemview':(context) => const ItemView(),
           '/help':(context) => const HelpScreen(),
           '/summery':(context) => const SummeryPage(),
+          '/addListing':(context) => const PlaceListing(),
         },
     );
   }
