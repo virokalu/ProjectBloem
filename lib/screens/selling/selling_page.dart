@@ -102,7 +102,9 @@ class SellingPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          IconButton(onPressed: (){}, icon: const Icon(Icons.summarize_outlined)),
+                          IconButton(onPressed: (){
+                            Navigator.pushNamed(context, '/summery');
+                          }, icon: const Icon(Icons.summarize_outlined)),
                           const Text(
                             "Summary",
                             style: TextStyle(
