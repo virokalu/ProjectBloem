@@ -1,14 +1,23 @@
 import 'dart:core';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
+import 'package:project_bloem/screens/item_view/item_view_component.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/button_components.dart';
 import '../../components/color_components.dart';
 import '../../components/size.dart';
 
+import 'package:firebase_storage/firebase_storage.dart' as storage;
+
+import '../item_view/image_dialog.dart';
+
+
 var _values = [
-  "Select a Category",
   "Cut Flowers",
   "Foliage Plants",
   "Pot Plants",
@@ -18,6 +27,20 @@ var _values = [
   "Other",
 ];
 
+late SharedPreferences preference;
+String username="";
+String? category;
+final nameController = TextEditingController();
+String? sciName;
+final desController = TextEditingController();
+final priceController = TextEditingController();
+bool cashOnDelivery=false;
+bool chatActivate=false;
+String? itemSpecific;
+String? imgOne;
+String? imgTwo;
+String? imgThree;
+bool imageAdded = true;
 
 class PlaceListing extends StatefulWidget {
   const PlaceListing({Key? key}) : super(key: key);
@@ -28,15 +51,28 @@ class PlaceListing extends StatefulWidget {
 
 class _PlaceListingState extends State<PlaceListing> {
 
+
   final _formField = GlobalKey<FormState>();
-  String? category;
-  final nameController = TextEditingController();
-  String? sciName;
-  final desController = TextEditingController();
-  final priceController = TextEditingController();
-  bool cashOnDelivery=false;
-  bool chatActivate=false;
-  String? itemSpecific;
+
+
+  @override
+  void initState(){
+    super.initState();
+    init();
+  }
+  Future init() async{
+    preference = await SharedPreferences.getInstance();
+    //String? fullname=preference.getString('fullname');
+    String? user=preference.getString('username');
+    //String? imgPath=preference.getString('imgPath');
+
+    setState(() =>username=user!);
+    //setState(() =>this.fullname=fullname!);
+    // if(imgPath!=null){
+    //   setState(() => profileimg=imgPath);
+    // }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +88,9 @@ class _PlaceListingState extends State<PlaceListing> {
       }
       return Colors.grey;
     }
-    bool isCheckedCashDev = false;
-    bool isCheckedChat = false;
-    String currentSelectedValue=_values[0];
+    //bool isCheckedCashDev = false;
+    //bool isCheckedChat = false;
+    //String currentSelectedValue=_values[0];
     var size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
@@ -67,7 +103,7 @@ class _PlaceListingState extends State<PlaceListing> {
             child:ListView(
             children: [
 
-              const BackButtonNHome(),
+              //const BackButtonNHome(),
 
               SizedBox(height: height/100),
 
@@ -111,49 +147,94 @@ class _PlaceListingState extends State<PlaceListing> {
               //   ),
               // ),
               SizedBox(
-
-                height: height/11,
-                child: FormField<String>(
-                  builder: (FormFieldState<String> state) {
-                    return InputDecorator(
-                      decoration: InputDecoration(
-                          filled: true,
-                          fillColor: HexColor.fromHex('#F3F1F1'),
-                          labelText: "Category",
-                          //labelStyle: textStyle,
-                          //errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
-                          hintText: 'Please select expense',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              //borderSide: BorderSide.none
-
-                          )
-                      ),
-                      isEmpty: currentSelectedValue == '',
-                      child: DropdownButtonHideUnderline(
-
-                        child: DropdownButton<String>(
-
-                          value: currentSelectedValue,
-                          isDense: true,
-                          onChanged: (String? value) {
-                            // This is called when the user selects an item.
-                            setState(() {
-                              currentSelectedValue = value!;
-                            });
-                          },
-                          items: _values.map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    );
+                height: height/10,
+                child: DropdownButtonFormField<String>(
+                  value: category,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      category = newValue;
+                    });
                   },
+                  decoration: InputDecoration(
+
+                    filled: true,
+                    //errorText: category == null ? 'This field is required' : null, // Add this line
+
+                    fillColor: HexColor.fromHex('#F3F1F1'),
+                    labelText: "Category",
+
+                    //labelText: 'Select an item',
+                    hintText: 'Choose an item',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'required';
+                    }
+                    return null;
+                  },
+                  items: _values.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
               ),
+              // SizedBox(
+              //
+              //   height: height/11,
+              //   child: FormField<String>(
+              //
+              //     builder: (FormFieldState<String> state) {
+              //       return InputDecorator(
+              //         decoration: InputDecoration(
+              //
+              //             filled: true,
+              //             //errorText: category == null ? 'This field is required' : null, // Add this line
+              //
+              //             fillColor: HexColor.fromHex('#F3F1F1'),
+              //             labelText: "Category",
+              //
+              //             //labelStyle: textStyle,
+              //             //errorStyle: const TextStyle(color: Colors.redAccent, fontSize: 16.0),
+              //             hintText: 'Please select expense',
+              //
+              //             border: OutlineInputBorder(
+              //                 borderRadius: BorderRadius.circular(20),
+              //                 //borderSide: BorderSide.none
+              //
+              //             )
+              //         ),
+              //         isEmpty: category == null,
+              //         child: DropdownButtonHideUnderline(
+              //
+              //           child: DropdownButton<String>(
+              //
+              //
+              //             value: category,
+              //             isDense: true,
+              //             onChanged: (String? value) {
+              //               // This is called when the user selects an item.
+              //               setState(() {
+              //                 category = value;
+              //               });
+              //             },
+              //             items: _values.map((String value) {
+              //               return DropdownMenuItem<String>(
+              //                 value: value,
+              //                 child: Text(value),
+              //               );
+              //             }).toList(),
+              //           ),
+              //         ),
+              //       );
+              //     },
+              //
+              //   ),
+              // ),
 
               Text(
                 "Add Common Name",
@@ -268,72 +349,195 @@ class _PlaceListingState extends State<PlaceListing> {
                           ),
                         ),
                         Text(
-                          "Maximum 3 images",
-                          style: TextStyle(
+                          imageAdded ? 'Maximum 3 images' : 'required',
+                          style: imageAdded ? TextStyle(
                             fontSize: getProportionateScreenWidth(11),
                             color: Colors.grey,
                             fontWeight: FontWeight.w600,
+                          ) : TextStyle(
+                              fontSize: getProportionateScreenWidth(11),
+                              color: Colors.red,
+                              fontWeight: FontWeight.w600,
                           ),
-                        ),
+                        )
+
                       ],
                     ),
                     SizedBox(width: width/30),
-                    TextButton(
-                      style: TextButton.styleFrom(
-
-                        foregroundColor: Colors.black,
-                        backgroundColor: HexColor.fromHex('#F3F1F1'),
-                        minimumSize:  const Size(60, 60),
-                        padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        ),
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: HexColor.fromHex('#F3F1F1'),
+                        border: Border.all(width: 1, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(20),
                       ),
+                      child: InkWell(
+                        onTap: () async{
 
-                      //################################################Add Images#######################################
-                      onPressed: () {},
-                      child: const Icon(
-                        Icons.add_photo_alternate,
-                        color: Colors.grey,
-                        size: 30.0,
-                      ),
-                    ),
-                    SizedBox(width: width/20),
-                    Text(
-                      "Pricing",
-                      style: TextStyle(
-                        fontSize: getProportionateScreenWidth(18),
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(width: width/40),
-                    SizedBox(
-                      width: width/4,
-                      child: TextFormField(
-                        controller: priceController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            labelText: "Price",
+                          final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
+                          if (image== null) return;
 
-                            filled: true,
-                            fillColor: HexColor.fromHex('#F3F1F1'),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                                //borderSide: BorderSide.none
-                            )
-                        ),
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return "required";
-                          }
+                          DateTime now = DateTime.now();
+                          //print(now); // prints the current date and time
 
-                          return null;
+
+                          final ref = storage.FirebaseStorage.instance.ref()
+                              .child('itemImg').child(username).child("$username$now${basename(image.path)}");
+                          final result = await ref.putFile(File(image.path));
+                          final fileUrl = await result.ref.getDownloadURL();
+
+
+                          setState(() => imgOne=fileUrl);
+                          setState(() {
+                            imageAdded=true;
+                          });
+                          // Open a file picker to select an image
                         },
-
+                        child: imgOne == null
+                            ? const Center(
+                          child: Icon(
+                            Icons.add_photo_alternate,
+                            color: Colors.grey,
+                            size: 30.0,
+                          ),
+                        )
+                            : Image.network(
+                          imgOne!,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
+
+                    SizedBox(width: width/30),
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: HexColor.fromHex('#F3F1F1'),
+                        border: Border.all(width: 1, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: InkWell(
+                        onTap: () async {
+
+                          final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
+                          if (image== null) return;
+
+                          DateTime now = DateTime.now();
+                          //print(now); // prints the current date and time
+
+
+                          final ref = storage.FirebaseStorage.instance.ref()
+                              .child('itemImg').child(username).child("$username$now${basename(image.path)}");
+                          final result = await ref.putFile(File(image.path));
+                          final fileUrl = await result.ref.getDownloadURL();
+
+
+                          setState(() => imgTwo=fileUrl);
+                          setState(() {
+                            imageAdded=true;
+                          });
+                          // Open a file picker to select an image
+                        },
+                        child: imgTwo == null
+                            ? const Center(
+                          child: Icon(
+                            Icons.add_photo_alternate,
+                            color: Colors.grey,
+                            size: 30.0,
+                          ),
+                        )
+                            : Image.network(
+                          imgTwo!,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(width: width/30),
+
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: HexColor.fromHex('#F3F1F1'),
+                        border: Border.all(width: 1, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: InkWell(
+                        onTap: () async {
+
+                          final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
+                          if (image== null) return;
+
+                          DateTime now = DateTime.now();
+                          //print(now); // prints the current date and time
+
+
+                          final ref = storage.FirebaseStorage.instance.ref()
+                              .child('itemImg').child(username).child("$username$now${basename(image.path)}");
+                          final result = await ref.putFile(File(image.path));
+                          final fileUrl = await result.ref.getDownloadURL();
+
+
+                          setState(() => imgThree=fileUrl);
+                          setState(() {
+                            imageAdded=true;
+                          });
+                          // Open a file picker to select an image
+                        },
+                        child: imgThree == null
+                            ? const Center(
+                          child: Icon(
+                            Icons.add_photo_alternate,
+                            color: Colors.grey,
+                            size: 30.0,
+                          ),
+                        )
+                            : Image.network(
+                          imgThree!,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+
+
                   ],
+                ),
+              ),
+              Text(
+                "Pricing",
+                style: TextStyle(
+                  fontSize: getProportionateScreenWidth(18),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: height/100),
+              SizedBox(
+                width: width/4,
+                child: TextFormField(
+                  controller: priceController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      labelText: "Price",
+
+                      filled: true,
+                      fillColor: HexColor.fromHex('#F3F1F1'),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        //borderSide: BorderSide.none
+                      )
+                  ),
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "required";
+                    }
+
+                    return null;
+                  },
+
                 ),
               ),
 
@@ -342,10 +546,10 @@ class _PlaceListingState extends State<PlaceListing> {
                   Checkbox(
                     checkColor: Colors.white,
                     fillColor: MaterialStateProperty.resolveWith(getColor),
-                    value: isCheckedCashDev,
+                    value: cashOnDelivery,
                     onChanged: (bool? value) {
                       setState(() {
-                        isCheckedCashDev = value!;
+                        cashOnDelivery = value!;
                       });
                     },
                   ),
@@ -395,10 +599,10 @@ class _PlaceListingState extends State<PlaceListing> {
                   Checkbox(
                     checkColor: Colors.white,
                     fillColor: MaterialStateProperty.resolveWith(getColor),
-                    value: isCheckedChat,
+                    value: chatActivate,
                     onChanged: (bool? value) {
                       setState(() {
-                        isCheckedChat = value!;
+                        chatActivate = value!;
                       });
                     },
                   ),
@@ -500,9 +704,24 @@ class _PlaceListingState extends State<PlaceListing> {
                       style: greenButtonStyle,
                       //################################################save#######################################
                       onPressed: () {
+                        if(imgThree?.isNotEmpty==true || imgOne?.isNotEmpty==true || imgTwo?.isNotEmpty==true){
+                          setState(() {
+                            imageAdded=true;
+                          });
+
+                        }else{
+                          setState(() {
+                            imageAdded=false;
+                          });
+
+                        }
                         if(_formField.currentState!.validate()){
-                          print("success");
+                          //print("success");
                           //registerUser(context);
+                          if(imageAdded){
+                            //Navigator.pushNamed(context, '/mybusket');##################Save
+
+                          }
 
 
                         }
@@ -520,7 +739,29 @@ class _PlaceListingState extends State<PlaceListing> {
                     child: TextButton(
                       style: greenButtonBorderStyle,
                       //################################################Preview#######################################
-                      onPressed: () {},
+                      onPressed: () {
+                        if(imgThree?.isNotEmpty==true || imgOne?.isNotEmpty==true || imgTwo?.isNotEmpty==true){
+                          setState(() {
+                            imageAdded=true;
+                          });
+
+                        }else{
+                          setState(() {
+                            imageAdded=false;
+                          });
+
+                        }
+                        if(_formField.currentState!.validate()){
+                          //print("success");
+                          //registerUser(context);
+                          if(imageAdded){
+                            //Navigator.pushNamed(context, '/mybusket');###########################Preview
+
+                          }
+
+
+                        }
+                      },
                       child: Text(
                         "Preview",
                         style: TextStyle(color: HexColor.fromHex('#4CD964'), fontSize: 16.0,
@@ -540,3 +781,201 @@ class _PlaceListingState extends State<PlaceListing> {
     );
   }
 }
+class Preview extends StatefulWidget {
+  const Preview({super.key});
+
+  @override
+  State<Preview> createState() => _Preview();
+}
+
+class _Preview extends State<Preview> {
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var width = size.width;
+
+    return SafeArea(
+        child: Scaffold(
+          body: Container(
+            margin: EdgeInsets.all(width / 30),
+            child: Column(children: [
+              ItemViewComponents(text: 'Title Here'),
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                flex: 3,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 9,
+                      child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => const ImageDialog('images/112.jpg'));
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: AssetImage('images/112.jpg')),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                        flex: 5,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              flex: 5,
+                              child: GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) =>
+                                      const ImageDialog('images/112.jpg'));
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black),
+                                    image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: AssetImage('images/112.jpg')),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Expanded(
+                              flex: 5,
+                              child: GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) =>
+                                      const ImageDialog('images/112.jpg'));
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black),
+                                    image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: AssetImage('images/112.jpg')),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        )),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  padding: EdgeInsets.all(width / 30),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Description",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                          "Each 2.5-Inch Pot contains 1 plant Plant needs : Light Level:Full Sun(6 + hours of direct sunlight) Soil Moisture: Moist,Dry Fertilizer:when transplanted and then every 3-4 weeks"),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Rs.500.00",
+                style: TextStyle(fontSize: 24),
+                textAlign: TextAlign.left,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          style: greenButtonStyle,
+                          onPressed: () {
+                            // showModalBottomSheet(
+                            //   context: context,
+                            //   builder: (context) => bottomesheet(),
+                            //   backgroundColor: Colors.white,
+                            // );
+                          },
+                          child: const Text(
+                            "Buy Now",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontFamily: 'Poppings',
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Expanded(
+                          child: TextButton(
+                            style: greenButtonBorderStyle,
+                            onPressed: () {},
+                            child: Text(
+                              "Add Basket",
+                              style: TextStyle(
+                                color: HexColor.fromHex('#4CD964'),
+                                fontSize: 16.0,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                          )),
+                      const SizedBox(height: 10),
+                      Expanded(
+                          child: TextButton(
+                            style: greenButtonBorderStyle,
+                            onPressed: () {},
+                            child: Text(
+                              "Chat",
+                              style: TextStyle(
+                                color: HexColor.fromHex('#4CD964'),
+                                fontSize: 16.0,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+              ),
+            ]),
+          ),
+        ),
+    );
+  }}

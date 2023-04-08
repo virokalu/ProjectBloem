@@ -31,7 +31,7 @@ class ItemViewComponents extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Text(
+            const Text(
               'Category Here',
               style: TextStyle(fontFamily: 'poppins', fontSize: 16),
             )

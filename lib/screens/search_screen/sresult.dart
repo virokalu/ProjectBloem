@@ -3,14 +3,17 @@ import 'package:project_bloem/components/color_components.dart';
 import '../../components/back_button_icon.dart';
 import '../../components/size.dart';
 
+// ignore: camel_case_types
 class searchResultScreen extends StatefulWidget{
   const searchResultScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _searchResultScreenState createState() => _searchResultScreenState();
 
 }
 
+// ignore: camel_case_types
 class _searchResultScreenState extends State<searchResultScreen>{
 
   List<bool> expanded = [false, false];

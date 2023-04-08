@@ -55,9 +55,7 @@ class _ProfileCardState extends State<ProfileCard> {
 
   @override
   Widget build(BuildContext context) {
-    final img =  profileimg.contains('https://')
-        ? NetworkImage(profileimg)
-        : FileImage(File(profileimg));
+    final img =  NetworkImage(profileimg);
 
     return Container(
       padding: const EdgeInsets.all(10),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_bloem/components/back_button_icon.dart';
+//import 'package:project_bloem/components/back_button_icon.dart';
 import 'package:project_bloem/components/button_components.dart';
 import 'package:project_bloem/components/color_components.dart';
 import 'package:project_bloem/screens/item_view/image_dialog.dart';
@@ -23,8 +23,8 @@ class _ItemViewNewState extends State<ItemViewNew> {
       body: Container(
         margin: EdgeInsets.all(width / 30),
         child: Column(children: [
-          ItemViewComponents(text: 'Title Here'),
-          SizedBox(
+          const ItemViewComponents(text: 'Title Here'),
+          const SizedBox(
             height: 10,
           ),
           Expanded(
@@ -43,14 +43,14 @@ class _ItemViewNewState extends State<ItemViewNew> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
-                        image: DecorationImage(
+                        image: const DecorationImage(
                             fit: BoxFit.fill,
                             image: AssetImage('images/112.jpg')),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Expanded(
@@ -70,14 +70,14 @@ class _ItemViewNewState extends State<ItemViewNew> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
-                                image: DecorationImage(
+                                image: const DecorationImage(
                                     fit: BoxFit.fill,
                                     image: AssetImage('images/112.jpg')),
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Expanded(
@@ -93,7 +93,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
-                                image: DecorationImage(
+                                image: const DecorationImage(
                                     fit: BoxFit.fill,
                                     image: AssetImage('images/112.jpg')),
                               ),
@@ -105,7 +105,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Expanded(
@@ -117,7 +117,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Column(
+              child: const Column(
                 children: [
                   Text(
                     "Description",
@@ -129,15 +129,15 @@ class _ItemViewNewState extends State<ItemViewNew> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Text(
+          const Text(
             "Rs.500.00",
             style: TextStyle(fontSize: 24),
             textAlign: TextAlign.left,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Expanded(
