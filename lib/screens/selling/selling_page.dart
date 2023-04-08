@@ -147,7 +147,7 @@ class SellingPage extends StatelessWidget {
                         icon: Icons.delivery_dining_sharp,
                         name: 'Delivery',
                         onPressed: () {
-                          //Navigator.pushNamed(context, '/chat');
+                          Navigator.pushNamed(context, '/delivery');
                         },
                       ),
 
