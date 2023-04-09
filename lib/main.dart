@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         //home: const UserProfile());
-        initialRoute: '/itemviewNew',
+        initialRoute: '/',
         routes: {
           '/':(context) => const WelcomeScreen(),
           '/mybusket' :(context) => const MyBasketScreen(),
@@ -75,6 +75,7 @@ class MyApp extends StatelessWidget {
           '/delivery':(context) => const DeliveryScreen(),
           '/itemview':(context) => const ItemView(),
           '/itemviewNew':(context) => const ItemViewNew(),
+          '/preview':(context) => const Preview(),
           '/help':(context) => const HelpScreen(),
           '/summery':(context) => const SummeryPage(),
           '/addListing':(context) => const PlaceListing(),

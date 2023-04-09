@@ -32,27 +32,15 @@ class ItemViewComponents extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              'Category Here',
-              style: TextStyle(fontFamily: 'poppins', fontSize: 16),
+              text,
+              style: const TextStyle(fontFamily: 'poppins', fontSize: 16),
             )
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              text,
-              style: TextStyle(
-                color: HexColor.fromHex('#33363F'),
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
+
+
         //SizedBox(height: height*75),
-        Container(),
+        //Container(),
       ],
     );
   }

@@ -4,18 +4,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
-import 'package:project_bloem/components/back_button_icon.dart';
 import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../components/back_button_icon.dart';
 import '../../components/button_components.dart';
 import '../../components/color_components.dart';
 import '../../components/size.dart';
 
 import 'package:firebase_storage/firebase_storage.dart' as storage;
-
-import '../item_view/image_dialog.dart';
-
 
 var _values = [
   "Cut Flowers",
@@ -102,6 +99,7 @@ class _PlaceListingState extends State<PlaceListing> {
             key: _formField,
             child:ListView(
             children: [
+              const ButtonText(text: "Create Listing", icon: Icons.add),
 
               //const BackButtonNHome(),
 
@@ -645,56 +643,56 @@ class _PlaceListingState extends State<PlaceListing> {
                 ],
               ),
 
-              Text(
-                "Item Specifications",
-                style: TextStyle(
-                  fontSize: getProportionateScreenWidth(18),
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: height/100),
-              Row(
-                children: [
-                  SizedBox(
-                    width: width/1.5,
-                    child: TextFormField(
-
-                      decoration: InputDecoration(
-                          labelText: "Specification",
-
-                          filled: true,
-                          fillColor: HexColor.fromHex('#F3F1F1'),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              //borderSide: BorderSide.none
-                          )
-                      ),
-
-                    ),
-                  ),
-                  SizedBox(width: width/40),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: HexColor.fromHex('#F3F1F1'),
-                      minimumSize:  const Size(60, 60),
-                      padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      ),
-                    ),
-                    //################################################Add Specifications#######################################
-                    onPressed: () {},
-                    child: const Icon(
-                      Icons.add_circle,
-                      color: Colors.grey,
-                      size: 30.0,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: height/100),
+              // Text(
+              //   "Item Specifications",
+              //   style: TextStyle(
+              //     fontSize: getProportionateScreenWidth(18),
+              //     color: Colors.black,
+              //     fontWeight: FontWeight.w600,
+              //   ),
+              // ),
+              // SizedBox(height: height/100),
+              // Row(
+              //   children: [
+              //     SizedBox(
+              //       width: width/1.5,
+              //       child: TextFormField(
+              //
+              //         decoration: InputDecoration(
+              //             labelText: "Specification",
+              //
+              //             filled: true,
+              //             fillColor: HexColor.fromHex('#F3F1F1'),
+              //             border: OutlineInputBorder(
+              //                 borderRadius: BorderRadius.circular(20),
+              //                 //borderSide: BorderSide.none
+              //             )
+              //         ),
+              //
+              //       ),
+              //     ),
+              //     SizedBox(width: width/40),
+              //     TextButton(
+              //       style: TextButton.styleFrom(
+              //         foregroundColor: Colors.black,
+              //         backgroundColor: HexColor.fromHex('#F3F1F1'),
+              //         minimumSize:  const Size(60, 60),
+              //         padding: const EdgeInsets.symmetric(horizontal: 0.0),
+              //         shape: const RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              //         ),
+              //       ),
+              //       //################################################Add Specifications#######################################
+              //       onPressed: () {},
+              //       child: const Icon(
+              //         Icons.add_circle,
+              //         color: Colors.grey,
+              //         size: 30.0,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(height: height/100),
 
               Row(
                 children: [
@@ -740,7 +738,7 @@ class _PlaceListingState extends State<PlaceListing> {
                       style: greenButtonBorderStyle,
                       //################################################Preview#######################################
                       onPressed: () {
-                        if(imgThree?.isNotEmpty==true || imgOne?.isNotEmpty==true || imgTwo?.isNotEmpty==true){
+                        if(imgThree?.isNotEmpty==true && imgOne?.isNotEmpty==true && imgTwo?.isNotEmpty==true){
                           setState(() {
                             imageAdded=true;
                           });
@@ -755,7 +753,7 @@ class _PlaceListingState extends State<PlaceListing> {
                           //print("success");
                           //registerUser(context);
                           if(imageAdded){
-                            //Navigator.pushNamed(context, '/mybusket');###########################Preview
+                            Navigator.pushNamed(context, '/preview');
 
                           }
 
@@ -789,6 +787,12 @@ class Preview extends StatefulWidget {
 }
 
 class _Preview extends State<Preview> {
+
+  int currentIndex = 0;
+  List<String> images = ['$imgOne','$imgTwo','$imgThree'];
+  final PageController _pageController = PageController(initialPage: 0);
+
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -798,182 +802,371 @@ class _Preview extends State<Preview> {
         child: Scaffold(
           body: Container(
             margin: EdgeInsets.all(width / 30),
-            child: Column(children: [
-              ItemViewComponents(text: 'Title Here'),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                flex: 3,
-                child: Row(
+            child: ListView(
+                children: [
+                  ItemViewComponents(text: '$category'),
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                Stack(
                   children: [
-                    Expanded(
-                      flex: 9,
-                      child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (_) => const ImageDialog('images/112.jpg'));
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width * 0.7,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemCount: images.length,
+                        onPageChanged: (index) {
+                          setState(() {
+                            currentIndex = index;
+                          });
                         },
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: AssetImage('images/112.jpg')),
-                          ),
-                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          String? image = images[index];
+                          if (image != 'null' && image.isNotEmpty) {
+                            return Image.network(
+                              image,
+                              fit: BoxFit.cover,
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
                       ),
                     ),
-                    SizedBox(
-                      width: 10,
+                    Positioned(
+                      left: 0,
+                      top: MediaQuery.of(context).size.width * 0.35,
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_back),
+                        color: HexColor.fromHex('#4CD964'),
+                        onPressed: () {
+                          setState(() {
+                            currentIndex = (currentIndex - 1) % images.length;
+                          });
+                          _pageController.animateToPage(
+                            currentIndex,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.ease,
+                          );
+                        },
+                      ),
                     ),
-                    Expanded(
-                        flex: 5,
-                        child: Column(
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) =>
-                                      const ImageDialog('images/112.jpg'));
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
-                                    image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: AssetImage('images/112.jpg')),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Expanded(
-                              flex: 5,
-                              child: GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) =>
-                                      const ImageDialog('images/112.jpg'));
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
-                                    image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: AssetImage('images/112.jpg')),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        )),
+                    Positioned(
+                      right: 0,
+                      top: MediaQuery.of(context).size.width * 0.35,
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_forward),
+                        color: HexColor.fromHex('#4CD964'),
+                        onPressed: () {
+                          setState(() {
+                            currentIndex = (currentIndex + 1) % images.length;
+                          });
+                          _pageController.animateToPage(
+                            currentIndex,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.ease,
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              SizedBox(
+
+              const SizedBox(
+
                 height: 10,
               ),
-              Expanded(
-                flex: 3,
-                child: Container(
-                  padding: EdgeInsets.all(width / 30),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        "Description",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+              // Expanded(
+              //   flex: 3,
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //         flex: 9,
+              //         child: GestureDetector(
+              //           onTap: () {
+              //             showDialog(
+              //                 context: context,
+              //                 builder: (_) => const ImageDialog('images/112.jpg'));
+              //           },
+              //           child: Container(
+              //             alignment: Alignment.center,
+              //             decoration: BoxDecoration(
+              //               border: Border.all(color: Colors.black),
+              //               image: const DecorationImage(
+              //                   fit: BoxFit.fill,
+              //                   image: AssetImage('images/112.jpg')),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       SizedBox(
+              //         width: 10,
+              //       ),
+              //       Expanded(
+              //           flex: 5,
+              //           child: Column(
+              //             children: [
+              //               Expanded(
+              //                 flex: 5,
+              //                 child: GestureDetector(
+              //                   onTap: () {
+              //                     showDialog(
+              //                         context: context,
+              //                         builder: (_) =>
+              //                         const ImageDialog('images/112.jpg'));
+              //                   },
+              //                   child: Container(
+              //                     alignment: Alignment.center,
+              //                     decoration: BoxDecoration(
+              //                       border: Border.all(color: Colors.black),
+              //                       image: DecorationImage(
+              //                           fit: BoxFit.fill,
+              //                           image: AssetImage('images/112.jpg')),
+              //                     ),
+              //                   ),
+              //                 ),
+              //               ),
+              //               SizedBox(
+              //                 height: 10,
+              //               ),
+              //               Expanded(
+              //                 flex: 5,
+              //                 child: GestureDetector(
+              //                   onTap: () {
+              //                     showDialog(
+              //                         context: context,
+              //                         builder: (_) =>
+              //                         const ImageDialog('images/112.jpg'));
+              //                   },
+              //                   child: Container(
+              //                     alignment: Alignment.center,
+              //                     decoration: BoxDecoration(
+              //                       border: Border.all(color: Colors.black),
+              //                       image: DecorationImage(
+              //                           fit: BoxFit.fill,
+              //                           image: AssetImage('images/112.jpg')),
+              //                     ),
+              //                   ),
+              //                 ),
+              //               )
+              //             ],
+              //           )),
+              //     ],
+              //   ),
+              // ),
+
+                  SizedBox(
+                    width: width,
+                    child:Text(
+                      nameController.text,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: getProportionateScreenWidth(20),
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
                       ),
-                      Text(
-                          "Each 2.5-Inch Pot contains 1 plant Plant needs : Light Level:Full Sun(6 + hours of direct sunlight) Soil Moisture: Moist,Dry Fertilizer:when transplanted and then every 3-4 weeks"),
-                    ],
+                    ),
+                  ),
+              SizedBox(
+                width: width,
+                child: Text(
+                  sciName != null ? '$sciName' : '',
+                  style: TextStyle(
+                    fontSize: getProportionateScreenWidth(11),
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
+              const SizedBox(
+                height: 4,
               ),
-              Text(
-                "Rs.500.00",
-                style: TextStyle(fontSize: 24),
-                textAlign: TextAlign.left,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                flex: 3,
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: TextButton(
-                          style: greenButtonStyle,
-                          onPressed: () {
-                            // showModalBottomSheet(
-                            //   context: context,
-                            //   builder: (context) => bottomesheet(),
-                            //   backgroundColor: Colors.white,
-                            // );
-                          },
-                          child: const Text(
-                            "Buy Now",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontFamily: 'Poppings',
-                            ),
-                          ),
+                  SizedBox(
+                    width: width,
+                    child: const Text(
+                      "Description",
+                      textAlign: TextAlign.right,
+
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+
+
+              // Expanded(
+              //   flex: 2,
+              //   child: Container(
+              //     padding: EdgeInsets.all(width / 30),
+              //     alignment: Alignment.center,
+              //     decoration: BoxDecoration(
+              //       border: Border.all(color: Colors.black),
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //     child: const Column(
+              //       children: [
+              //
+              //         Text(
+              //             "Each 2.5-Inch Pot contains 1 plant Plant needs : Light Level:Full Sun(6 + hours of direct sunlight) Soil Moisture: Moist,Dry Fertilizer:when transplanted and then every 3-4 weeks"),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: width,
+                      maxWidth: width,
+                      minHeight: 70,
+                      maxHeight: 70,
+                    ),
+                    child: LimitedBox(
+                      maxHeight: 4 * 20.0, // assuming font size is 20
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          desController.text,
+                          style: const TextStyle(fontSize: 14),
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Expanded(
-                          child: TextButton(
-                            style: greenButtonBorderStyle,
-                            onPressed: () {},
-                            child: Text(
-                              "Add Basket",
-                              style: TextStyle(
-                                color: HexColor.fromHex('#4CD964'),
-                                fontSize: 16.0,
-                                fontFamily: 'Poppins',
-                              ),
-                            ),
-                          )),
-                      const SizedBox(height: 10),
-                      Expanded(
-                          child: TextButton(
-                            style: greenButtonBorderStyle,
-                            onPressed: () {},
-                            child: Text(
-                              "Chat",
-                              style: TextStyle(
-                                color: HexColor.fromHex('#4CD964'),
-                                fontSize: 16.0,
-                                fontFamily: 'Poppins',
-                              ),
-                            ),
-                          ))
-                    ],
+                    ),
                   ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: width,
+                child: Text(
+                  "Rs.${priceController.text}",
+                  style: const TextStyle(fontSize: 24),
+                  textAlign: TextAlign.left,
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              // Expanded(
+              //   flex: 3,
+              //   child: Container(
+              //     alignment: Alignment.center,
+              //     child: Column(
+              //       children: [
+              //         Expanded(
+              //           child: TextButton(
+              //             style: greenButtonStyle,
+              //             onPressed: () {
+              //               // showModalBottomSheet(
+              //               //   context: context,
+              //               //   builder: (context) => bottomesheet(),
+              //               //   backgroundColor: Colors.white,
+              //               // );
+              //             },
+              //             child: const Text(
+              //               "Buy Now",
+              //               style: TextStyle(
+              //                 color: Colors.white,
+              //                 fontSize: 16.0,
+              //                 fontFamily: 'Poppings',
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //         const SizedBox(height: 10),
+              //         Expanded(
+              //             child: TextButton(
+              //               style: greenButtonBorderStyle,
+              //               onPressed: () {},
+              //               child: Text(
+              //                 "Add Basket",
+              //                 style: TextStyle(
+              //                   color: HexColor.fromHex('#4CD964'),
+              //                   fontSize: 16.0,
+              //                   fontFamily: 'Poppins',
+              //                 ),
+              //               ),
+              //             )),
+              //         const SizedBox(height: 10),
+              //         Expanded(
+              //             child: TextButton(
+              //               style: greenButtonBorderStyle,
+              //               onPressed: () {},
+              //               child: Text(
+              //                 "Chat",
+              //                 style: TextStyle(
+              //                   color: HexColor.fromHex('#4CD964'),
+              //                   fontSize: 16.0,
+              //                   fontFamily: 'Poppins',
+              //                 ),
+              //               ),
+              //             ))
+              //       ],
+              //     ),
+              //   ),
+              // ),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  TextButton(
+                    style: greenButtonStyle,
+                    //############################Buy Now##########################################
+                    onPressed: () {
+                      //Navigator.pushNamed(context, '/login');
+                    },
+                    child: const Text(
+                      "Save the view",
+                      style: TextStyle(
+                        color: Colors.white,fontSize: 16.0,
+                        fontFamily: 'Poppins',),
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  TextButton(
+                    style: greenButtonBorderStyle,
+                    //############################Add Basket##########################################
+                    onPressed: () {
+                      //Navigator.pushNamed(context, '/login');
+                    },
+                    child: Text(
+                      "Add Basket",
+                      style: TextStyle(
+                        color: HexColor.fromHex('#4CD964'), fontSize: 16.0,
+                        fontFamily: 'Poppins',),
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+
+                  TextButton(
+                    style: chatActivate ? greenButtonBorderStyle
+                    : greyButtonStyle,
+                    //############################Chat#######################################
+                    onPressed: chatActivate
+                        ? () {}
+                        : null,
+                    child: Text(
+                      "Chat",
+                      style: TextStyle(
+                        color: chatActivate? HexColor.fromHex('#4CD964') : Colors.grey,
+                        fontSize: 16.0,
+                        fontFamily: 'Poppins',),
+                    ),
+                  ),
             ]),
           ),
         ),
