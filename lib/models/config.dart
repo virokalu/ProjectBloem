@@ -5,3 +5,4 @@ const registration = "${url}registration";
 const login = "${url}login";
 const profileImg = "${url}profile/img";
 const profileGetImg = "${url}profile/getimg";
+const itemAdd = "${url}item";

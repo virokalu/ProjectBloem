@@ -1,6 +1,9 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
@@ -11,8 +14,12 @@ import '../../components/back_button_icon.dart';
 import '../../components/button_components.dart';
 import '../../components/color_components.dart';
 import '../../components/size.dart';
+import 'package:http/http.dart' as http;
+
 
 import 'package:firebase_storage/firebase_storage.dart' as storage;
+
+import '../../models/config.dart';
 
 var _values = [
   "Cut Flowers",
@@ -28,7 +35,7 @@ late SharedPreferences preference;
 String username="";
 String? category;
 final nameController = TextEditingController();
-String? sciName;
+final sciName =TextEditingController();
 final desController = TextEditingController();
 final priceController = TextEditingController();
 bool cashOnDelivery=false;
@@ -279,7 +286,7 @@ class _PlaceListingState extends State<PlaceListing> {
               SizedBox(
                 height: height/10,
                 child: TextFormField(
-                  //controller: ,
+                  controller: sciName,
                   decoration: InputDecoration(
                       labelText: "Scientific Name",
                       filled: true,
@@ -717,6 +724,7 @@ class _PlaceListingState extends State<PlaceListing> {
                           //print("success");
                           //registerUser(context);
                           if(imageAdded){
+                            addListing(context);
                             //Navigator.pushNamed(context, '/mybusket');##################Save
 
                           }
@@ -754,7 +762,6 @@ class _PlaceListingState extends State<PlaceListing> {
                           //registerUser(context);
                           if(imageAdded){
                             Navigator.pushNamed(context, '/preview');
-
                           }
 
 
@@ -972,7 +979,7 @@ class _Preview extends State<Preview> {
               SizedBox(
                 width: width,
                 child: Text(
-                  sciName != null ? '$sciName' : '',
+                  sciName.text.isNotEmpty? sciName.text : '',
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(11),
                     color: Colors.grey,
@@ -1117,8 +1124,9 @@ class _Preview extends State<Preview> {
 
                   TextButton(
                     style: greenButtonStyle,
-                    //############################Buy Now##########################################
+                    //############################Save the view##########################################
                     onPressed: () {
+                      addListing(context);
                       //Navigator.pushNamed(context, '/login');
                     },
                     child: const Text(
@@ -1172,3 +1180,89 @@ class _Preview extends State<Preview> {
         ),
     );
   }}
+
+Future<void> addListing(BuildContext context) async {
+  final completer = Completer<void>();
+  var itemBody = {
+    "username":username,
+    "category":category,
+    "commonname":nameController.text,
+    "sciname":sciName.text,
+    "price":priceController.text,
+    "description":desController.text,
+    "cashondelivery":cashOnDelivery,
+    "chatactivate":chatActivate,
+    "imgone":imgOne,
+    "imgtwo":imgTwo,
+    "imgthree":imgThree,
+    "activestatus":true,
+  };
+  //print(registration);
+  var response = await http.post(Uri.parse(itemAdd),
+      headers: {"Content-Type":"application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: jsonEncode(itemBody)
+  );
+  var jsonResponse = jsonDecode(response.body);
+  //print(jsonResponse['status']);
+  if(jsonResponse['status']){
+
+    // ignore: use_build_context_synchronously
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      //dialogBackgroundColor: Colors.black,
+      animType: AnimType.topSlide,
+
+      showCloseIcon: true,
+      title: "Success!",
+      desc: "Logged in Successfully",
+
+      btnOkOnPress: (){
+        category=null;
+        nameController.clear();
+        sciName.clear();
+        desController.clear();
+        priceController.clear();
+        cashOnDelivery=false;
+        chatActivate=false;
+        imgOne=null;
+        imgTwo=null;
+        imgThree=null;
+
+        Navigator.pushNamed(context, '/selling');
+        //print("Inside Login");
+        completer.complete();
+      },
+      btnOkText: "OK",
+
+      btnOkColor: HexColor.fromHex('#4CD964'),
+    ).show();
+
+  }else if(!jsonResponse['status']){
+
+    // ignore: use_build_context_synchronously
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.warning,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "Something went wrong",
+      desc: "Unable to add the item to the system please try again",
+      btnCancelOnPress: (){
+        //nameController.clear();
+
+
+      },
+      btnCancelText: "OK",
+      btnCancelColor: HexColor.fromHex('#4CD964'),
+
+
+    ).show();
+    return completer.future;
+    //print(jsonResponse['exist']);
+
+  }
+
+}
