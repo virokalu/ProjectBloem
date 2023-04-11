@@ -37,3 +37,13 @@ final ButtonStyle greenButtonBorderStyle = TextButton.styleFrom(
     fontFamily: 'Poppins',
   ),
 );
+
+final ButtonStyle greyButtonStyle = TextButton.styleFrom(
+  foregroundColor: Colors.black87,
+  backgroundColor: Colors.black12,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(20.0),
+  ),
+  fixedSize: const Size(327,56),
+
+);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/back_button_icon.dart';
 import '../../components/button_components.dart';
 
@@ -9,7 +10,32 @@ class MyBasketScreen extends StatefulWidget {
   State<MyBasketScreen> createState() => _MyBasketScreenState();
 }
 
+
 class _MyBasketScreenState extends State<MyBasketScreen> {
+  late SharedPreferences preference;
+
+  @override
+  void initState(){
+    super.initState();
+    init();
+  }
+  Future init() async{
+    preference = await SharedPreferences.getInstance();
+    //String? fullname=preference.getString('fullname');
+    //String? username=preference.getString('username');
+    String? token=preference.getString('token');
+    //print(token);
+
+    if(token==null){
+      //print(token);
+
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamed(context, '/login');
+    }
+    //setState(() =>this.username=username!);
+    //setState(() =>this.fullname=fullname!);
+
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;

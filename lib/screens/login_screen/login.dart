@@ -39,9 +39,6 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
 
-
-
-
   Future<void> loginUser(BuildContext context) async {
     final completer = Completer<void>();
     var reqBody = {
@@ -54,13 +51,27 @@ class _LoginPageState extends State<LoginPage> {
     );
     var jsonResponse = jsonDecode(response.body);
 
-
     if(jsonResponse['status']){
 
+      var username = jsonResponse['username'];
+      var imgBody = {
+        "username" : username,
+      };
+      var responseImg = await http.post(Uri.parse(profileGetImg),
+          headers: {"Content-Type":"application/json"},
+          body: jsonEncode(imgBody)
+      );
+      var jsonResponseImg = jsonDecode(responseImg.body);
+      if(jsonResponseImg['status']){
+        preference.setString('imgPath', jsonResponseImg['img']);
+
+      }
 
       preference.setString('fullname', jsonResponse['fullname']);
       preference.setString('username', jsonResponse['username']);
       preference.setString('token', jsonResponse['token']);
+      //String? token=preference.getString('token');
+      //print(token);
 
       // ignore: use_build_context_synchronously
       AwesomeDialog(
@@ -150,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: const Icon(Icons.person),
                       labelText: "Username",
                       filled: true,
-                      fillColor: Colors.white38,
+                      fillColor: HexColor.fromHex('#F3F1F1'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                       )
@@ -158,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   validator: (value){
                       if(value!.isEmpty){
-                        return "";
+                        return "required";
                       }
                       
                       return null;
@@ -175,15 +186,18 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: const Icon(Icons.lock),
                       labelText: "Password",
                       filled: true,
-                      fillColor: Colors.white38,
+                      fillColor: HexColor.fromHex('#F3F1F1'),
+
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
+
+                          //borderSide: BorderSide.none
                       )
                   ),
 
                   validator: (value){
                       if(value!.isEmpty){
-                        return "";
+                        return "required";
                       }
                       
                       return null;

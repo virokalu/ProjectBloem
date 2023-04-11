@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/size.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../components/button_components.dart';
 import '../../../components/color_components.dart';
@@ -15,20 +14,6 @@ class IconRow extends StatefulWidget {
 }
 
 class _IconRowState extends State<IconRow> {
-
-  late SharedPreferences prefs;
-  bool isLoggedIn = false;
-
-  @override
-  void initState(){
-    super.initState();
-    initSharedPref();
-
-  }
-  void initSharedPref() async{
-    prefs = await SharedPreferences.getInstance();
-    isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +31,9 @@ class _IconRowState extends State<IconRow> {
         TextButton(
         onPressed: () async => {
 
-          if (isLoggedIn) {
+
             Navigator.pushNamed(context, '/profile'),
-          } else {
-            Navigator.pushNamed(context, '/login'),
-          }
+
 
       },
         style: circularIconStyle,
@@ -81,12 +64,7 @@ class _IconRowState extends State<IconRow> {
     children: [
     TextButton(
     onPressed: () => {
-      if (isLoggedIn) {
         Navigator.pushNamed(context, '/mybusket'),
-      } else {
-        Navigator.pushNamed(context, '/login'),
-      }
-
     },
     style: circularIconStyle,
     //padding: EdgeInsets.all(10.0),
