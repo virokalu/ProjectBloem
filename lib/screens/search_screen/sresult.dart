@@ -3,15 +3,16 @@ import 'package:project_bloem/components/color_components.dart';
 import '../../components/back_button_icon.dart';
 import '../../components/size.dart';
 
-class searchResultScreen extends StatefulWidget{
-  const searchResultScreen({super.key});
+class SearchResultScreen extends StatefulWidget{
+  const SearchResultScreen({super.key});
 
   @override
-  _searchResultScreenState createState() => _searchResultScreenState();
+  // ignore: library_private_types_in_public_api
+  _SearchResultScreenState createState() => _SearchResultScreenState();
 
 }
 
-class _searchResultScreenState extends State<searchResultScreen>{
+class _SearchResultScreenState extends State<SearchResultScreen>{
 
   List<bool> expanded = [false, false];
 
