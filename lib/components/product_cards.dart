@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/size.dart';
+import 'package:project_bloem/models/item.dart';
 
 import 'color_components.dart';
 
 
 class CardBox extends StatelessWidget {
-  const CardBox({Key? key}) : super(key: key);
+  final Item? model;
+  const CardBox({Key? key,this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class CardBox extends StatelessWidget {
         width: getProportionateScreenWidth(170),
         child: GestureDetector(
           onTap: (){
-            Navigator.pushNamed(context, '/itemview');
+            //Navigator.pushNamed(context, '/itemview');
           },
           //######################################on tap navigation############################
           // onTap: () => Navigator.pushNamed(
@@ -70,7 +72,7 @@ class CardBox extends StatelessWidget {
                       child: SizedBox.fromSize(
                         size: const Size.fromRadius(48),
                         //###############################################image here###################// Image radius
-                        child: Image.asset("images/welcome.png", fit: BoxFit.cover),
+                        child: Image.network(model!.imgone, fit: BoxFit.cover),
                       ),
                     ),
 
@@ -79,7 +81,7 @@ class CardBox extends StatelessWidget {
                       height: 20,
                       child: Text(
 //####################################################titlt here################################################
-                      "Sun Flower",
+                        model!.commonname,
                       style: TextStyle(
                           color: Colors.black,
                         fontSize: getProportionateScreenWidth(16),
@@ -95,7 +97,7 @@ class CardBox extends StatelessWidget {
                       children: [
                         Text(
                           //##########################################price here################################
-                          "Rs.5000",
+                          'Rs.${model!.price}',
                           style: TextStyle(
                             fontSize: getProportionateScreenWidth(16),
                             fontWeight: FontWeight.w400,

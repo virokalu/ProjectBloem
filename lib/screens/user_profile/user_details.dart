@@ -13,7 +13,7 @@ import '../../components/color_components.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_storage/firebase_storage.dart' as storage;
 
-import '../../models/config.dart';
+import '../../config.dart';
 
 
 
