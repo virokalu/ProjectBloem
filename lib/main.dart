@@ -19,7 +19,7 @@ import 'package:project_bloem/screens/user_profile/profile.dart';
 import 'package:project_bloem/screens/welcome_screen/welcome_screen.dart';
 import 'components/size.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 Future main() async{
@@ -38,10 +38,11 @@ Future main() async{
 
   }
   runApp(
-    // DevicePreview(
+    // const ProviderScope(child: DevicePreview(
     //   builder: (context) => const MyApp(), // Wrap your app
-    // ),
-    const MyApp(),
+    // ),),
+
+    const ProviderScope(child: MyApp()),
   );
 }
 
@@ -75,6 +76,7 @@ class MyApp extends StatelessWidget {
           '/delivery':(context) => const DeliveryScreen(),
           '/itemview':(context) => const ItemView(),
           '/itemviewNew':(context) => const ItemViewNew(),
+          '/preview':(context) => const Preview(),
           '/help':(context) => const HelpScreen(),
           '/summery':(context) => const SummeryPage(),
           '/addListing':(context) => const PlaceListing(),

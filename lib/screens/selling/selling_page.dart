@@ -42,10 +42,10 @@ class SellingPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20,),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Active",
                         style: TextStyle(
                           fontFamily: 'Poppins',
@@ -54,27 +54,24 @@ class SellingPage extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            "edit",
-                            style: TextStyle(
-                              fontFamily: "Poppins",
-                            ),
-                          ),
-                          Icon(Icons.edit),
+
+                          Icon(Icons.edit,size: getProportionateScreenHeight(18),),
                         ],
                       ),
                     ],
                   ),
 
-                  const Divider(color: Color.fromARGB(255, 243, 236, 236)),
+                  //const Divider(color: Color.fromARGB(255, 243, 236, 236)),
+              const SizedBox(height: 10,),
+
               SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        const SellingCard(),
-                        const SellingCard(),
-                        const SellingCard(),
-                        const SellingCard(),
+                        const ActiveCard(),
+                        const ActiveCard(),
+                        const ActiveCard(),
+                        const ActiveCard(),
 
                         SizedBox(width: getProportionateScreenWidth(20)),
                       ],

@@ -9,7 +9,7 @@ import 'package:project_bloem/components/back_button_icon.dart';
 
 import '../../components/button_components.dart';
 import 'package:http/http.dart' as http;
-import 'package:project_bloem/models/config.dart';
+import 'package:project_bloem/config.dart';
 
 import '../../components/color_components.dart';
 

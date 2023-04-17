@@ -40,19 +40,17 @@ class ItemViewComponents extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
             Text(
               text,
-              style: TextStyle(
-                color: HexColor.fromHex('#33363F'),
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
+              style: const TextStyle(fontFamily: 'poppins', fontSize: 16),
+            )
           ],
         ),
+
+
         //SizedBox(height: height*75),
-        Container(),
+        //Container(),
       ],
     );
   }

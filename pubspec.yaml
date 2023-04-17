@@ -48,6 +48,10 @@ dependencies:
   image_cropper:
   firebase_storage:
   image_cropper_for_web:
+  flutter_riverpod:
+  freezed_annotation:
+  json_annotation:
+#  device_preview:
 
 
 
@@ -70,6 +74,9 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  build_runner:
+  freezed:
+  json_serializable:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

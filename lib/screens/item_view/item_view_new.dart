@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:project_bloem/components/back_button_icon.dart';
 import 'package:project_bloem/components/button_components.dart';
 import 'package:project_bloem/components/color_components.dart';
 import 'package:project_bloem/screens/item_view/image_dialog.dart';
