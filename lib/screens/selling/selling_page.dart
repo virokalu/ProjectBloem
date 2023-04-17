@@ -126,7 +126,7 @@ class SellingPage extends StatelessWidget {
                         icon: Icons.summarize_outlined,
                         name: 'Summary',
                         onPressed: () {
-                          //Navigator.pushNamed(context, '/chat');
+                          Navigator.pushNamed(context, '/summery');
                         },
                       ),
                       const Divider(color: Color.fromARGB(255, 243, 236, 236)),
