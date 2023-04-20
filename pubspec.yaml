@@ -51,7 +51,7 @@ dependencies:
   flutter_riverpod:
   freezed_annotation:
   json_annotation:
-#  device_preview:
+  # device_preview:
 
 
 

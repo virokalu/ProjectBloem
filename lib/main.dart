@@ -38,8 +38,8 @@ Future main() async{
 
   }
   runApp(
-    // const ProviderScope(child: DevicePreview(
-    //   builder: (context) => const MyApp(), // Wrap your app
+    // ProviderScope(child: DevicePreview(
+    //   builder: (context) => MyApp(), // Wrap your app
     // ),),
 
     const ProviderScope(child: MyApp()),
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         //home: const UserProfile());
-        initialRoute: '/',
+        initialRoute: '/summery',
         routes: {
           '/':(context) => const WelcomeScreen(),
           '/mybusket' :(context) => const MyBasketScreen(),
