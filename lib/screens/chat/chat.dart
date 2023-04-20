@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:project_bloem/screens/chat/replycard.dart';
 import '../../Model/chatmodel.dart';
@@ -6,6 +8,7 @@ import '../../components/color_components.dart';
 import 'ownmessagecard.dart';
 // ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:http/http.dart' as http;
 
 
 class ChatPage extends StatefulWidget {
@@ -26,9 +29,49 @@ class _ChatPageState extends State<ChatPage> {
   FocusNode focusNode = FocusNode(); 
   late IO.Socket socket;
 
+  //List<Map<String, dynamic>> _messages = [];
+
+  // void fetchMessages() async {
+  //   final response = await http.post(Uri.parse('http://localhost:3000/viewmessages'));
+
+  //   if (response.statusCode == 200) {
+  //     final List<dynamic> data = json.decode(response.body);
+  //     setState(() {
+  //       _messages = data.cast<Map<String, dynamic>>();
+  //     });
+  //   } else {
+  //     print('Failed to fetch messages');
+  //   }
+  //   print(_messages);
+  // }
+
+  Future<void> fetchMessages() async {
+
+    //var reqbody = {"user" : user};
+
+    final response = await http.post(Uri.parse('http://localhost:3000/chatlistdata'));
+    // headers: {"Content-Type":"application/json",
+    //       "Access-Control-Allow-Origin": "*"
+    //     },
+    //     body: jsonEncode(reqbody));
+    final List<dynamic> responseData = jsonDecode(response.body);
+    messages = responseData
+        .map((json) => MessageModel(
+              type: json['type'],
+              message: json['message'],
+              sourceId: int.parse(json['sourceId']), 
+              targetId: int.parse(json['targetId']),
+              key: json('key'), 
+            ))
+        .toList();
+    setState(() {});
+    //print(data);
+  }
+
   @override
   void initState(){
     super.initState();
+    fetchMessages();
     connect();
     focusNode.addListener(() {
       setState(() {
@@ -144,7 +187,7 @@ class _ChatPageState extends State<ChatPage> {
                   controller: _scrollcontroller,
                   itemCount: messages.length,
                   itemBuilder: (context, index){
-                    //print(index);
+                   // print(messages[index].type);
                     if(messages[index].type == 'source'){
                       return OwnMessageCard(message: messages[index].message);
                     } else {
@@ -198,6 +241,7 @@ class _ChatPageState extends State<ChatPage> {
                             _scrollcontroller.animateTo(_scrollcontroller.position.maxScrollExtent, duration: const Duration(milliseconds: 3000), curve: Curves.easeOut);
                             sendMessage(_textController.text,widget.sourceId,widget.chatmodel.id);
                             _textController.clear();
+                            //print(messages);
                           },
                         ),
                       )

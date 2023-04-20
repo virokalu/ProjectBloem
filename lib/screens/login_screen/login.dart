@@ -12,6 +12,8 @@ import '../../components/color_components.dart';
 import 'package:project_bloem/config.dart';
 import 'package:http/http.dart' as http;
 
+import 'loginuserdetails.dart';
+
 
   class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -57,6 +59,7 @@ class _LoginPageState extends State<LoginPage> {
       var imgBody = {
         "username" : username,
       };
+      UserDetails.username = username;
       var responseImg = await http.post(Uri.parse(profileGetImg),
           headers: {"Content-Type":"application/json"},
           body: jsonEncode(imgBody)

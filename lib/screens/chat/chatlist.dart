@@ -1,8 +1,13 @@
+import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../../Model/chatmodel.dart';
+import '../../components/button_components.dart';
 import '../../components/color_components.dart';
 import '../homo_screen/home_screen.dart';
+import '../login_screen/loginuserdetails.dart';
 import 'customcard.dart';
+import 'package:http/http.dart' as http;
 
 class ChatList extends StatefulWidget {
   const ChatList({super.key});
@@ -13,92 +18,61 @@ class ChatList extends StatefulWidget {
 
 class _ChatListState extends State<ChatList> {
 
-  List<ChatModel> chats = [
-    ChatModel(
-      name: "janaka lakshan",
-      time: "4:00",
-      currentpage: 'Hi janaka lakshan',
-      img: 'images/background1.jpg',
-      id: 1,
-    ),
-    ChatModel(
-      name: "Manoj lakshan",
-      time: "4:00",
-      currentpage: 'Hi manoj lakshan',
-      img: 'images/112.jpg',
-      id: 2,
-    ),
-    ChatModel(
-      name: "Ishan udayanga",
-      time: "4:00",
-      currentpage: 'Hi Ishan udayanga',
-      img: 'images/background1.jpg',
-      id: 3,
-    ),
-    ChatModel(
-      name: "Anusha lakmali",
-      time: "4:00",
-      currentpage: 'Hi anusha lakmali',
-      img: 'images/background1.jpg',
-      id: 4,
-    ),
-    ChatModel(
-      name: "Dinusha lakmali",
-      time: "4:00",
-      currentpage: 'Hi dinusha lakmali',
-      img: 'images/background1.jpg',
-      id: 5,
-    ),
-    ChatModel(
-      name: "Sihina nimnath",
-      time: "4:00",
-      currentpage: 'Hi sihina nimnath',
-      img: 'images/background1.jpg',
-      id: 6,
-    ),
-    ChatModel(
-      name: "Chanidu dilshan",
-      time: "4:00",
-      currentpage: 'Hi chanidu dilshan',
-      img: 'images/background1.jpg',
-      id: 7,
-    ),
-    ChatModel(
-      name: "Indrajith madumal",
-      time: "4:00",
-      currentpage: 'Hi indrajith madumal',
-      img: 'images/background1.jpg',
-      id: 8,
-    ),
-    ChatModel(
-      name: "Asanka madushan",
-      time: "4:00",
-      currentpage: 'Hi asanka madushan',
-      img: 'images/background1.jpg',
-      id: 9,
-    ),
-    ChatModel(
-      name: "Hashan piumal",
-      time: "4:00",
-      currentpage: 'Hi hashan piumal',
-      img: 'images/background1.jpg',
-      id: 10,
-    ),
-    ChatModel(
-      name: "Nirosh sanjeewa",
-      time: "4:00",
-      currentpage: 'Hi Nirosh sanjeewa',
-      img: 'images/background1.jpg',
-      id: 11,
-    ),
-    ChatModel(
-      name: "Kavinda Dissanayaka",
-      time: "4:00",
-      currentpage: 'Hi kavinda dissanayaka',
-      img: 'images/background1.jpg',
-      id: 12,
-    ),
-  ];
+  //final _formField = GlobalKey<FormState>();
+  final receiverController = TextEditingController();
+  final senderController = TextEditingController();
+
+  String user = UserDetails.username;
+
+  late List<ChatModel> chats;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData(user);
+    //registerChat();
+  }
+
+  Future<void> registerChat(BuildContext context) async {
+    //final completer = Completer<void>();
+    senderController.text=user;
+    final reqbody = {
+      "name" : receiverController.text,
+      "currentpage" : "jjj",
+      "users" : [user,receiverController.text],
+      "img" : "jj",
+      "id" : "5",
+    };
+    var response = await http.post(Uri.parse('http://localhost:3000/insertchatlistdata'),
+        headers: {"Content-Type":"application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
+        body: jsonEncode(reqbody),
+    );
+    //setState(() {});
+  }
+
+  Future<void> fetchData(String user) async {
+
+    var reqbody = {"user" : user};
+
+    final response = await http.post(Uri.parse('http://localhost:3000/chatlistdata'),
+    headers: {"Content-Type":"application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
+        body: jsonEncode(reqbody));
+    final List<dynamic> responseData = jsonDecode(response.body);
+    chats = responseData
+        .map((json) => ChatModel(
+              name: json['name'],
+              currentpage: json['currentpage'],
+              id: int.parse(json['id']), 
+              img: json['img'],
+            ))
+        .toList();
+    setState(() {});
+    //print(data);
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -131,7 +105,120 @@ class _ChatListState extends State<ChatList> {
                   itemCount: chats.length,
                  itemBuilder: (context, index) => CustomeCard(chatModel: chats[index],),
              ),
+             floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                                  backgroundColor: Colors.transparent,
+                                  context: context, 
+                                  builder: (BuildContext context)=> bottomesheet(context)
+                                );
+                },
+                child: const Icon(Icons.chat),
+            ),
+      ),
+    );
+  }
+  // Widget bottomesheet(){
+  //   return SizedBox(
+  //     //height: 270,
+  //     //width: MediaQuery.of(context).size.width,
+  //     child: Card(
+  //       margin: const EdgeInsets.all(18),
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           Row(
+  //             children: [
+  //               Text("From"),
+  //             ],
+  //           )
+            
+  //         ]
+  //       ),
+  //     ),
+  //   );
+  // }
+
+   Widget bottomesheet(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height/2,
+      width: MediaQuery.of(context).size.width,
+      child: Card(
+        margin: EdgeInsets.all(MediaQuery.of(context).size.width/30),
+        child: ListView(
+          children: [Column(
+            children: [
+              const Text("Create new Chat"),
+              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        const Text("From"),
+                        const SizedBox(height: 20,),
+                        TextFormField(
+                          controller: senderController,
+                          
+                          decoration: InputDecoration(
+                            hintText: "04/03",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            )
+                          ),
+                          keyboardType: const TextInputType.numberWithOptions(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 80),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        const Text("To"),
+                        const SizedBox(height: 20,),
+                        TextFormField(
+                          controller: receiverController,
+                          decoration: InputDecoration(
+                            hintText: "12",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            )
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20,),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                          style: greenButtonStyle,
+                          onPressed: () {
+                            registerChat(context);
+                            fetchData(user);
+                          },
+                          child: const Text(
+                                "Cash on Delivery",
+                                style: TextStyle(color: Colors.white, fontSize: 16.0,
+                                fontFamily: 'Poppins',),
+                          ),
+                    ),
+                  ),
+                  
+                ],
+              ),
+            ],
+          ),
+          ],
+        ),
       ),
     );
   }
 }
+
