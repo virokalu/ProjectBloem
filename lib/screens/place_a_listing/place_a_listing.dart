@@ -177,7 +177,7 @@ class _PlaceListingState extends State<PlaceListing> {
                   ),
                   validator: (value) {
                     if (value == null) {
-                      return 'required';
+                      return 'Required Field';
                     }
                     return null;
                   },
@@ -257,6 +257,8 @@ class _PlaceListingState extends State<PlaceListing> {
                   controller: nameController,
                   decoration: InputDecoration(
                       labelText: "Common Name",
+                      hintText: "Ex: Anthurium",
+                      helperText: "Please add a suitable name here.",
                       filled: true,
                       fillColor: HexColor.fromHex('#F3F1F1'),
                       border: OutlineInputBorder(
@@ -266,7 +268,7 @@ class _PlaceListingState extends State<PlaceListing> {
                   ),
                   validator: (value){
                     if(value!.isEmpty){
-                      return "required";
+                      return "Required Field";
                     }
 
                     return null;
@@ -276,7 +278,7 @@ class _PlaceListingState extends State<PlaceListing> {
               ),
 
               Text(
-                "Add Scientific Name (optional)",
+                "Add Scientific Name (Optional)",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(18),
                   color: Colors.black,
@@ -328,7 +330,7 @@ class _PlaceListingState extends State<PlaceListing> {
                   ),
                   validator: (value){
                     if(value!.isEmpty){
-                      return "required";
+                      return "Required Field";
                     }
 
                     return null;
@@ -355,7 +357,7 @@ class _PlaceListingState extends State<PlaceListing> {
                           ),
                         ),
                         Text(
-                          imageAdded ? 'Maximum 3 images' : 'required',
+                          imageAdded ? 'Maximum 3 images' : 'Required',
                           style: imageAdded ? TextStyle(
                             fontSize: getProportionateScreenWidth(11),
                             color: Colors.grey,
@@ -658,6 +660,41 @@ class _PlaceListingState extends State<PlaceListing> {
                 ),
               ),
               Text(
+                "Number of Items",
+                style: TextStyle(
+                  fontSize: getProportionateScreenWidth(18),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: height/100),
+              SizedBox(
+                width: width/4,
+                child: TextFormField(
+                  controller: priceController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      labelText: "Number of Items",
+
+                      filled: true,
+                      fillColor: HexColor.fromHex('#F3F1F1'),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        //borderSide: BorderSide.none
+                      )
+                  ),
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "Required Field";
+                    }
+
+                    return null;
+                  },
+
+                ),
+              ),
+
+              Text(
                 "Item Price",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(18),
@@ -672,7 +709,7 @@ class _PlaceListingState extends State<PlaceListing> {
                   controller: priceController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                      labelText: "Price",
+                      labelText: "Item Price",
 
                       filled: true,
                       fillColor: HexColor.fromHex('#F3F1F1'),
@@ -683,7 +720,7 @@ class _PlaceListingState extends State<PlaceListing> {
                   ),
                   validator: (value){
                     if(value!.isEmpty){
-                      return "required";
+                      return "Required Field";
                     }
 
                     return null;

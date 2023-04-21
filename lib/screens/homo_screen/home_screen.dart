@@ -45,7 +45,7 @@ class HomeScreen extends ConsumerWidget {
               SizedBox(height: getProportionateScreenHeight(1)),
               const Padding(
                   padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-                  child: Text("Hello, What flowers do you want today?",
+                  child: Text("Hello, What do you want today?",
                     style: TextStyle(fontSize: 20),
                   ),
 
