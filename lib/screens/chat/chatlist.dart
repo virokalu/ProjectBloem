@@ -21,6 +21,8 @@ class _ChatListState extends State<ChatList> {
   //final _formField = GlobalKey<FormState>();
   final receiverController = TextEditingController();
   final senderController = TextEditingController();
+  bool _isLoading = true;
+  String _resText = " ";
 
   String user = UserDetails.username;
 
@@ -55,8 +57,12 @@ class _ChatListState extends State<ChatList> {
   Future<void> fetchData(String user) async {
 
     var reqbody = {"user" : user};
+    setState(() {
+      _isLoading = true;
+    });
 
-    final response = await http.post(Uri.parse('http://localhost:3000/chatlistdata'),
+    try{
+      final response = await http.post(Uri.parse('http://localhost:3000/chatlistdata'),
     headers: {"Content-Type":"application/json",
           "Access-Control-Allow-Origin": "*"
         },
@@ -70,7 +76,20 @@ class _ChatListState extends State<ChatList> {
               img: json['img'],
             ))
         .toList();
-    setState(() {});
+    setState(() {
+      _resText = response.body;
+    });
+    }
+    catch(e){
+      setState(() {
+        _resText = 'Error: $e';
+      });
+    }
+    finally{
+      setState(() {
+        _isLoading = false;
+      });
+    }
     //print(data);
   }
   
@@ -101,7 +120,9 @@ class _ChatListState extends State<ChatList> {
       ),
           ],
         ),
-        body: ListView.builder(
+        body: (_isLoading && _resText.isNotEmpty) 
+            ? const Center(child:CircularProgressIndicator())
+            :ListView.builder(
                   itemCount: chats.length,
                  itemBuilder: (context, index) => CustomeCard(chatModel: chats[index],),
              ),
@@ -142,7 +163,7 @@ class _ChatListState extends State<ChatList> {
    Widget bottomesheet(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height/2,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width/2,
       child: Card(
         margin: EdgeInsets.all(MediaQuery.of(context).size.width/30),
         child: ListView(
@@ -159,15 +180,16 @@ class _ChatListState extends State<ChatList> {
                         const Text("From"),
                         const SizedBox(height: 20,),
                         TextFormField(
-                          controller: senderController,
-                          
-                          decoration: InputDecoration(
-                            hintText: "04/03",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            )
-                          ),
-                          keyboardType: const TextInputType.numberWithOptions(),
+                          enabled: false,
+                          initialValue: user,
+                          // controller: senderController,
+                          // decoration: InputDecoration(
+                          //   hintText: "04/03",
+                          //   border: OutlineInputBorder(
+                          //     borderRadius: BorderRadius.circular(20),
+                          //   )
+                          // ),
+                          // keyboardType: const TextInputType.numberWithOptions(),
                         ),
                       ],
                     ),
@@ -181,7 +203,7 @@ class _ChatListState extends State<ChatList> {
                         TextFormField(
                           controller: receiverController,
                           decoration: InputDecoration(
-                            hintText: "12",
+                            hintText: "Enter reciver username",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                             )
@@ -204,7 +226,7 @@ class _ChatListState extends State<ChatList> {
                             fetchData(user);
                           },
                           child: const Text(
-                                "Cash on Delivery",
+                                "Create New Chat",
                                 style: TextStyle(color: Colors.white, fontSize: 16.0,
                                 fontFamily: 'Poppins',),
                           ),
