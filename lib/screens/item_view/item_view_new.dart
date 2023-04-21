@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/button_components.dart';
 import 'package:project_bloem/components/color_components.dart';
-import 'package:project_bloem/screens/item_view/image_dialog.dart';
+//import 'package:project_bloem/screens/item_view/image_dialog.dart';
 import 'package:project_bloem/screens/item_view/item_view_component.dart';
+
+String? imgOne;
+String? imgTwo;
+String? imgThree;
+bool imageAdded = true;
 
 class ItemViewNew extends StatefulWidget {
   const ItemViewNew({super.key});
@@ -16,6 +21,9 @@ class _ItemViewNewState extends State<ItemViewNew> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var width = size.width;
+    int currentIndex = 0;
+    List<String> images = ['$imgOne', '$imgTwo', '$imgThree'];
+    final PageController _pageController = PageController(initialPage: 0);
 
     return SafeArea(
         child: Scaffold(
@@ -26,83 +34,69 @@ class _ItemViewNewState extends State<ItemViewNew> {
           const SizedBox(
             height: 10,
           ),
-          Expanded(
-            flex: 3,
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 9,
-                  child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (_) => const ImageDialog('images/112.jpg'));
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        image: const DecorationImage(
-                            fit: BoxFit.fill,
-                            image: AssetImage('images/112.jpg')),
-                      ),
-                    ),
-                  ),
+          Stack(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width * 0.7,
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: images.length,
+                  onPageChanged: (index) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    String? image = images[index];
+                    if (image != 'null' && image.isNotEmpty) {
+                      return Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
                 ),
-                const SizedBox(
-                  width: 10,
+              ),
+              Positioned(
+                left: 0,
+                top: MediaQuery.of(context).size.width * 0.35,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  color: HexColor.fromHex('#4CD964'),
+                  onPressed: () {
+                    setState(() {
+                      currentIndex = (currentIndex - 1) % images.length;
+                    });
+                    _pageController.animateToPage(
+                      currentIndex,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.ease,
+                    );
+                  },
                 ),
-                Expanded(
-                    flex: 5,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          flex: 5,
-                          child: GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) =>
-                                      const ImageDialog('images/112.jpg'));
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                image: const DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: AssetImage('images/112.jpg')),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Expanded(
-                          flex: 5,
-                          child: GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) =>
-                                      const ImageDialog('images/112.jpg'));
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                image: const DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: AssetImage('images/112.jpg')),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    )),
-              ],
-            ),
+              ),
+              Positioned(
+                right: 0,
+                top: MediaQuery.of(context).size.width * 0.35,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_forward),
+                  color: HexColor.fromHex('#4CD964'),
+                  onPressed: () {
+                    setState(() {
+                      currentIndex = (currentIndex + 1) % images.length;
+                    });
+                    _pageController.animateToPage(
+                      currentIndex,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.ease,
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 10,
