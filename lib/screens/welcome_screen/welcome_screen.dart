@@ -43,7 +43,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: SizedBox(
                 width: 350.0,
                 child: Text(
-                  'Get The Best floriculture Products',
+                  'Get The Best Floriculture Products',
                   textAlign:  TextAlign.left,
                   style:  TextStyle(
                     fontSize: 19,

@@ -172,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   validator: (value){
                       if(value!.isEmpty){
-                        return "required";
+                        return "Required";
                       }
                       
                       return null;
@@ -200,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   validator: (value){
                       if(value!.isEmpty){
-                        return "required";
+                        return "Required";
                       }
                       
                       return null;

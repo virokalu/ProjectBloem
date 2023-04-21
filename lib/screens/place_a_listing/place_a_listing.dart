@@ -658,7 +658,7 @@ class _PlaceListingState extends State<PlaceListing> {
                 ),
               ),
               Text(
-                "Pricing",
+                "Item Price",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(18),
                   color: Colors.black,
@@ -1364,7 +1364,7 @@ Future<void> addListing(BuildContext context) async {
 
       showCloseIcon: true,
       title: "Success!",
-      desc: "Logged in Successfully",
+      desc: "Item added Successfully",
 
       btnOkOnPress: (){
         category=null;
