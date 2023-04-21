@@ -45,6 +45,7 @@ dependencies:
   cloud_firestore:
   firebase_core:
   file_picker:
+  image_picker_web:
   image_cropper:
   firebase_storage:
   image_cropper_for_web:

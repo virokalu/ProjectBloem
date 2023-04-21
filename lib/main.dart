@@ -30,12 +30,11 @@ Future main() async{
           apiKey: "AIzaSyDlZU5-YB1ikQ3JUvb_BGOVzwf5OZZZflw",
           appId: "1:698241380744:web:82fcffc4d940b3f3ab8a3d",
           messagingSenderId: "698241380744",
+          storageBucket: "projectbloem-1e1c5.appspot.com",
           projectId: "projectbloem-1e1c5")
     );
   }else{
     await Firebase.initializeApp();
-
-
   }
   runApp(
     // ProviderScope(child: DevicePreview(
@@ -61,7 +60,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         //home: const UserProfile());
-        initialRoute: '/summery',
+        initialRoute: '/',
         routes: {
           '/':(context) => const WelcomeScreen(),
           '/mybusket' :(context) => const MyBasketScreen(),

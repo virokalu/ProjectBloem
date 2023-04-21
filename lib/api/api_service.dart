@@ -38,6 +38,9 @@ class APIService {
     if(itemFilterModel.categoryId != null){
       queryString["category"] = itemFilterModel.categoryId!;
     }
+    if(itemFilterModel.sortBy != null){
+      queryString['sort'] = itemFilterModel.sortBy!;
+    }
     var url = Uri.http(apiURL,itemGet,queryString);
     var response = await http.get(url,headers: requestHeader);
     //print(url.toString());
