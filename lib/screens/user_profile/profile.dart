@@ -69,7 +69,7 @@ class _UserProfileState extends State<UserProfile> {
 
               ClickableBar(
                 icon: Icons.chat,
-                name: 'chat',
+                name: 'Chat',
                 onPressed: () {
                   Navigator.pushNamed(context, '/chat');
                 },
@@ -90,7 +90,7 @@ class _UserProfileState extends State<UserProfile> {
 
               ClickableBar(
                 icon: Icons.settings,
-                name: 'Setting',
+                name: 'Settings',
                 onPressed: () {
 
                   Navigator.pushNamed(context, '/setting');

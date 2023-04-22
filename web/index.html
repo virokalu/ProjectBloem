@@ -35,6 +35,25 @@
 
   <title>project_bloem</title>
   <link rel="manifest" href="manifest.json">
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "firebase/app";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDlZU5-YB1ikQ3JUvb_BGOVzwf5OZZZflw",
+      authDomain: "projectbloem-1e1c5.firebaseapp.com",
+      projectId: "projectbloem-1e1c5",
+      storageBucket: "projectbloem-1e1c5.appspot.com",
+      messagingSenderId: "698241380744",
+      appId: "1:698241380744:web:82fcffc4d940b3f3ab8a3d"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
 
   <script>
     // The value below is injected by flutter build, do not touch.

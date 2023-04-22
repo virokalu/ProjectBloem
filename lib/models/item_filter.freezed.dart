@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ItemFilterModel {
   PaginationModel get paginationModel => throw _privateConstructorUsedError;
   String? get categoryId => throw _privateConstructorUsedError;
+  String? get sortBy => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ItemFilterModelCopyWith<ItemFilterModel> get copyWith =>
@@ -30,7 +31,8 @@ abstract class $ItemFilterModelCopyWith<$Res> {
           ItemFilterModel value, $Res Function(ItemFilterModel) then) =
       _$ItemFilterModelCopyWithImpl<$Res, ItemFilterModel>;
   @useResult
-  $Res call({PaginationModel paginationModel, String? categoryId});
+  $Res call(
+      {PaginationModel paginationModel, String? categoryId, String? sortBy});
 
   $PaginationModelCopyWith<$Res> get paginationModel;
 }
@@ -50,6 +52,7 @@ class _$ItemFilterModelCopyWithImpl<$Res, $Val extends ItemFilterModel>
   $Res call({
     Object? paginationModel = null,
     Object? categoryId = freezed,
+    Object? sortBy = freezed,
   }) {
     return _then(_value.copyWith(
       paginationModel: null == paginationModel
@@ -59,6 +62,10 @@ class _$ItemFilterModelCopyWithImpl<$Res, $Val extends ItemFilterModel>
       categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sortBy: freezed == sortBy
+          ? _value.sortBy
+          : sortBy // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -80,7 +87,8 @@ abstract class _$$_ItemFilterModelCopyWith<$Res>
       __$$_ItemFilterModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({PaginationModel paginationModel, String? categoryId});
+  $Res call(
+      {PaginationModel paginationModel, String? categoryId, String? sortBy});
 
   @override
   $PaginationModelCopyWith<$Res> get paginationModel;
@@ -99,6 +107,7 @@ class __$$_ItemFilterModelCopyWithImpl<$Res>
   $Res call({
     Object? paginationModel = null,
     Object? categoryId = freezed,
+    Object? sortBy = freezed,
   }) {
     return _then(_$_ItemFilterModel(
       paginationModel: null == paginationModel
@@ -109,6 +118,10 @@ class __$$_ItemFilterModelCopyWithImpl<$Res>
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String?,
+      sortBy: freezed == sortBy
+          ? _value.sortBy
+          : sortBy // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -116,16 +129,19 @@ class __$$_ItemFilterModelCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ItemFilterModel implements _ItemFilterModel {
-  _$_ItemFilterModel({required this.paginationModel, this.categoryId});
+  _$_ItemFilterModel(
+      {required this.paginationModel, this.categoryId, this.sortBy});
 
   @override
   final PaginationModel paginationModel;
   @override
   final String? categoryId;
+  @override
+  final String? sortBy;
 
   @override
   String toString() {
-    return 'ItemFilterModel(paginationModel: $paginationModel, categoryId: $categoryId)';
+    return 'ItemFilterModel(paginationModel: $paginationModel, categoryId: $categoryId, sortBy: $sortBy)';
   }
 
   @override
@@ -136,11 +152,13 @@ class _$_ItemFilterModel implements _ItemFilterModel {
             (identical(other.paginationModel, paginationModel) ||
                 other.paginationModel == paginationModel) &&
             (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId));
+                other.categoryId == categoryId) &&
+            (identical(other.sortBy, sortBy) || other.sortBy == sortBy));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, paginationModel, categoryId);
+  int get hashCode =>
+      Object.hash(runtimeType, paginationModel, categoryId, sortBy);
 
   @JsonKey(ignore: true)
   @override
@@ -152,12 +170,15 @@ class _$_ItemFilterModel implements _ItemFilterModel {
 abstract class _ItemFilterModel implements ItemFilterModel {
   factory _ItemFilterModel(
       {required final PaginationModel paginationModel,
-      final String? categoryId}) = _$_ItemFilterModel;
+      final String? categoryId,
+      final String? sortBy}) = _$_ItemFilterModel;
 
   @override
   PaginationModel get paginationModel;
   @override
   String? get categoryId;
+  @override
+  String? get sortBy;
   @override
   @JsonKey(ignore: true)
   _$$_ItemFilterModelCopyWith<_$_ItemFilterModel> get copyWith =>
