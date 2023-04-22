@@ -4,8 +4,10 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 import 'package:path/path.dart';
 import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,7 +17,6 @@ import '../../components/button_components.dart';
 import '../../components/color_components.dart';
 import '../../components/size.dart';
 import 'package:http/http.dart' as http;
-
 
 import 'package:firebase_storage/firebase_storage.dart' as storage;
 
@@ -176,7 +177,7 @@ class _PlaceListingState extends State<PlaceListing> {
                   ),
                   validator: (value) {
                     if (value == null) {
-                      return 'required';
+                      return 'Required Field';
                     }
                     return null;
                   },
@@ -256,6 +257,8 @@ class _PlaceListingState extends State<PlaceListing> {
                   controller: nameController,
                   decoration: InputDecoration(
                       labelText: "Common Name",
+                      hintText: "Ex: Anthurium",
+                      helperText: "Please add a suitable name here.",
                       filled: true,
                       fillColor: HexColor.fromHex('#F3F1F1'),
                       border: OutlineInputBorder(
@@ -265,7 +268,7 @@ class _PlaceListingState extends State<PlaceListing> {
                   ),
                   validator: (value){
                     if(value!.isEmpty){
-                      return "required";
+                      return "Required Field";
                     }
 
                     return null;
@@ -275,7 +278,7 @@ class _PlaceListingState extends State<PlaceListing> {
               ),
 
               Text(
-                "Add Scientific Name (optional)",
+                "Add Scientific Name (Optional)",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(18),
                   color: Colors.black,
@@ -327,7 +330,7 @@ class _PlaceListingState extends State<PlaceListing> {
                   ),
                   validator: (value){
                     if(value!.isEmpty){
-                      return "required";
+                      return "Required Field";
                     }
 
                     return null;
@@ -354,7 +357,7 @@ class _PlaceListingState extends State<PlaceListing> {
                           ),
                         ),
                         Text(
-                          imageAdded ? 'Maximum 3 images' : 'required',
+                          imageAdded ? 'Maximum 3 images' : 'Required',
                           style: imageAdded ? TextStyle(
                             fontSize: getProportionateScreenWidth(11),
                             color: Colors.grey,
@@ -380,23 +383,72 @@ class _PlaceListingState extends State<PlaceListing> {
                       child: InkWell(
                         onTap: () async{
 
-                          final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
-                          if (image== null) return;
-
                           DateTime now = DateTime.now();
-                          //print(now); // prints the current date and time
+                          if(kIsWeb) {
+                            //print("Im Here");
+                            //final picker = ImagePickerWeb();
+                            final pickedFile = await ImagePickerWeb
+                                .getImageAsFile();
+                            if (pickedFile != null) {
+                              final fileName = basename(pickedFile.name);
+                              final path = 'itemImg/$username/$username$now$fileName';
+                              final storageRef = storage.FirebaseStorage
+                                  .instance.ref().child(path);
+                              final uploadTask = storageRef.putBlob(
+                              pickedFile.slice());
+                              final snapshot = await uploadTask;
+                              final fileUrl = await snapshot.ref
+                                  .getDownloadURL();
+                              setState(() => imgOne = fileUrl);
+                              setState(() {
+                              imageAdded = true;
+                              });
+                            }
+                          }else {
+                              final image = await ImagePicker().pickImage(
+                                  source: ImageSource.gallery,
+                                  imageQuality: 50);
+                              if (image == null) return;
+
+                              //print(now); // prints the current date and time
 
 
-                          final ref = storage.FirebaseStorage.instance.ref()
-                              .child('itemImg').child(username).child("$username$now${basename(image.path)}");
-                          final result = await ref.putFile(File(image.path));
-                          final fileUrl = await result.ref.getDownloadURL();
+                              // try {
+                              //   if(kIsWeb){
+                              //     Reference _reference = FirebaseStorage
+                              //         .ref()
+                              //         .child('images/${Path.basename(pickedFile!.path)}');
+                              //     await _reference
+                              //         .putData(
+                              //       await pickedFile!.readAsBytes(),
+                              //       SettableMetadata(contentType: 'image/jpeg'),
+                              //     )
+                              //         .whenComplete(() async {
+                              //       await _reference.getDownloadURL().then((value) {
+                              //         uploadedPhotoUrl = value;
+                              //       });
+                              //     });
+                              //   }else{
+                              //
+                              //   }
+                              // } on Exception catch (e) {
+                              //   // TODO
+                              //   print("File Upload Error $e");
+                              // }
+                              final ref = storage.FirebaseStorage.instance.ref()
+                                  .child('itemImg').child(username).child(
+                                  "$username$now${basename(image.path)}");
+
+                              final result = await ref.putFile(
+                                  File(image.path));
+                              final fileUrl = await result.ref.getDownloadURL();
+                              setState(() => imgOne = fileUrl);
+                              setState(() {
+                                imageAdded = true;
+                              });
+                            }
 
 
-                          setState(() => imgOne=fileUrl);
-                          setState(() {
-                            imageAdded=true;
-                          });
                           // Open a file picker to select an image
                         },
                         child: imgOne == null
@@ -425,24 +477,71 @@ class _PlaceListingState extends State<PlaceListing> {
                       ),
                       child: InkWell(
                         onTap: () async {
-
-                          final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
-                          if (image== null) return;
-
                           DateTime now = DateTime.now();
-                          //print(now); // prints the current date and time
+
+                          if(kIsWeb) {
+                            //print("Im Here");
+                            //final picker = ImagePickerWeb();
+                            final pickedFile = await ImagePickerWeb
+                                .getImageAsFile();
+                            if (pickedFile != null) {
+                              final fileName = basename(pickedFile.name);
+                              final path = 'itemImg/$username/$username$now$fileName';
+                              final storageRef = storage.FirebaseStorage
+                                  .instance.ref().child(path);
+                              final uploadTask = storageRef.putBlob(
+                                  pickedFile.slice());
+                              final snapshot = await uploadTask;
+                              final fileUrl = await snapshot.ref
+                                  .getDownloadURL();
+                              setState(() => imgTwo = fileUrl);
+                              setState(() {
+                                imageAdded = true;
+                              });
+                            }
+                          }else {
+                            final image = await ImagePicker().pickImage(
+                                source: ImageSource.gallery,
+                                imageQuality: 50);
+                            if (image == null) return;
+                            //print(now); // prints the current date and time
 
 
-                          final ref = storage.FirebaseStorage.instance.ref()
-                              .child('itemImg').child(username).child("$username$now${basename(image.path)}");
-                          final result = await ref.putFile(File(image.path));
-                          final fileUrl = await result.ref.getDownloadURL();
+                            // try {
+                            //   if(kIsWeb){
+                            //     Reference _reference = FirebaseStorage
+                            //         .ref()
+                            //         .child('images/${Path.basename(pickedFile!.path)}');
+                            //     await _reference
+                            //         .putData(
+                            //       await pickedFile!.readAsBytes(),
+                            //       SettableMetadata(contentType: 'image/jpeg'),
+                            //     )
+                            //         .whenComplete(() async {
+                            //       await _reference.getDownloadURL().then((value) {
+                            //         uploadedPhotoUrl = value;
+                            //       });
+                            //     });
+                            //   }else{
+                            //
+                            //   }
+                            // } on Exception catch (e) {
+                            //   // TODO
+                            //   print("File Upload Error $e");
+                            // }
+                            final ref = storage.FirebaseStorage.instance.ref()
+                                .child('itemImg').child(username).child(
+                                "$username$now${basename(image.path)}");
 
+                            final result = await ref.putFile(
+                                File(image.path));
+                            final fileUrl = await result.ref.getDownloadURL();
+                            setState(() => imgTwo = fileUrl);
+                            setState(() {
+                              imageAdded = true;
+                            });
+                          }
 
-                          setState(() => imgTwo=fileUrl);
-                          setState(() {
-                            imageAdded=true;
-                          });
                           // Open a file picker to select an image
                         },
                         child: imgTwo == null
@@ -473,23 +572,72 @@ class _PlaceListingState extends State<PlaceListing> {
                       child: InkWell(
                         onTap: () async {
 
-                          final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
-                          if (image== null) return;
-
                           DateTime now = DateTime.now();
-                          //print(now); // prints the current date and time
+                          if(kIsWeb) {
+                            //print("Im Here");
+                            //final picker = ImagePickerWeb();
+                            final pickedFile = await ImagePickerWeb
+                                .getImageAsFile();
+                            if (pickedFile != null) {
+                              final fileName = basename(pickedFile.name);
+                              final path = 'itemImg/$username/$username$now$fileName';
+                              final storageRef = storage.FirebaseStorage
+                                  .instance.ref().child(path);
+                              final uploadTask = storageRef.putBlob(
+                                  pickedFile.slice());
+                              final snapshot = await uploadTask;
+                              final fileUrl = await snapshot.ref
+                                  .getDownloadURL();
+                              setState(() => imgThree = fileUrl);
+                              setState(() {
+                                imageAdded = true;
+                              });
+                            }
+                          }else {
+                            final image = await ImagePicker().pickImage(
+                                source: ImageSource.gallery,
+                                imageQuality: 50);
+                            if (image == null) return;
+
+                            //print(now); // prints the current date and time
 
 
-                          final ref = storage.FirebaseStorage.instance.ref()
-                              .child('itemImg').child(username).child("$username$now${basename(image.path)}");
-                          final result = await ref.putFile(File(image.path));
-                          final fileUrl = await result.ref.getDownloadURL();
+                            // try {
+                            //   if(kIsWeb){
+                            //     Reference _reference = FirebaseStorage
+                            //         .ref()
+                            //         .child('images/${Path.basename(pickedFile!.path)}');
+                            //     await _reference
+                            //         .putData(
+                            //       await pickedFile!.readAsBytes(),
+                            //       SettableMetadata(contentType: 'image/jpeg'),
+                            //     )
+                            //         .whenComplete(() async {
+                            //       await _reference.getDownloadURL().then((value) {
+                            //         uploadedPhotoUrl = value;
+                            //       });
+                            //     });
+                            //   }else{
+                            //
+                            //   }
+                            // } on Exception catch (e) {
+                            //   // TODO
+                            //   print("File Upload Error $e");
+                            // }
+                            final ref = storage.FirebaseStorage.instance.ref()
+                                .child('itemImg').child(username).child(
+                                "$username$now${basename(image.path)}");
+
+                            final result = await ref.putFile(
+                                File(image.path));
+                            final fileUrl = await result.ref.getDownloadURL();
+                            setState(() => imgThree = fileUrl);
+                            setState(() {
+                              imageAdded = true;
+                            });
+                          }
 
 
-                          setState(() => imgThree=fileUrl);
-                          setState(() {
-                            imageAdded=true;
-                          });
                           // Open a file picker to select an image
                         },
                         child: imgThree == null
@@ -512,7 +660,7 @@ class _PlaceListingState extends State<PlaceListing> {
                 ),
               ),
               Text(
-                "Pricing",
+                "Number of Items",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(18),
                   color: Colors.black,
@@ -526,7 +674,7 @@ class _PlaceListingState extends State<PlaceListing> {
                   controller: priceController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                      labelText: "Price",
+                      labelText: "Number of Items",
 
                       filled: true,
                       fillColor: HexColor.fromHex('#F3F1F1'),
@@ -537,7 +685,42 @@ class _PlaceListingState extends State<PlaceListing> {
                   ),
                   validator: (value){
                     if(value!.isEmpty){
-                      return "required";
+                      return "Required Field";
+                    }
+
+                    return null;
+                  },
+
+                ),
+              ),
+
+              Text(
+                "Item Price",
+                style: TextStyle(
+                  fontSize: getProportionateScreenWidth(18),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: height/100),
+              SizedBox(
+                width: width/4,
+                child: TextFormField(
+                  controller: priceController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      labelText: "Item Price",
+
+                      filled: true,
+                      fillColor: HexColor.fromHex('#F3F1F1'),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        //borderSide: BorderSide.none
+                      )
+                  ),
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "Required Field";
                     }
 
                     return null;
@@ -1218,7 +1401,7 @@ Future<void> addListing(BuildContext context) async {
 
       showCloseIcon: true,
       title: "Success!",
-      desc: "Logged in Successfully",
+      desc: "Item added Successfully",
 
       btnOkOnPress: (){
         category=null;

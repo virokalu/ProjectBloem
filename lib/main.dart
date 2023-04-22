@@ -30,16 +30,15 @@ Future main() async{
           apiKey: "AIzaSyDlZU5-YB1ikQ3JUvb_BGOVzwf5OZZZflw",
           appId: "1:698241380744:web:82fcffc4d940b3f3ab8a3d",
           messagingSenderId: "698241380744",
+          storageBucket: "projectbloem-1e1c5.appspot.com",
           projectId: "projectbloem-1e1c5")
     );
   }else{
     await Firebase.initializeApp();
-
-
   }
   runApp(
-    // const ProviderScope(child: DevicePreview(
-    //   builder: (context) => const MyApp(), // Wrap your app
+    // ProviderScope(child: DevicePreview(
+    //   builder: (context) => MyApp(), // Wrap your app
     // ),),
 
     const ProviderScope(child: MyApp()),

@@ -15,4 +15,3 @@ const apiURL = "192.168.8.124:3000";
 const itemGet = "item";
 const String appName = "Project Bloem";
 const int pageSize = 10;
-
