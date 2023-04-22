@@ -4,10 +4,8 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 import 'package:path/path.dart';
 import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -384,27 +382,27 @@ class _PlaceListingState extends State<PlaceListing> {
                         onTap: () async{
 
                           DateTime now = DateTime.now();
-                          if(kIsWeb) {
-                            //print("Im Here");
-                            //final picker = ImagePickerWeb();
-                            final pickedFile = await ImagePickerWeb
-                                .getImageAsFile();
-                            if (pickedFile != null) {
-                              final fileName = basename(pickedFile.name);
-                              final path = 'itemImg/$username/$username$now$fileName';
-                              final storageRef = storage.FirebaseStorage
-                                  .instance.ref().child(path);
-                              final uploadTask = storageRef.putBlob(
-                              pickedFile.slice());
-                              final snapshot = await uploadTask;
-                              final fileUrl = await snapshot.ref
-                                  .getDownloadURL();
-                              setState(() => imgOne = fileUrl);
-                              setState(() {
-                              imageAdded = true;
-                              });
-                            }
-                          }else {
+                          // if(kIsWeb) {
+                          //   //print("Im Here");
+                          //   //final picker = ImagePickerWeb();
+                          //   final pickedFile = await ImagePickerWeb
+                          //       .getImageAsFile();
+                          //   if (pickedFile != null) {
+                          //     final fileName = basename(pickedFile.name);
+                          //     final path = 'itemImg/$username/$username$now$fileName';
+                          //     final storageRef = storage.FirebaseStorage
+                          //         .instance.ref().child(path);
+                          //     final uploadTask = storageRef.putBlob(
+                          //     pickedFile.slice());
+                          //     final snapshot = await uploadTask;
+                          //     final fileUrl = await snapshot.ref
+                          //         .getDownloadURL();
+                          //     setState(() => imgOne = fileUrl);
+                          //     setState(() {
+                          //     imageAdded = true;
+                          //     });
+                          //   }
+                          // }else {
                               final image = await ImagePicker().pickImage(
                                   source: ImageSource.gallery,
                                   imageQuality: 50);
@@ -446,7 +444,7 @@ class _PlaceListingState extends State<PlaceListing> {
                               setState(() {
                                 imageAdded = true;
                               });
-                            }
+
 
 
                           // Open a file picker to select an image
@@ -479,27 +477,27 @@ class _PlaceListingState extends State<PlaceListing> {
                         onTap: () async {
                           DateTime now = DateTime.now();
 
-                          if(kIsWeb) {
-                            //print("Im Here");
-                            //final picker = ImagePickerWeb();
-                            final pickedFile = await ImagePickerWeb
-                                .getImageAsFile();
-                            if (pickedFile != null) {
-                              final fileName = basename(pickedFile.name);
-                              final path = 'itemImg/$username/$username$now$fileName';
-                              final storageRef = storage.FirebaseStorage
-                                  .instance.ref().child(path);
-                              final uploadTask = storageRef.putBlob(
-                                  pickedFile.slice());
-                              final snapshot = await uploadTask;
-                              final fileUrl = await snapshot.ref
-                                  .getDownloadURL();
-                              setState(() => imgTwo = fileUrl);
-                              setState(() {
-                                imageAdded = true;
-                              });
-                            }
-                          }else {
+                          // if(kIsWeb) {
+                          //   //print("Im Here");
+                          //   //final picker = ImagePickerWeb();
+                          //   final pickedFile = await ImagePickerWeb
+                          //       .getImageAsFile();
+                          //   if (pickedFile != null) {
+                          //     final fileName = basename(pickedFile.name);
+                          //     final path = 'itemImg/$username/$username$now$fileName';
+                          //     final storageRef = storage.FirebaseStorage
+                          //         .instance.ref().child(path);
+                          //     final uploadTask = storageRef.putBlob(
+                          //         pickedFile.slice());
+                          //     final snapshot = await uploadTask;
+                          //     final fileUrl = await snapshot.ref
+                          //         .getDownloadURL();
+                          //     setState(() => imgTwo = fileUrl);
+                          //     setState(() {
+                          //       imageAdded = true;
+                          //     });
+                          //   }
+                          // }else {
                             final image = await ImagePicker().pickImage(
                                 source: ImageSource.gallery,
                                 imageQuality: 50);
@@ -540,7 +538,7 @@ class _PlaceListingState extends State<PlaceListing> {
                             setState(() {
                               imageAdded = true;
                             });
-                          }
+
 
                           // Open a file picker to select an image
                         },
@@ -573,27 +571,27 @@ class _PlaceListingState extends State<PlaceListing> {
                         onTap: () async {
 
                           DateTime now = DateTime.now();
-                          if(kIsWeb) {
-                            //print("Im Here");
-                            //final picker = ImagePickerWeb();
-                            final pickedFile = await ImagePickerWeb
-                                .getImageAsFile();
-                            if (pickedFile != null) {
-                              final fileName = basename(pickedFile.name);
-                              final path = 'itemImg/$username/$username$now$fileName';
-                              final storageRef = storage.FirebaseStorage
-                                  .instance.ref().child(path);
-                              final uploadTask = storageRef.putBlob(
-                                  pickedFile.slice());
-                              final snapshot = await uploadTask;
-                              final fileUrl = await snapshot.ref
-                                  .getDownloadURL();
-                              setState(() => imgThree = fileUrl);
-                              setState(() {
-                                imageAdded = true;
-                              });
-                            }
-                          }else {
+                          // if(kIsWeb) {
+                          //   //print("Im Here");
+                          //   //final picker = ImagePickerWeb();
+                          //   final pickedFile = await ImagePickerWeb
+                          //       .getImageAsFile();
+                          //   if (pickedFile != null) {
+                          //     final fileName = basename(pickedFile.name);
+                          //     final path = 'itemImg/$username/$username$now$fileName';
+                          //     final storageRef = storage.FirebaseStorage
+                          //         .instance.ref().child(path);
+                          //     final uploadTask = storageRef.putBlob(
+                          //         pickedFile.slice());
+                          //     final snapshot = await uploadTask;
+                          //     final fileUrl = await snapshot.ref
+                          //         .getDownloadURL();
+                          //     setState(() => imgThree = fileUrl);
+                          //     setState(() {
+                          //       imageAdded = true;
+                          //     });
+                          //   }
+                          // }else {
                             final image = await ImagePicker().pickImage(
                                 source: ImageSource.gallery,
                                 imageQuality: 50);
@@ -635,7 +633,7 @@ class _PlaceListingState extends State<PlaceListing> {
                             setState(() {
                               imageAdded = true;
                             });
-                          }
+
 
 
                           // Open a file picker to select an image
