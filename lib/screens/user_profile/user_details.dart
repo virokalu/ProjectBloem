@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 import 'package:image_cropper/image_cropper.dart';
 import "package:image_picker/image_picker.dart";
-import 'package:image_picker_web/image_picker_web.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -88,25 +87,24 @@ class _ProfileCardState extends State<ProfileCard> {
                 child: GestureDetector(
                   onTap: () async {
                     //final File file;
-                    // ignore: unused_local_variable
-                    DateTime now = DateTime.now();
+                    //DateTime now = DateTime.now();
 
-                    if(kIsWeb){
-                      final pickedFile = await ImagePickerWeb
-                          .getImageAsFile();
-                      if (pickedFile != null) {
-                        final fileName = basename(pickedFile.name);
-                        final path = 'profileImg/$username$fileName';
-                        final storageRef = storage.FirebaseStorage
-                            .instance.ref().child(path);
-                        final uploadTask = storageRef.putBlob(
-                            pickedFile.slice());
-                        final snapshot = await uploadTask;
-                        fileUrl = await snapshot.ref
-                            .getDownloadURL();
-                      }
-
-                    }else{
+                    // if(kIsWeb){
+                    //   final pickedFile = await ImagePickerWeb
+                    //       .getImageAsFile();
+                    //   if (pickedFile != null) {
+                    //     final fileName = basename(pickedFile.name);
+                    //     final path = 'profileImg/$username$fileName';
+                    //     final storageRef = storage.FirebaseStorage
+                    //         .instance.ref().child(path);
+                    //     final uploadTask = storageRef.putBlob(
+                    //         pickedFile.slice());
+                    //     final snapshot = await uploadTask;
+                    //     fileUrl = await snapshot.ref
+                    //         .getDownloadURL();
+                    //   }
+                    //
+                    // }else{
                       final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
                       if (image== null) return;
 
@@ -128,7 +126,7 @@ class _ProfileCardState extends State<ProfileCard> {
                           .child('profileImg').child(username + basename(cropFile.path));
                       final result = await ref.putFile(File(cropFile.path));
                       fileUrl = await result.ref.getDownloadURL();
-                    }
+
 
                     //setState(() => pickedfile=image);
                     //preference.setString('imgPath', newImage.path);
