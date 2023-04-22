@@ -432,7 +432,7 @@ class _PlaceListingState extends State<PlaceListing> {
                               //
                               //   }
                               // } on Exception catch (e) {
-                              //   // TODO
+                              
                               //   print("File Upload Error $e");
                               // }
                               final ref = storage.FirebaseStorage.instance.ref()
@@ -526,7 +526,7 @@ class _PlaceListingState extends State<PlaceListing> {
                             //
                             //   }
                             // } on Exception catch (e) {
-                            //   // TODO
+                            
                             //   print("File Upload Error $e");
                             // }
                             final ref = storage.FirebaseStorage.instance.ref()
@@ -621,7 +621,7 @@ class _PlaceListingState extends State<PlaceListing> {
                             //
                             //   }
                             // } on Exception catch (e) {
-                            //   // TODO
+                            
                             //   print("File Upload Error $e");
                             // }
                             final ref = storage.FirebaseStorage.instance.ref()

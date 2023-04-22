@@ -88,6 +88,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 child: GestureDetector(
                   onTap: () async {
                     //final File file;
+                    // ignore: unused_local_variable
                     DateTime now = DateTime.now();
 
                     if(kIsWeb){
