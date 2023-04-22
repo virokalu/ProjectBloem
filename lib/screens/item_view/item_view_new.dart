@@ -117,7 +117,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                      "Each 2.5 -Inch Pot contains 1 plant Plant needs : Light Level:Full Sun(6 + hours of direct sunlight) Soil Moisture: Moist,Dry Fertilizer:when transplanted and then every 3-4 weeks"),
+                      "Each 2.50 -Inch Pot contains 1 plant Plant needs : Light Level:Full Sun(6 + hours of direct sunlight) Soil Moisture: Moist,Dry Fertilizer:when transplanted and then every 3-4 weeks"),
                 ],
               ),
             ),
