@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:project_bloem/screens/search_screen/sresult.dart';
 //import 'package:device_preview/device_preview.dart';
 import 'package:project_bloem/screens/summery/summery.dart';
 import 'package:project_bloem/screens/basket_screen/mybasket.dart';
@@ -79,6 +80,8 @@ class MyApp extends StatelessWidget {
           '/help':(context) => const HelpScreen(),
           '/summery':(context) => const SummeryPage(),
           '/addListing':(context) => const PlaceListing(),
+          '/search':(context) => const SearchResultScreen(),
+          //'/item':(context) => const SearchResultScreen(),
         },
     );
   }

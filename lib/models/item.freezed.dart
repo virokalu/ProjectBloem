@@ -20,6 +20,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Item {
+  String get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   String get commonname => throw _privateConstructorUsedError;
@@ -43,7 +44,8 @@ abstract class $ItemCopyWith<$Res> {
       _$ItemCopyWithImpl<$Res, Item>;
   @useResult
   $Res call(
-      {String username,
+      {String id,
+      String username,
       String category,
       String commonname,
       String? sciname,
@@ -69,6 +71,7 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? username = null,
     Object? category = null,
     Object? commonname = null,
@@ -82,6 +85,10 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
     Object? imgthree = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -137,7 +144,8 @@ abstract class _$$_ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String username,
+      {String id,
+      String username,
       String category,
       String commonname,
       String? sciname,
@@ -159,6 +167,7 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? username = null,
     Object? category = null,
     Object? commonname = null,
@@ -172,6 +181,10 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
     Object? imgthree = null,
   }) {
     return _then(_$_Item(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -224,7 +237,8 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
 @JsonSerializable()
 class _$_Item implements _Item {
   _$_Item(
-      {required this.username,
+      {required this.id,
+      required this.username,
       required this.category,
       required this.commonname,
       this.sciname,
@@ -238,6 +252,8 @@ class _$_Item implements _Item {
 
   factory _$_Item.fromJson(Map<String, dynamic> json) => _$$_ItemFromJson(json);
 
+  @override
+  final String id;
   @override
   final String username;
   @override
@@ -263,7 +279,7 @@ class _$_Item implements _Item {
 
   @override
   String toString() {
-    return 'Item(username: $username, category: $category, commonname: $commonname, sciname: $sciname, price: $price, description: $description, cashondelivery: $cashondelivery, chatactivate: $chatactivate, imgone: $imgone, imgtwo: $imgtwo, imgthree: $imgthree)';
+    return 'Item(id: $id, username: $username, category: $category, commonname: $commonname, sciname: $sciname, price: $price, description: $description, cashondelivery: $cashondelivery, chatactivate: $chatactivate, imgone: $imgone, imgtwo: $imgtwo, imgthree: $imgthree)';
   }
 
   @override
@@ -271,6 +287,7 @@ class _$_Item implements _Item {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Item &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.category, category) ||
@@ -295,6 +312,7 @@ class _$_Item implements _Item {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      id,
       username,
       category,
       commonname,
@@ -323,7 +341,8 @@ class _$_Item implements _Item {
 
 abstract class _Item implements Item {
   factory _Item(
-      {required final String username,
+      {required final String id,
+      required final String username,
       required final String category,
       required final String commonname,
       final String? sciname,
@@ -337,6 +356,8 @@ abstract class _Item implements Item {
 
   factory _Item.fromJson(Map<String, dynamic> json) = _$_Item.fromJson;
 
+  @override
+  String get id;
   @override
   String get username;
   @override

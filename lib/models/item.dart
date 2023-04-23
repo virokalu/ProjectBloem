@@ -9,6 +9,7 @@ List<Item> itemsFromJson(dynamic str)=>
 @freezed
 abstract class Item with _$Item {
   factory Item({
+    required String id,
     required String username,
     required String category,
     required String commonname,
