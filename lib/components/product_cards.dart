@@ -21,6 +21,8 @@ class CardBox extends StatelessWidget {
         height: getProportionateScreenHeight(270),
         child: GestureDetector(
           onTap: (){
+            print(model!.id);
+            //Navigator.pushNamed(context, '/itemview');
             Navigator.push(context, MaterialPageRoute(builder: (context) => const ItemViewNew(id : "644337e0697cd498a8bab053")));
           },
           //######################################on tap navigation############################
@@ -148,9 +150,10 @@ class CardBox extends StatelessWidget {
 
 class CategoryCardBox extends StatelessWidget {
 
-
+  final String img;
+  final String text;
   final Color colorName;
-  const CategoryCardBox({super.key,required this.colorName});
+  const CategoryCardBox({super.key,required this.colorName,required this.img,required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +201,7 @@ class CategoryCardBox extends StatelessWidget {
                         child: SizedBox.fromSize(
                           size: const Size.fromRadius(48),
                           //###############################################image here###################// Image radius
-                          child: Image.asset("images/welcome.png", fit: BoxFit.cover),
+                          child: Image.asset(img, fit: BoxFit.cover),
                         ),
                       ),
 
@@ -207,7 +210,7 @@ class CategoryCardBox extends StatelessWidget {
                         height: 20,
                         child: Text(
 //####################################################titlt here################################################
-                          "Sun Flower",
+                          text,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: getProportionateScreenWidth(16),

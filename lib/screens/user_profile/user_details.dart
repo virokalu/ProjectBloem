@@ -108,8 +108,6 @@ class _ProfileCardState extends State<ProfileCard> {
                       final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
                       if (image== null) return;
 
-
-
                       //final directory = await getApplicationSupportDirectory();
                       //final name = basename(image.path);
                       //final imageFile = File('${directory.path}/$name');

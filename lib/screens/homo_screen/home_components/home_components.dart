@@ -105,7 +105,6 @@ class SearchBarFilter extends StatelessWidget {
       children: [
         SizedBox(width: getProportionateScreenWidth(30)),
         Container(
-
           width: SizeConfig.screenWidth * 0.7,
 
           decoration: BoxDecoration(
@@ -125,21 +124,126 @@ class SearchBarFilter extends StatelessWidget {
               enabledBorder: InputBorder.none,
               hintText: "Search product",
               hintStyle: TextStyle(color: HexColor.fromHex('#86869E')),
-              prefixIcon: Icon(
-                  Icons.search,
-                  color: HexColor.fromHex('#86869E',
-                  )
-              ),
+              // prefixIcon: Icon(
+              //     Icons.search,
+              //     color: HexColor.fromHex('#86869E',
+              //     )
+              // ),
             ),
           ),
 
         ),
-        IconButton(
-          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-          //###############################################Filter ICon#################################
-          onPressed: () { },
-          icon: const Icon(Icons.menu),
-          color: HexColor.fromHex('#33363F'),
+        // IconButton(
+        //   style: ,
+        //   padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+        //   //###############################################Filter ICon#################################
+        //   onPressed: () {
+        //
+        //   },
+        //   icon: const Icon(Icons.search),
+        //   color: HexColor.fromHex('#33363F'),
+        // ),
+        SizedBox(width: getProportionateScreenWidth(10)),
+
+        InkWell(
+          borderRadius: BorderRadius.circular(50),
+          onTap: () {},
+          child: Container(
+            padding: EdgeInsets.all(getProportionateScreenWidth(0)),
+            height: getProportionateScreenWidth(55),
+            width: getProportionateScreenWidth(55),
+            decoration: BoxDecoration(
+              color: HexColor.fromHex('#E7FFED'),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+              onPressed: () {
+                Navigator.pushNamed(context, '/search');
+              },
+              //###################################################go to item when click##########
+              icon: const Icon(Icons.search),
+              color: HexColor.fromHex('#4CD964'),
+            ),
+          ),
+        ),
+
+      ],
+    );
+  }
+}
+
+class SearchBar extends StatelessWidget {
+  const SearchBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+
+      children: [
+        SizedBox(width: getProportionateScreenWidth(10)),
+        Container(
+          width: SizeConfig.screenWidth * 0.7,
+
+          decoration: BoxDecoration(
+            color: HexColor.fromHex('#F3F4F9'),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: TextField(
+
+            //onChanged: () { },
+            //################################################Search Onchange#######################################
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(30),
+                  vertical: getProportionateScreenWidth(20)),
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              hintText: "Search product",
+              hintStyle: TextStyle(color: HexColor.fromHex('#86869E')),
+              // prefixIcon: Icon(
+              //     Icons.search,
+              //     color: HexColor.fromHex('#86869E',
+              //     )
+              // ),
+            ),
+          ),
+
+        ),
+        // IconButton(
+        //   style: ,
+        //   padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+        //   //###############################################Filter ICon#################################
+        //   onPressed: () {
+        //
+        //   },
+        //   icon: const Icon(Icons.search),
+        //   color: HexColor.fromHex('#33363F'),
+        // ),
+        SizedBox(width: getProportionateScreenWidth(10)),
+
+        InkWell(
+          borderRadius: BorderRadius.circular(50),
+          onTap: () {},
+          child: Container(
+            padding: EdgeInsets.all(getProportionateScreenWidth(0)),
+            height: getProportionateScreenWidth(55),
+            width: getProportionateScreenWidth(55),
+            decoration: BoxDecoration(
+              color: HexColor.fromHex('#E7FFED'),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+              onPressed: () {
+                Navigator.pushNamed(context, '/search');
+              },
+              //###################################################go to item when click##########
+              icon: const Icon(Icons.search),
+              color: HexColor.fromHex('#4CD964'),
+            ),
+          ),
         ),
 
       ],

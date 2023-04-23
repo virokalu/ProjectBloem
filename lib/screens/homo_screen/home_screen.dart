@@ -51,9 +51,7 @@ class HomeScreen extends ConsumerWidget {
 
               ),
               SizedBox(height: getProportionateScreenHeight(20)),
-
               const SearchBarFilter(),
-
               SizedBox(height: getProportionateScreenHeight(20)),
 
 
@@ -100,9 +98,42 @@ class HomeScreen extends ConsumerWidget {
                         //#####################################card start Here##########################################
 
 
-                        CategoryCardBox(colorName: HexColor.fromHex('#FFFAEB')),
-                        CategoryCardBox(colorName: HexColor.fromHex('#FEF0F0')),
-                        CategoryCardBox(colorName: HexColor.fromHex('#F1EFF6')),
+                        CategoryCardBox(
+                          colorName: HexColor.fromHex('#FFFAEB'),
+                          img: "images/cutFlowers.jpg",
+                          text: "Cut Flowers",
+
+                        ),
+                        CategoryCardBox(
+                            colorName: HexColor.fromHex('#FEF0F0'),
+                          img: "images/foliage.jpg",
+                          text: "Foliage",
+                        ),
+                        CategoryCardBox(
+                          colorName: HexColor.fromHex('#F1EFF6'),
+                          img: "images/potPlants.jpg",
+                          text: "Pot Plants",
+                        ),
+                        CategoryCardBox(
+                          colorName: HexColor.fromHex('#F1EFF6'),
+                          img: "images/lanscapingPlants.jpg",
+                          text: "Landscaping",
+                        ),
+                        CategoryCardBox(
+                          colorName: HexColor.fromHex('#F1EFF6'),
+                          img: "images/beddingPlants.jpg",
+                          text: "Bedding",
+                        ),
+                        CategoryCardBox(
+                          colorName: HexColor.fromHex('#F1EFF6'),
+                          img: "images/propagatoryPlant.jpg",
+                          text: "Propagatory",
+                        ),
+                        CategoryCardBox(
+                          colorName: HexColor.fromHex('#F1EFF6'),
+                          img: "images/other.jpg",
+                          text: "Other..",
+                        ),
 
                         // ...List.generate(
                         //   demoProducts.length,
