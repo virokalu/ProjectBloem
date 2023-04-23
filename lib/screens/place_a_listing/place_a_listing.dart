@@ -36,6 +36,7 @@ String? category;
 final nameController = TextEditingController();
 final sciName =TextEditingController();
 final desController = TextEditingController();
+final noOfItemsController = TextEditingController();
 final priceController = TextEditingController();
 bool cashOnDelivery=false;
 bool chatActivate=false;
@@ -430,7 +431,7 @@ class _PlaceListingState extends State<PlaceListing> {
                               //
                               //   }
                               // } on Exception catch (e) {
-                              //   // TODO
+                              
                               //   print("File Upload Error $e");
                               // }
                               final ref = storage.FirebaseStorage.instance.ref()
@@ -524,7 +525,7 @@ class _PlaceListingState extends State<PlaceListing> {
                             //
                             //   }
                             // } on Exception catch (e) {
-                            //   // TODO
+                            
                             //   print("File Upload Error $e");
                             // }
                             final ref = storage.FirebaseStorage.instance.ref()
@@ -619,7 +620,7 @@ class _PlaceListingState extends State<PlaceListing> {
                             //
                             //   }
                             // } on Exception catch (e) {
-                            //   // TODO
+                            
                             //   print("File Upload Error $e");
                             // }
                             final ref = storage.FirebaseStorage.instance.ref()
@@ -669,7 +670,7 @@ class _PlaceListingState extends State<PlaceListing> {
               SizedBox(
                 width: width/4,
                 child: TextFormField(
-                  controller: priceController,
+                  controller: noOfItemsController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       labelText: "Number of Items",
@@ -1230,6 +1231,17 @@ class _Preview extends State<Preview> {
               const SizedBox(
                 height: 10,
               ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width: width,
+                    child: Text(
+                      "${noOfItemsController.text}",
+                      style: const TextStyle(fontSize: 24),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
               SizedBox(
                 width: width,
                 child: Text(

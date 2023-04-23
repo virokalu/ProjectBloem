@@ -23,6 +23,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
     var width = size.width;
     int currentIndex = 0;
     List<String> images = ['$imgOne', '$imgTwo', '$imgThree'];
+    // ignore: no_leading_underscores_for_local_identifiers
     final PageController _pageController = PageController(initialPage: 0);
 
     return SafeArea(

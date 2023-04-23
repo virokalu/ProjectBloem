@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:http/http.dart' as http;
+import '../../config.dart';
 import 'barchartmodel.dart';
 import 'dart:convert';
 
@@ -25,7 +26,8 @@ class _SummeryPageState extends State<SummeryPage> {
     
   // ];
 
-  late List<BarChartModel> data;
+  late List<BarChartModel> data = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -34,7 +36,11 @@ class _SummeryPageState extends State<SummeryPage> {
   }
 
   Future<void> fetchData() async {
-    final response = await http.get(Uri.parse('http://localhost:3000/barchartdata'));
+    setState(() {
+      _isLoading = true;
+    });
+    try{
+      final response = await http.get(Uri.parse(barchartdata));
     final List<dynamic> responseData = jsonDecode(response.body);
     data = responseData
         .map((json) => BarChartModel(
@@ -43,7 +49,15 @@ class _SummeryPageState extends State<SummeryPage> {
               color: charts.ColorUtil.fromDartColor(getColorFromName(json['color'])),
             ))
         .toList();
-    setState(() {});
+    }
+    catch(e){
+      setState(() {
+        _isLoading = true;
+      });
+    }
+    setState(() {
+        _isLoading = false;
+      });
     //print(data);
   }
 
@@ -73,8 +87,10 @@ class _SummeryPageState extends State<SummeryPage> {
     ];
 
     return Scaffold(
-      body: SafeArea(
-        child: ListView(
+      body: _isLoading
+      ? const Center(child: CircularProgressIndicator())
+      :SafeArea(
+        child:ListView(
           children: [
             //back button with text,
             Text("Sales in a Last Week",style: TextStyle(
@@ -82,11 +98,21 @@ class _SummeryPageState extends State<SummeryPage> {
               fontSize: 17.00,
               letterSpacing: 5.00,
             ),),
-            Container(
-              margin: const EdgeInsets.all(10),
-              height: MediaQuery.of(context).size.height/2,
-              //color: Colors.red,
-              child: charts.BarChart(animate: true, series,),
+            Column(
+              children: [
+                    Container(
+                  margin: const EdgeInsets.all(10),
+                  height: MediaQuery.of(context).size.height/2,
+                  //color: Colors.red,
+                  child: charts.BarChart(animate: true, series,),
+                ),
+                    Container(
+                  margin: const EdgeInsets.all(10),
+                  height: MediaQuery.of(context).size.height/2,
+                  //color: Colors.red,
+                  child: charts.BarChart(animate: true, series,),
+                ),
+              ],
             ),
             Column(
               children: [

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../Model/chatmodel.dart';
 import '../../components/button_components.dart';
 import '../../components/color_components.dart';
+import '../../config.dart';
 import '../homo_screen/home_screen.dart';
 import '../login_screen/loginuserdetails.dart';
 import 'customcard.dart';
@@ -22,11 +23,10 @@ class _ChatListState extends State<ChatList> {
   final receiverController = TextEditingController();
   final senderController = TextEditingController();
   bool _isLoading = true;
-  String _resText = " ";
 
   String user = UserDetails.username;
 
-  late List<ChatModel> chats;
+  late List<ChatModel> chats = [];
 
   @override
   void initState() {
@@ -45,7 +45,8 @@ class _ChatListState extends State<ChatList> {
       "img" : "jj",
       "id" : "5",
     };
-    var response = await http.post(Uri.parse('http://localhost:3000/insertchatlistdata'),
+    //var response = await http.post(Uri.parse(insertchats),
+    await http.post(Uri.parse(insertchats),
         headers: {"Content-Type":"application/json",
           "Access-Control-Allow-Origin": "*"
         },
@@ -62,7 +63,7 @@ class _ChatListState extends State<ChatList> {
     });
 
     try{
-      final response = await http.post(Uri.parse('http://localhost:3000/chatlistdata'),
+      final response = await http.post(Uri.parse(chatdetails),
     headers: {"Content-Type":"application/json",
           "Access-Control-Allow-Origin": "*"
         },
@@ -76,20 +77,15 @@ class _ChatListState extends State<ChatList> {
               img: json['img'],
             ))
         .toList();
-    setState(() {
-      _resText = response.body;
-    });
     }
     catch(e){
       setState(() {
-        _resText = 'Error: $e';
+        _isLoading = true;
       });
     }
-    finally{
-      setState(() {
+    setState(() {
         _isLoading = false;
       });
-    }
     //print(data);
   }
   
@@ -120,7 +116,7 @@ class _ChatListState extends State<ChatList> {
       ),
           ],
         ),
-        body: (_isLoading && _resText.isNotEmpty) 
+        body: _isLoading 
             ? const Center(child:CircularProgressIndicator())
             :ListView.builder(
                   itemCount: chats.length,
