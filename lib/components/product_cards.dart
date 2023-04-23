@@ -113,7 +113,7 @@ class CardBox extends StatelessWidget {
                           onTap: () {},
                           child: Container(
                             padding: EdgeInsets.all(getProportionateScreenWidth(0)),
-                            height: getProportionateScreenWidth(20),
+                            height: getProportionateScreenWidth(40),
                             width: getProportionateScreenWidth(40),
                             decoration: BoxDecoration(
                               color: HexColor.fromHex('#E7FFED'),
@@ -153,6 +153,7 @@ class CategoryCardBox extends StatelessWidget {
   final String img;
   final String text;
   final Color colorName;
+  //final VoidCallback onPressed;
   const CategoryCardBox({super.key,required this.colorName,required this.img,required this.text});
 
   @override
@@ -163,7 +164,15 @@ class CategoryCardBox extends StatelessWidget {
       child: SizedBox(
         width: getProportionateScreenWidth(150),
         child: GestureDetector(
-          onTap: (){},
+          onTap: (){
+            Navigator.of(context).pushNamed(
+              '/search',
+              arguments: {
+                'category':text,
+              }
+
+            );
+          },
           //######################################on tap navigation############################
           // onTap: () => Navigator.pushNamed(
           //   context,

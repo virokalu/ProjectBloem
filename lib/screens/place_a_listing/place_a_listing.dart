@@ -26,7 +26,7 @@ var _values = [
   "Pot Plants",
   "Landscaping Plants",
   "Bedded Plants",
-  "Propagatory Plants / Nursery Plants",
+  "Propagatory Plants",
   "Other",
 ];
 

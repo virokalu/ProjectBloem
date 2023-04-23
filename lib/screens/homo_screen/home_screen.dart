@@ -103,11 +103,12 @@ class HomeScreen extends ConsumerWidget {
                           img: "images/cutFlowers.jpg",
                           text: "Cut Flowers",
 
+
                         ),
                         CategoryCardBox(
                             colorName: HexColor.fromHex('#FEF0F0'),
                           img: "images/foliage.jpg",
-                          text: "Foliage",
+                          text: "Foliage Plants",
                         ),
                         CategoryCardBox(
                           colorName: HexColor.fromHex('#F1EFF6'),
@@ -117,22 +118,22 @@ class HomeScreen extends ConsumerWidget {
                         CategoryCardBox(
                           colorName: HexColor.fromHex('#F1EFF6'),
                           img: "images/lanscapingPlants.jpg",
-                          text: "Landscaping",
+                          text: "Landscaping Plants",
                         ),
                         CategoryCardBox(
                           colorName: HexColor.fromHex('#F1EFF6'),
                           img: "images/beddingPlants.jpg",
-                          text: "Bedding",
+                          text: "Bedded Plants",
                         ),
                         CategoryCardBox(
                           colorName: HexColor.fromHex('#F1EFF6'),
                           img: "images/propagatoryPlant.jpg",
-                          text: "Propagatory",
+                          text: "Propagatory Plants",
                         ),
                         CategoryCardBox(
                           colorName: HexColor.fromHex('#F1EFF6'),
                           img: "images/other.jpg",
-                          text: "Other..",
+                          text: "Other",
                         ),
 
                         // ...List.generate(

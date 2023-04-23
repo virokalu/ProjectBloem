@@ -6,6 +6,8 @@ import 'package:project_bloem/components/color_components.dart';
 //import 'package:project_bloem/screens/item_view/image_dialog.dart';
 import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:http/http.dart' as http;
+
+import '../../config.dart';
 //import '../../models/item.dart';
 
 String? imgOne;
@@ -35,7 +37,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
     });
     try{
       // ignore: prefer_interpolation_to_compose_strings
-      final url = Uri.parse("http://192.168.8.124:3000/item/"+widget.id);
+      final url = Uri.parse(itemAdd+"/"+widget.id);
       final response = await http.get(url);
       if(response.statusCode == 200){
         data = jsonDecode(response.body);

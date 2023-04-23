@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_bloem/models/item_sort.dart';
 //import 'package:project_bloem/components/color_components.dart';
 import '../../components/back_button_icon.dart';
 import '../../components/size.dart';
@@ -14,6 +16,7 @@ class SearchResultScreen extends StatefulWidget{
 }
 
 class _SearchResultScreenState extends State<SearchResultScreen>{
+  String? category;
 
   List<bool> expanded = [false, false];
 
@@ -332,10 +335,54 @@ class _SearchResultScreenState extends State<SearchResultScreen>{
                 //     ),
                 //   ),
                 // ),
+                Container(
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                    ],
+                  ),
+                )
               ],
             ),
           ),
         ),
     );
   }
+  @override
+  void didChangeDependencies(){
+    final Map? arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    if(arguments !=null){
+      category = arguments['category'];
+    }
+    super.didChangeDependencies();
+  }
+}
+class _ItemFilters extends ConsumerWidget{
+  final _sortByOptions = [
+    ItemSortModel(value: "createdAt",label: "Latest"),
+    ItemSortModel(value: "-productPrice",label: "Price: High to Low"),
+    ItemSortModel(value: "productPrice",label: "Price: Low to High"),
+  ];
+
+  _ItemFilters({
+    Key? key,
+    this.category,
+  });
+  @override
+  Widget build(BuildContext context,WidgetRef ref){
+    return Container(
+      height: 51,
+      margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(data)
+        ],
+      ),
+    );
+  }
+
 }

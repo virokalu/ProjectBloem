@@ -7,7 +7,7 @@ part 'item_filter.freezed.dart';
 abstract class ItemFilterModel with _$ItemFilterModel{
   factory ItemFilterModel({
     required PaginationModel paginationModel,
-    String? categoryId,
+    String? category,
     String? sortBy,
   }) = _ItemFilterModel;
 }
