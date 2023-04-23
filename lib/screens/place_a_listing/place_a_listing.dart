@@ -993,7 +993,7 @@ class _Preview extends State<Preview> {
             margin: EdgeInsets.all(width / 30),
             child: ListView(
                 children: [
-                  ItemViewComponents(text: '$category'),
+                  ItemViewComponents(text: '$category',category: " "),
                   const SizedBox(
                     height: 10,
                   ),

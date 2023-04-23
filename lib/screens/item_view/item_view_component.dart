@@ -4,9 +4,10 @@ import '../../components/color_components.dart';
 
 class ItemViewComponents extends StatelessWidget {
   final String text;
+  final String category;
   //final IconData icon;
 
-  const ItemViewComponents({super.key, required this.text});
+  const ItemViewComponents({super.key, required this.text,required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +32,9 @@ class ItemViewComponents extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            const Text(
-              'Category Here',
-              style: TextStyle(fontFamily: 'poppins', fontSize: 16),
+            Text(
+              category,
+              style: const TextStyle(fontFamily: 'poppins', fontSize: 16),
             )
           ],
         ),

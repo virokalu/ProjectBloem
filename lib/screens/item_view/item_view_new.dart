@@ -1,37 +1,84 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/button_components.dart';
 import 'package:project_bloem/components/color_components.dart';
 //import 'package:project_bloem/screens/item_view/image_dialog.dart';
 import 'package:project_bloem/screens/item_view/item_view_component.dart';
+import 'package:http/http.dart' as http;
+//import '../../models/item.dart';
 
 String? imgOne;
 String? imgTwo;
 String? imgThree;
 bool imageAdded = true;
+bool _isLoading = true;
 
 class ItemViewNew extends StatefulWidget {
-  const ItemViewNew({super.key});
+  final String id;
+  const ItemViewNew({super.key,required this.id});
+ 
 
   @override
   State<ItemViewNew> createState() => _ItemViewNewState();
 }
 
 class _ItemViewNewState extends State<ItemViewNew> {
+
+  // ignore: prefer_typing_uninitialized_variables
+  var data;
+
+  Future<void> fetchItemData() async {
+    // ignore: prefer_interpolation_to_compose_strings
+    setState(() {
+      _isLoading = true;
+    });
+    try{
+      // ignore: prefer_interpolation_to_compose_strings
+      final url = Uri.parse("http://192.168.8.124:3000/item/"+widget.id);
+      final response = await http.get(url);
+      if(response.statusCode == 200){
+        //print("ok");
+        data = jsonDecode(response.body);
+        //var newData = itemsFromJson(data["data"]);
+        print(data['data']['id']);
+      }
+    }
+    catch(e){
+      print(e);
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+   @override
+  void initState() {
+    super.initState();
+    fetchItemData();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var width = size.width;
     int currentIndex = 0;
-    List<String> images = ['$imgOne', '$imgTwo', '$imgThree'];
+     //List<String> images = ['$imgOne', '$imgTwo', '$imgThree'];
+    List<String> images = data == null ? [] : [data["data"]["imgone"], data["data"]["imgtwo"], data["data"]["imgthree"]];
     // ignore: no_leading_underscores_for_local_identifiers
     final PageController _pageController = PageController(initialPage: 0);
 
     return SafeArea(
         child: Scaffold(
-      body: Container(
+      body: _isLoading 
+                ? const Center(child: CircularProgressIndicator())
+                : Container(
         margin: EdgeInsets.all(width / 30),
         child: Column(children: [
-          const ItemViewComponents(text: 'Title Here'),
+          ItemViewComponents(text: data["data"]["commonname"],category: data["data"]["category"],),
           const SizedBox(
             height: 10,
           ),
@@ -111,14 +158,15 @@ class _ItemViewNewState extends State<ItemViewNew> {
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Column(
+              child:Column(
                 children: [
-                  Text(
+                  const Text(
                     "Description",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                      "Each 2.50 -Inch Pot contains 1 plant Plant needs : Light Level:Full Sun(6 + hours of direct sunlight) Soil Moisture: Moist,Dry Fertilizer:when transplanted and then every 3-4 weeks"),
+                      data["data"]["description"],
+                  )
                 ],
               ),
             ),
@@ -126,9 +174,10 @@ class _ItemViewNewState extends State<ItemViewNew> {
           const SizedBox(
             height: 10,
           ),
-          const Text(
-            "Rs.500.00",
-            style: TextStyle(fontSize: 24),
+          Text(
+            // ignore: prefer_interpolation_to_compose_strings
+            "Rs."+data["data"]["price"].toString(),
+            style: const TextStyle(fontSize: 24),
             textAlign: TextAlign.left,
           ),
           const SizedBox(
@@ -164,7 +213,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                   Expanded(
                       child: TextButton(
                     style: greenButtonBorderStyle,
-                    onPressed: () {},
+                    onPressed: () {fetchItemData();},
                     child: Text(
                       "Add Basket",
                       style: TextStyle(

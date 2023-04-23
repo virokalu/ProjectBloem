@@ -135,11 +135,14 @@ class HomeScreen extends ConsumerWidget {
       ),
     );
 
+    //print(items);
+
     return items.when(
         data: (list){
           return _buildItemList(list!);
         },
         error: (error,__){
+          //print(error);
           return Center(child: Text(error.toString()));
         },
         loading: ()=> const Center(

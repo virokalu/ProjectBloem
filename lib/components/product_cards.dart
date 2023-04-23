@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project_bloem/components/size.dart';
 import 'package:project_bloem/models/item.dart';
 
+import '../screens/item_view/item_view_new.dart';
 import 'color_components.dart';
 
 
@@ -17,9 +18,10 @@ class CardBox extends StatelessWidget {
       padding: EdgeInsets.only(left: getProportionateScreenWidth(5)),
       child: SizedBox(
         width: getProportionateScreenWidth(170),
+        height: getProportionateScreenHeight(270),
         child: GestureDetector(
           onTap: (){
-            //Navigator.pushNamed(context, '/itemview');
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const ItemViewNew(id : "644337e0697cd498a8bab053")));
           },
           //######################################on tap navigation############################
           // onTap: () => Navigator.pushNamed(
@@ -109,7 +111,7 @@ class CardBox extends StatelessWidget {
                           onTap: () {},
                           child: Container(
                             padding: EdgeInsets.all(getProportionateScreenWidth(0)),
-                            height: getProportionateScreenWidth(40),
+                            height: getProportionateScreenWidth(20),
                             width: getProportionateScreenWidth(40),
                             decoration: BoxDecoration(
                               color: HexColor.fromHex('#E7FFED'),

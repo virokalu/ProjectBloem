@@ -46,9 +46,9 @@ class APIService {
     //print(url.toString());
     //print(response.body.toString());
     var data = jsonDecode(response.body);
-    //print("pass response");
+    //print(data);
     if(data["status"]){
-      //print("pass");
+      //print(data["data"]);
       return itemsFromJson(data["data"]);
     }else{
       return null;
