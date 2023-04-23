@@ -1237,6 +1237,7 @@ class _Preview extends State<Preview> {
                   SizedBox(
                     width: width,
                     child: Text(
+                      // ignore: unnecessary_string_interpolations
                       "${noOfItemsController.text}",
                       style: const TextStyle(fontSize: 24),
                       textAlign: TextAlign.left,

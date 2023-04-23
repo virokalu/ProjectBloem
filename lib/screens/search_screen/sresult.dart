@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_bloem/components/color_components.dart';
+//import 'package:project_bloem/components/color_components.dart';
 import '../../components/back_button_icon.dart';
 import '../../components/size.dart';
 import '../homo_screen/home_components/home_components.dart';
@@ -19,6 +19,7 @@ class _SearchResultScreenState extends State<SearchResultScreen>{
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 

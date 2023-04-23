@@ -21,9 +21,9 @@ class CardBox extends StatelessWidget {
         height: getProportionateScreenHeight(270),
         child: GestureDetector(
           onTap: (){
-            print(model!.id);
+            //print(model!.id);
             //Navigator.pushNamed(context, '/itemview');
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const ItemViewNew(id : "644337e0697cd498a8bab053")));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ItemViewNew(id : model!.id.toString())));
           },
           //######################################on tap navigation############################
           // onTap: () => Navigator.pushNamed(

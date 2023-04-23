@@ -38,13 +38,11 @@ class _ItemViewNewState extends State<ItemViewNew> {
       final url = Uri.parse("http://192.168.8.124:3000/item/"+widget.id);
       final response = await http.get(url);
       if(response.statusCode == 200){
-        //print("ok");
         data = jsonDecode(response.body);
-        //var newData = itemsFromJson(data["data"]);
-        print(data['data']['id']);
       }
     }
     catch(e){
+      // ignore: avoid_print
       print(e);
     }
 
