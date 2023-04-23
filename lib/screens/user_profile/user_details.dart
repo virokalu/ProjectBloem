@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 import 'package:image_cropper/image_cropper.dart';
 import "package:image_picker/image_picker.dart";
@@ -32,6 +33,7 @@ class _ProfileCardState extends State<ProfileCard> {
   String fullname="";
   String username="";
   String profileimg='https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg';
+  late String fileUrl;
 
 
   @override
@@ -85,29 +87,45 @@ class _ProfileCardState extends State<ProfileCard> {
                 child: GestureDetector(
                   onTap: () async {
                     //final File file;
+                    //DateTime now = DateTime.now();
 
-                    final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
-                    if (image== null) return;
+                    // if(kIsWeb){
+                    //   final pickedFile = await ImagePickerWeb
+                    //       .getImageAsFile();
+                    //   if (pickedFile != null) {
+                    //     final fileName = basename(pickedFile.name);
+                    //     final path = 'profileImg/$username$fileName';
+                    //     final storageRef = storage.FirebaseStorage
+                    //         .instance.ref().child(path);
+                    //     final uploadTask = storageRef.putBlob(
+                    //         pickedFile.slice());
+                    //     final snapshot = await uploadTask;
+                    //     fileUrl = await snapshot.ref
+                    //         .getDownloadURL();
+                    //   }
+                    //
+                    // }else{
+                      final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
+                      if (image== null) return;
 
 
 
-                    //final directory = await getApplicationSupportDirectory();
-                    //final name = basename(image.path);
-                    //final imageFile = File('${directory.path}/$name');
-                    //final newImage = await File(image.path).copy(imageFile.path);
+                      //final directory = await getApplicationSupportDirectory();
+                      //final name = basename(image.path);
+                      //final imageFile = File('${directory.path}/$name');
+                      //final newImage = await File(image.path).copy(imageFile.path);
 
-                    //Crop the image using ImageCropper
+                      //Crop the image using ImageCropper
 
+                      var cropFile = await ImageCropper().cropImage(
+                          sourcePath: image.path,
+                          aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1));
+                      if (cropFile== null) return;
 
-                    var cropFile = await ImageCropper().cropImage(
-                        sourcePath: image.path,
-                        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1));
-                    if (cropFile== null) return;
-
-                    final ref = storage.FirebaseStorage.instance.ref()
-                        .child('profileImg').child(username + basename(cropFile.path));
-                    final result = await ref.putFile(File(cropFile.path));
-                    final fileUrl = await result.ref.getDownloadURL();
+                      final ref = storage.FirebaseStorage.instance.ref()
+                          .child('profileImg').child(username + basename(cropFile.path));
+                      final result = await ref.putFile(File(cropFile.path));
+                      fileUrl = await result.ref.getDownloadURL();
 
 
                     //setState(() => pickedfile=image);
@@ -246,6 +264,11 @@ class _ProfileCardState extends State<ProfileCard> {
         ],
       ),
     );
+  }
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('fileUrl', fileUrl));
   }
 }
 

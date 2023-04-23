@@ -6,6 +6,7 @@ part of 'item.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+// ignore: non_constant_identifier_names
 _$_Item _$$_ItemFromJson(Map<String, dynamic> json) => _$_Item(
       username: json['username'] as String,
       category: json['category'] as String,
@@ -20,6 +21,7 @@ _$_Item _$$_ItemFromJson(Map<String, dynamic> json) => _$_Item(
       imgthree: json['imgthree'] as String,
     );
 
+// ignore: non_constant_identifier_names
 Map<String, dynamic> _$$_ItemToJson(_$_Item instance) => <String, dynamic>{
       'username': instance.username,
       'category': instance.category,
