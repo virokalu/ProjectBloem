@@ -40,5 +40,6 @@ class ItemsNotifier extends StateNotifier<ItemsState>{
     state = state.copyWith(items: [],hasNext: false);
 
     _page = 1;
+    await getItems();
   }
 }

@@ -1,8 +1,12 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_bloem/components/size.dart';
 import 'package:project_bloem/models/item.dart';
+import 'package:project_bloem/models/item_filter.dart';
+import 'package:project_bloem/models/pagination.dart';
+import 'package:project_bloem/provider.dart';
 
 import '../screens/item_view/item_view_new.dart';
 import 'color_components.dart';
@@ -148,7 +152,7 @@ class CardBox extends StatelessWidget {
 }
 
 
-class CategoryCardBox extends StatelessWidget {
+class CategoryCardBox extends ConsumerWidget {
 
   final String img;
   final String text;
@@ -157,94 +161,100 @@ class CategoryCardBox extends StatelessWidget {
   const CategoryCardBox({super.key,required this.colorName,required this.img,required this.text});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+      return Padding(
+        padding: EdgeInsets.only(left: getProportionateScreenWidth(5)),
+        child: SizedBox(
+          width: getProportionateScreenWidth(150),
+          child: GestureDetector(
+            onTap: (){
+              ItemFilterModel filterModel = ItemFilterModel(
+                paginationModel: PaginationModel(
+                    pageSize:  10,
+                    page: 1),
+                category: text,
+              );
 
-    return Padding(
-      padding: EdgeInsets.only(left: getProportionateScreenWidth(5)),
-      child: SizedBox(
-        width: getProportionateScreenWidth(150),
-        child: GestureDetector(
-          onTap: (){
-            Navigator.of(context).pushNamed(
-              '/search',
-              arguments: {
-                'category':text,
-              }
+              ref
+                  .read(itemsFilterProvider.notifier)
+                  .setItemFilter(filterModel);
+              ref.read(itemNotifierProvider.notifier).getItems();
 
-            );
-          },
-          //######################################on tap navigation############################
-          // onTap: () => Navigator.pushNamed(
-          //   context,
-          //   DetailsScreen.routeName,
-          //   arguments: ProductDetailsArguments(product: product),
-          // ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AspectRatio(
-                aspectRatio: 0.9,
-                child: Container(
-                  margin: const EdgeInsets.only(left:5,right:5,top:10),
-                  padding: const EdgeInsets.only(left: 15,right: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: colorName,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 40,
-                        offset: const Offset(0, 25), // changes position of shadow
-                      ),
-                    ],
+              //print(ref);
+              Navigator.of(context).pushNamed(
+                  '/category',
+                  arguments: {
+                    'category':text,
+                  }
 
-                  ),
-                  child: Column(
-
-                    children: [
-                      const SizedBox(height: 20),
-                      ClipRRect(
-
-                        borderRadius: BorderRadius.circular(10), // Image border
-                        child: SizedBox.fromSize(
-                          size: const Size.fromRadius(48),
-                          //###############################################image here###################// Image radius
-                          child: Image.asset(img, fit: BoxFit.cover),
+              );
+            },
+            //######################################on tap navigation############################
+            // onTap: () => Navigator.pushNamed(
+            //   context,
+            //   DetailsScreen.routeName,
+            //   arguments: ProductDetailsArguments(product: product),
+            // ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AspectRatio(
+                  aspectRatio: 0.9,
+                  child: Container(
+                    margin: const EdgeInsets.only(left:5,right:5,top:10),
+                    padding: const EdgeInsets.only(left: 15,right: 15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: colorName,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 40,
+                          offset: const Offset(0, 25), // changes position of shadow
                         ),
-                      ),
+                      ],
 
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        height: 20,
-                        child: Text(
-//####################################################titlt here################################################
-                          text,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: getProportionateScreenWidth(16),
+                    ),
+                    child: Column(
 
+                      children: [
+                        const SizedBox(height: 20),
+                        ClipRRect(
 
+                          borderRadius: BorderRadius.circular(10), // Image border
+                          child: SizedBox.fromSize(
+                            size: const Size.fromRadius(48),
+                            //###############################################image here###################// Image radius
+                            child: Image.asset(img, fit: BoxFit.cover),
                           ),
-                          maxLines: 1,
-
                         ),
-                      ),
 
-                    ],
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          height: 20,
+                          child: Text(
+//####################################################titlt here################################################
+                            text,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: getProportionateScreenWidth(16),
+
+
+                            ),
+                            maxLines: 1,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-
                 ),
-              ),
-
-
-
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
+    }
 }
 
 //##################################selling Card#################
@@ -370,9 +380,6 @@ class SellingCard extends StatelessWidget {
 
               ),
             ),
-
-
-
             ],
           ),
         ),

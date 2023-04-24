@@ -17,7 +17,6 @@ class SearchResultScreen extends StatefulWidget{
 
 class _SearchResultScreenState extends State<SearchResultScreen>{
   String? category;
-
   List<bool> expanded = [false, false];
 
   @override
@@ -341,7 +340,7 @@ class _SearchResultScreenState extends State<SearchResultScreen>{
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
+                      _ItemFilters(category: category,)
                     ],
                   ),
                 )
@@ -369,8 +368,10 @@ class _ItemFilters extends ConsumerWidget{
 
   _ItemFilters({
     Key? key,
-    //this.category,
+    this.category,
   });
+  final String? category;
+
   @override
   Widget build(BuildContext context,WidgetRef ref){
     return Container(
@@ -379,7 +380,7 @@ class _ItemFilters extends ConsumerWidget{
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(data)
+          Text(category!)
         ],
       ),
     );
