@@ -10,6 +10,7 @@ const chatdetails = "${url}chatlistdata";
 const insertchats = "${url}insertchatlistdata";
 const barchartdata = "${url}barchartdata";
 const apiURL = "10.0.2.2:3000";
+const regBuyItem = "${url}item/regbuyitem";
 //const apiURL = "localhost:3000";
 //const apiURL = "192.168.8.124:3000";
 const itemGet = "item";
