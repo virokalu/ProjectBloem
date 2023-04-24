@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ItemFilterModel {
   PaginationModel get paginationModel => throw _privateConstructorUsedError;
-  String? get categoryId => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
   String? get sortBy => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -32,7 +32,7 @@ abstract class $ItemFilterModelCopyWith<$Res> {
       _$ItemFilterModelCopyWithImpl<$Res, ItemFilterModel>;
   @useResult
   $Res call(
-      {PaginationModel paginationModel, String? categoryId, String? sortBy});
+      {PaginationModel paginationModel, String? category, String? sortBy});
 
   $PaginationModelCopyWith<$Res> get paginationModel;
 }
@@ -51,7 +51,7 @@ class _$ItemFilterModelCopyWithImpl<$Res, $Val extends ItemFilterModel>
   @override
   $Res call({
     Object? paginationModel = null,
-    Object? categoryId = freezed,
+    Object? category = freezed,
     Object? sortBy = freezed,
   }) {
     return _then(_value.copyWith(
@@ -59,9 +59,9 @@ class _$ItemFilterModelCopyWithImpl<$Res, $Val extends ItemFilterModel>
           ? _value.paginationModel
           : paginationModel // ignore: cast_nullable_to_non_nullable
               as PaginationModel,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
               as String?,
       sortBy: freezed == sortBy
           ? _value.sortBy
@@ -88,7 +88,7 @@ abstract class _$$_ItemFilterModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {PaginationModel paginationModel, String? categoryId, String? sortBy});
+      {PaginationModel paginationModel, String? category, String? sortBy});
 
   @override
   $PaginationModelCopyWith<$Res> get paginationModel;
@@ -106,7 +106,7 @@ class __$$_ItemFilterModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? paginationModel = null,
-    Object? categoryId = freezed,
+    Object? category = freezed,
     Object? sortBy = freezed,
   }) {
     return _then(_$_ItemFilterModel(
@@ -114,9 +114,9 @@ class __$$_ItemFilterModelCopyWithImpl<$Res>
           ? _value.paginationModel
           : paginationModel // ignore: cast_nullable_to_non_nullable
               as PaginationModel,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
               as String?,
       sortBy: freezed == sortBy
           ? _value.sortBy
@@ -130,18 +130,18 @@ class __$$_ItemFilterModelCopyWithImpl<$Res>
 
 class _$_ItemFilterModel implements _ItemFilterModel {
   _$_ItemFilterModel(
-      {required this.paginationModel, this.categoryId, this.sortBy});
+      {required this.paginationModel, this.category, this.sortBy});
 
   @override
   final PaginationModel paginationModel;
   @override
-  final String? categoryId;
+  final String? category;
   @override
   final String? sortBy;
 
   @override
   String toString() {
-    return 'ItemFilterModel(paginationModel: $paginationModel, categoryId: $categoryId, sortBy: $sortBy)';
+    return 'ItemFilterModel(paginationModel: $paginationModel, category: $category, sortBy: $sortBy)';
   }
 
   @override
@@ -151,14 +151,14 @@ class _$_ItemFilterModel implements _ItemFilterModel {
             other is _$_ItemFilterModel &&
             (identical(other.paginationModel, paginationModel) ||
                 other.paginationModel == paginationModel) &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.sortBy, sortBy) || other.sortBy == sortBy));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, paginationModel, categoryId, sortBy);
+      Object.hash(runtimeType, paginationModel, category, sortBy);
 
   @JsonKey(ignore: true)
   @override
@@ -170,13 +170,13 @@ class _$_ItemFilterModel implements _ItemFilterModel {
 abstract class _ItemFilterModel implements ItemFilterModel {
   factory _ItemFilterModel(
       {required final PaginationModel paginationModel,
-      final String? categoryId,
+      final String? category,
       final String? sortBy}) = _$_ItemFilterModel;
 
   @override
   PaginationModel get paginationModel;
   @override
-  String? get categoryId;
+  String? get category;
   @override
   String? get sortBy;
   @override

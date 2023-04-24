@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project_bloem/components/size.dart';
 import 'package:project_bloem/models/item.dart';
 
+import '../screens/item_view/item_view_new.dart';
 import 'color_components.dart';
 
 
@@ -17,9 +18,12 @@ class CardBox extends StatelessWidget {
       padding: EdgeInsets.only(left: getProportionateScreenWidth(5)),
       child: SizedBox(
         width: getProportionateScreenWidth(170),
+        height: getProportionateScreenHeight(270),
         child: GestureDetector(
           onTap: (){
+            //print(model!.id);
             //Navigator.pushNamed(context, '/itemview');
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ItemViewNew(id : model!.id.toString())));
           },
           //######################################on tap navigation############################
           // onTap: () => Navigator.pushNamed(
@@ -146,9 +150,11 @@ class CardBox extends StatelessWidget {
 
 class CategoryCardBox extends StatelessWidget {
 
-
+  final String img;
+  final String text;
   final Color colorName;
-  const CategoryCardBox({super.key,required this.colorName});
+  //final VoidCallback onPressed;
+  const CategoryCardBox({super.key,required this.colorName,required this.img,required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +164,15 @@ class CategoryCardBox extends StatelessWidget {
       child: SizedBox(
         width: getProportionateScreenWidth(150),
         child: GestureDetector(
-          onTap: (){},
+          onTap: (){
+            Navigator.of(context).pushNamed(
+              '/search',
+              arguments: {
+                'category':text,
+              }
+
+            );
+          },
           //######################################on tap navigation############################
           // onTap: () => Navigator.pushNamed(
           //   context,
@@ -196,7 +210,7 @@ class CategoryCardBox extends StatelessWidget {
                         child: SizedBox.fromSize(
                           size: const Size.fromRadius(48),
                           //###############################################image here###################// Image radius
-                          child: Image.asset("images/welcome.png", fit: BoxFit.cover),
+                          child: Image.asset(img, fit: BoxFit.cover),
                         ),
                       ),
 
@@ -205,7 +219,7 @@ class CategoryCardBox extends StatelessWidget {
                         height: 20,
                         child: Text(
 //####################################################titlt here################################################
-                          "Sun Flower",
+                          text,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: getProportionateScreenWidth(16),

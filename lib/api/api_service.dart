@@ -35,8 +35,8 @@ class APIService {
       'page': itemFilterModel.paginationModel.page.toString(),
       'pageSize': itemFilterModel.paginationModel.pageSize.toString()
     };
-    if(itemFilterModel.categoryId != null){
-      queryString["category"] = itemFilterModel.categoryId!;
+    if(itemFilterModel.category != null){
+      queryString["category"] = itemFilterModel.category!;
     }
     if(itemFilterModel.sortBy != null){
       queryString['sort'] = itemFilterModel.sortBy!;
@@ -46,9 +46,9 @@ class APIService {
     //print(url.toString());
     //print(response.body.toString());
     var data = jsonDecode(response.body);
-    //print("pass response");
+    //print(data);
     if(data["status"]){
-      //print("pass");
+      //print(data["data"]);
       return itemsFromJson(data["data"]);
     }else{
       return null;

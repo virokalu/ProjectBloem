@@ -26,7 +26,7 @@ var _values = [
   "Pot Plants",
   "Landscaping Plants",
   "Bedded Plants",
-  "Propagatory Plants / Nursery Plants",
+  "Propagatory Plants",
   "Other",
 ];
 
@@ -994,7 +994,7 @@ class _Preview extends State<Preview> {
             margin: EdgeInsets.all(width / 30),
             child: ListView(
                 children: [
-                  ItemViewComponents(text: '$category'),
+                  ItemViewComponents(text: '$category',category: " "),
                   const SizedBox(
                     height: 10,
                   ),
@@ -1237,6 +1237,7 @@ class _Preview extends State<Preview> {
                   SizedBox(
                     width: width,
                     child: Text(
+                      // ignore: unnecessary_string_interpolations
                       "${noOfItemsController.text}",
                       style: const TextStyle(fontSize: 24),
                       textAlign: TextAlign.left,

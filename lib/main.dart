@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:project_bloem/screens/search_screen/sresult.dart';
 //import 'package:device_preview/device_preview.dart';
 import 'package:project_bloem/screens/summery/summery.dart';
 import 'package:project_bloem/screens/basket_screen/mybasket.dart';
@@ -8,7 +9,7 @@ import 'package:project_bloem/screens/chat/chatlist.dart';
 import 'package:project_bloem/screens/delivery_screen/delivery.dart';
 import 'package:project_bloem/screens/help_screen/help.dart';
 import 'package:project_bloem/screens/homo_screen/home_screen.dart';
-import 'package:project_bloem/screens/item_view/item_view_new.dart';
+//import 'package:project_bloem/screens/item_view/item_view_new.dart';
 import 'package:project_bloem/screens/item_view/itemview.dart';
 import 'package:project_bloem/screens/login_screen/login.dart';
 import 'package:project_bloem/screens/place_a_listing/place_a_listing.dart';
@@ -74,11 +75,13 @@ class MyApp extends StatelessWidget {
           '/chat' :(context) => const ChatList(),
           '/delivery':(context) => const DeliveryScreen(),
           '/itemview':(context) => const ItemView(),
-          '/itemviewNew':(context) => const ItemViewNew(),
+          // '/itemviewNew':(context) => const ItemViewNew(item: model),
           '/preview':(context) => const Preview(),
           '/help':(context) => const HelpScreen(),
           '/summery':(context) => const SummeryPage(),
           '/addListing':(context) => const PlaceListing(),
+          '/search':(context) => const SearchResultScreen(),
+          //'/item':(context) => const SearchResultScreen(),
         },
     );
   }
