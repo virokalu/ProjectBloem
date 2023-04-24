@@ -204,7 +204,6 @@ class _ChatListState extends State<ChatList> {
                               borderRadius: BorderRadius.circular(20),
                             )
                           ),
-                          keyboardType: TextInputType.number,
                         ),
                       ],
                     ),

@@ -6,6 +6,8 @@ import 'package:project_bloem/components/color_components.dart';
 //import 'package:project_bloem/screens/item_view/image_dialog.dart';
 import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:http/http.dart' as http;
+
+import '../../config.dart';
 //import '../../models/item.dart';
 
 String? imgOne;
@@ -27,6 +29,13 @@ class _ItemViewNewState extends State<ItemViewNew> {
 
   // ignore: prefer_typing_uninitialized_variables
   var data;
+  final streetController = TextEditingController();
+  final cityController = TextEditingController();
+  final postalCodeController = TextEditingController();
+  final cardholderController = TextEditingController();
+  final cardnumberController = TextEditingController();
+  final dateController = TextEditingController();
+  final ccvController = TextEditingController();
 
   Future<void> fetchItemData() async {
     // ignore: prefer_interpolation_to_compose_strings
@@ -51,10 +60,67 @@ class _ItemViewNewState extends State<ItemViewNew> {
     });
   }
 
+  Future<void> registerBuyItem() async {
+    var reqbody = {
+      "street" : streetController.text,
+      "town" : cityController.text,
+      "postalCode" : postalCodeController.text,
+      "username" : data["data"]["username"],
+      "id" : widget.id,
+    };
+
+    final url = Uri.parse(regBuyItem);
+    var response = await http.post(
+      url,
+      headers: {"Content-Type":"application/json",
+          "Access-Control-Allow-Origin": "*"
+      },
+      body: jsonEncode(reqbody),
+    );
+
+    // var jsonresponse = jsonDecode(response.body);
+    // (jsonresponse.status);
+    // if(jsonresponse.status){
+    //   print("success");
+    // }
+    // else{
+    //   print("not success");
+    // }
+  }
+
+  Future<void> registeCard() async {
+    var reqbody = {
+      "cardholdername" : cardholderController.text,
+      "cardnumber" : cardnumberController.text,
+      "date" : dateController.text,
+      "ccv" : ccvController.text,
+      "username" : widget.id,
+    };
+
+    final url = Uri.parse(regBuyItem);
+    var response = await http.post(
+      url,
+      headers: {"Content-Type":"application/json",
+          "Access-Control-Allow-Origin": "*"
+      },
+      body: jsonEncode(reqbody),
+    );
+
+    // var jsonresponse = jsonDecode(response.body);
+    // (jsonresponse.status);
+    // if(jsonresponse.status){
+    //   print("success");
+    // }
+    // else{
+    //   print("not success");
+    // }
+  }
+
    @override
   void initState() {
     super.initState();
     fetchItemData();
+    registerBuyItem();
   }
 
 
@@ -191,11 +257,8 @@ class _ItemViewNewState extends State<ItemViewNew> {
                     child: TextButton(
                       style: greenButtonStyle,
                       onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) => bottomesheet(),
-                          backgroundColor: Colors.white,
-                        );
+                        
+                        openDialog();
                       },
                       child: const Text(
                         "Buy Now",
@@ -211,7 +274,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                   Expanded(
                       child: TextButton(
                     style: greenButtonBorderStyle,
-                    onPressed: () {fetchItemData();},
+                    onPressed: () {},
                     child: Text(
                       "Add Basket",
                       style: TextStyle(
@@ -244,6 +307,54 @@ class _ItemViewNewState extends State<ItemViewNew> {
     ));
   }
 
+  Future openDialog() => showDialog(
+    builder: (context) => AlertDialog(
+      title: Text("Enter your location for deliver"),
+      content: SizedBox(
+        height: MediaQuery.of(context).size.height/4,
+        child: ListView(
+          children: [
+          TextFormField(
+              controller: streetController,
+              decoration: InputDecoration(hintText: "Street Name"),
+          ),
+          TextFormField(
+              controller: cityController,
+              decoration: InputDecoration(hintText: "Town Name"),
+          ),
+          TextFormField(
+              controller: postalCodeController,
+              decoration: InputDecoration(hintText: "Postal Code"),
+          ),
+        ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            setState(() {
+              registerBuyItem();
+            });
+            streetController.clear();
+            cityController.clear();
+            postalCodeController.clear();
+            //open2Dialog();
+            Navigator.of(context).pop();
+            showModalBottomSheet(
+                          context: context,
+                          builder: (context) => bottomesheet(),
+                          backgroundColor: Colors.white,
+                        );
+          }, 
+          child: Text("Next")
+        ),
+      ],
+    ), 
+    context: context,
+  );
+
+  
+
 //button click action for buy now button
   Widget bottomesheet() {
     return SizedBox(
@@ -260,6 +371,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                   height: 20,
                 ),
                 TextFormField(
+                  controller : cardholderController,
                   decoration: InputDecoration(
                       hintText: "Manoj Lakshan",
                       border: OutlineInputBorder(
@@ -274,6 +386,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                   height: 20,
                 ),
                 TextFormField(
+                  controller : cardnumberController,
                   decoration: InputDecoration(
                       hintText: "1234 5678 9012",
                       border: OutlineInputBorder(
@@ -292,6 +405,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                             height: 20,
                           ),
                           TextFormField(
+                            controller : dateController,
                             decoration: InputDecoration(
                                 hintText: "04/03",
                                 border: OutlineInputBorder(
@@ -312,6 +426,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                             height: 20,
                           ),
                           TextFormField(
+                            controller : ccvController,
                             decoration: InputDecoration(
                                 hintText: "123",
                                 border: OutlineInputBorder(
