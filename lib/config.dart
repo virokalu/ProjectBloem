@@ -1,7 +1,5 @@
 const url = 'http://10.0.2.2:3000/';
-const url = 'http://10.48.35.167:3000/';
 //const url = 'http://localhost:3000/';
-//const url = 'http://192.168.8.124:3000/';
 //const url = 'http://192.168.8.124:3000/';
 const registration = "${url}registration";
 const login = "${url}login";
@@ -13,9 +11,7 @@ const insertchats = "${url}insertchatlistdata";
 const barchartdata = "${url}barchartdata";
 const apiURL = "10.0.2.2:3000";
 const regBuyItem = "${url}item/regbuyitem";
-const apiURL = "10.48.35.167:3000";
 //const apiURL = "localhost:3000";
-//const apiURL = "192.168.8.124:3000";
 //const apiURL = "192.168.8.124:3000";
 const itemGet = "item";
 const String appName = "Project Bloem";

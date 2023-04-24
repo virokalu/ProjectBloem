@@ -70,6 +70,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
     };
 
     final url = Uri.parse(regBuyItem);
+    // ignore: unused_local_variable
     var response = await http.post(
       url,
       headers: {"Content-Type":"application/json",
@@ -98,6 +99,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
     };
 
     final url = Uri.parse(regBuyItem);
+    // ignore: unused_local_variable
     var response = await http.post(
       url,
       headers: {"Content-Type":"application/json",
@@ -309,22 +311,22 @@ class _ItemViewNewState extends State<ItemViewNew> {
 
   Future openDialog() => showDialog(
     builder: (context) => AlertDialog(
-      title: Text("Enter your location for deliver"),
+      title: const Text("Enter your location for deliver"),
       content: SizedBox(
         height: MediaQuery.of(context).size.height/4,
         child: ListView(
           children: [
           TextFormField(
               controller: streetController,
-              decoration: InputDecoration(hintText: "Street Name"),
+              decoration: const InputDecoration(hintText: "Street Name"),
           ),
           TextFormField(
               controller: cityController,
-              decoration: InputDecoration(hintText: "Town Name"),
+              decoration: const InputDecoration(hintText: "Town Name"),
           ),
           TextFormField(
               controller: postalCodeController,
-              decoration: InputDecoration(hintText: "Postal Code"),
+              decoration: const InputDecoration(hintText: "Postal Code"),
           ),
         ],
         ),
@@ -346,7 +348,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                           backgroundColor: Colors.white,
                         );
           }, 
-          child: Text("Next")
+          child: const Text("Next")
         ),
       ],
     ), 

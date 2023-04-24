@@ -337,7 +337,7 @@ class _SearchResultScreenState extends State<SearchResultScreen>{
                 // ),
                 Container(
                   color: Colors.white,
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -353,6 +353,7 @@ class _SearchResultScreenState extends State<SearchResultScreen>{
   }
   @override
   void didChangeDependencies(){
+    // ignore: unnecessary_nullable_for_final_variable_declarations
     final Map? arguments = ModalRoute.of(context)!.settings.arguments as Map;
     if(arguments !=null){
       category = arguments['category'];
@@ -360,7 +361,9 @@ class _SearchResultScreenState extends State<SearchResultScreen>{
     super.didChangeDependencies();
   }
 }
+// ignore: unused_element
 class _ItemFilters extends ConsumerWidget{
+  // ignore: unused_field
   final _sortByOptions = [
     ItemSortModel(value: "createdAt",label: "Latest"),
     ItemSortModel(value: "-productPrice",label: "Price: High to Low"),
@@ -368,6 +371,7 @@ class _ItemFilters extends ConsumerWidget{
   ];
 
   _ItemFilters({
+    // ignore: unused_element
     Key? key,
     //this.category,
   });
@@ -376,10 +380,10 @@ class _ItemFilters extends ConsumerWidget{
     return Container(
       height: 51,
       margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(data)
+          //Text(data)
         ],
       ),
     );
