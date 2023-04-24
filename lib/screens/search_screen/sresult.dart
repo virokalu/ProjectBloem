@@ -369,7 +369,7 @@ class _ItemFilters extends ConsumerWidget{
 
   _ItemFilters({
     Key? key,
-    this.category,
+    //this.category,
   });
   @override
   Widget build(BuildContext context,WidgetRef ref){
