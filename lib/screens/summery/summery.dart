@@ -93,7 +93,7 @@ class _SummeryPageState extends State<SummeryPage> {
         child:ListView(
           children: [
             //back button with text,
-            Text("Sales in a Last Week",style: TextStyle(
+            Text("Your Sales in  Last Week",style: TextStyle(
               backgroundColor: Colors.greenAccent[700],
               fontSize: 17.00,
               letterSpacing: 5.00,
