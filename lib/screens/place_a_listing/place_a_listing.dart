@@ -26,7 +26,7 @@ var _values = [
   "Pot Plants",
   "Landscaping Plants",
   "Bedded Plants",
-  "Propagatory Plants / Nursery Plants",
+  "Propagatory Plants",
   "Other",
 ];
 
@@ -1246,7 +1246,7 @@ class _Preview extends State<Preview> {
               SizedBox(
                 width: width,
                 child: Text(
-                  "Rs.${priceController.text}",
+                  "Rs.${priceController.text} items available",
                   style: const TextStyle(fontSize: 24),
                   textAlign: TextAlign.left,
                 ),
@@ -1419,6 +1419,7 @@ Future<void> addListing(BuildContext context) async {
         nameController.clear();
         sciName.clear();
         desController.clear();
+        noOfItemsController.clear();
         priceController.clear();
         cashOnDelivery=false;
         chatActivate=false;
