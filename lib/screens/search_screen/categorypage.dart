@@ -344,9 +344,10 @@ class _CategoryPageState extends State<CategoryPage> {
                   children: [
                     _ItemFilters(category: category),
                     // Flexible(
-                    //     flex: 1,
-                    //     child:
-                        _ItemList(),
+                    //   fit: FlexFit.loose,
+                    //   child:
+                      _ItemList(),
+                    //   flex: 1,
                     // ),
                   ],
                 ),
@@ -428,9 +429,21 @@ class _ItemFilters extends ConsumerWidget{
   }
 }
 class _ItemList extends ConsumerWidget{
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context,WidgetRef ref){
     final itemsState = ref.watch(itemNotifierProvider);
+
+    _scrollController.addListener(() {
+      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+        final itemsViewModel = ref.read(itemNotifierProvider.notifier);
+        final itemsState = ref.watch(itemNotifierProvider);
+
+        if(itemsState.hasNext){
+          itemsViewModel.getItems();
+        }
+      }
+    });
 
     //print(itemsState);
     if(itemsState.items.isEmpty){
@@ -439,45 +452,63 @@ class _ItemList extends ConsumerWidget{
         return const Center(child: Text("No Items"),
         );
       }
+      return const LinearProgressIndicator();
 
     }
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          //#####################################card start here#####################################################
-          ...List.generate(
-            itemsState.items.length,
-                (index) {
-              var data = itemsState.items[index];
-              return CardBox(model: data);
-            },
+        scrollDirection: Axis.vertical,
+          physics: const AlwaysScrollableScrollPhysics(),
+        child: RefreshIndicator(
+          onRefresh: () async{
+            //print(" here");
+            ref.read(itemNotifierProvider.notifier).refreshItems();
+          },
+          child: GridView.count(
+            shrinkWrap: true,
+            physics: const AlwaysScrollableScrollPhysics(),
+            crossAxisCount: 2,
+            childAspectRatio: 0.75,
+            children:
+              //#####################################card start here#####################################################
+              List.generate(
+                itemsState.items.length,
+                    (index) {
+                  var data = itemsState.items[index];
+                  return CardBox(model: data);
+                },
 
-          ),
-          SizedBox(width: getProportionateScreenWidth(20)),
-        ],
-      ),
+              ),
+
+              //SizedBox(width: getProportionateScreenWidth(20)),
+            ),
+
+        ),
+
+
     );
-    // return Column(
-    //   mainAxisSize: MainAxisSize.min,
-    //   children: [
-    //     Flexible(
-    //       fit: FlexFit.loose,
-    //       flex: 1,
-    //         child: GridView.count(
-    //           crossAxisCount: 2,
-    //           children: [
-    //             ...List.generate(
-    //               itemsState.items.length,
-    //                   (index) {
-    //                 var data = itemsState.items[index];
-    //                 return CardBox(model: data);
-    //               },
-    //             ),
-    //           ]
-    //       ),
+    // return Expanded(
+    //   child:
+    //     Column(
+    //       //mainAxisSize: MainAxisSize.min,
+    //       children: [
+    //         Flexible(
+    //           //fit: FlexFit.loose,
+    //           flex: 1,
+    //             child: GridView.count(
+    //               crossAxisCount: 2,
+    //               children: [
+    //                 ...List.generate(
+    //                   itemsState.items.length,
+    //                       (index) {
+    //                     var data = itemsState.items[index];
+    //                     return ItemCard(model: data);
+    //                   },
+    //                 ),
+    //               ]
+    //           ),
+    //         ),
+    //       ],
     //     ),
-    //   ],
     // );
   }
 

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_bloem/components/button_components.dart';
 import 'package:project_bloem/components/size.dart';
 import 'package:project_bloem/models/item.dart';
 import 'package:project_bloem/models/item_filter.dart';
@@ -19,10 +20,10 @@ class CardBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: getProportionateScreenWidth(5)),
+      padding: const EdgeInsets.only(left: 5,bottom: 5),
       child: SizedBox(
-        width: getProportionateScreenWidth(170),
-        height: getProportionateScreenHeight(270),
+        width: 190,
+        height: 250,
         child: GestureDetector(
           onTap: (){
             //print(model!.id);
@@ -54,15 +55,14 @@ class CardBox extends StatelessWidget {
                       offset: const Offset(0, 25), // changes position of shadow
                     ),
                   ],
-
                 ),
                 child: Column(
-
+                  //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(width: getProportionateScreenWidth(40)),
+                        const SizedBox(width: 50),
                         IconButton(
                           padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                           onPressed: () { },
@@ -86,19 +86,22 @@ class CardBox extends StatelessWidget {
 
                     const SizedBox(height: 10),
                     SizedBox(
-                      height: 20,
-                      child: Text(
+                      height: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
 //####################################################titlt here################################################
-                        model!.commonname,
-                      style: TextStyle(
-                          color: Colors.black,
-                        fontSize: getProportionateScreenWidth(16),
-                        fontWeight: FontWeight.bold,
+                          model!.commonname,
+                        style: const TextStyle(
+                            color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
 
-                      ),
-                      maxLines: 1,
+                        ),
+                        maxLines: 1,
 
                     ),
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,7 +110,7 @@ class CardBox extends StatelessWidget {
                           //##########################################price here################################
                           'Rs.${model!.price}',
                           style: TextStyle(
-                            fontSize: getProportionateScreenWidth(16),
+                            fontSize: 17,
                             fontWeight: FontWeight.w400,
                             color: HexColor.fromHex('#4CD964'),
                           ),
@@ -116,9 +119,9 @@ class CardBox extends StatelessWidget {
                           borderRadius: BorderRadius.circular(50),
                           onTap: () {},
                           child: Container(
-                            padding: EdgeInsets.all(getProportionateScreenWidth(0)),
-                            height: getProportionateScreenWidth(40),
-                            width: getProportionateScreenWidth(40),
+                            padding: const EdgeInsets.all(0),
+                            height: 40,
+                            width: 40,
                             decoration: BoxDecoration(
                               color: HexColor.fromHex('#E7FFED'),
                               shape: BoxShape.circle,
@@ -518,5 +521,77 @@ class ActiveCard extends StatelessWidget {
       ),
     );
   }
-
 }
+
+class ItemCard extends StatelessWidget {
+  final Item? model;
+  const ItemCard({Key? key,this.model}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 150,
+      decoration: const BoxDecoration(color:Colors.white),
+      margin:const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 100,
+              width: MediaQuery.of(context).size.width,
+            child: Image.network(
+              model!.imgone,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0,left:10),
+            child: Text(
+              model!.commonname,
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontSize: 13,
+                  color: Colors.black,
+                  fontWeight:FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Flexible(child: Row(
+                  children: [
+                    Text(
+                        "Rs.${model!.price}",
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        decoration: null,
+                      ),
+                    ),
+                  ],
+                ),
+                ),
+                GestureDetector(
+                  child: Icon(
+                    Icons.favorite,
+                    color: HexColor.fromHex('#4CD964'),
+                    size: 20,
+                  ),
+                  onTap: (){
+
+                  },
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
