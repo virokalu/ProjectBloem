@@ -21,6 +21,7 @@ import 'package:project_bloem/screens/welcome_screen/welcome_screen.dart';
 import 'components/size.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 
 Future main() async{
@@ -37,6 +38,10 @@ Future main() async{
   }else{
     await Firebase.initializeApp();
   }
+
+  WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = "pk_test_51MlHd3KwlHMvGTgl6qL1yVwQK3pW2bv4JSzAPTgLg4pI9jZN5ONlAQtEDO84v52tZAGKgkpZsGRQ8gJQIqibPgcZ00pB2W8QEX";
+  //await Stripe.instance.applySettings();
   runApp(
     // ProviderScope(child: DevicePreview(
     //   builder: (context) => MyApp(), // Wrap your app
