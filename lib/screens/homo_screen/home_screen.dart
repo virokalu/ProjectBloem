@@ -56,6 +56,7 @@ class HomeScreen extends ConsumerWidget {
 
 
           Column(
+            //mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
                 padding:
@@ -193,7 +194,10 @@ class HomeScreen extends ConsumerWidget {
             items.length,
                 (index) {
                   var data = items[index];
-                  return CardBox(model: data);
+                  return SizedBox(
+                    height: 275,
+                    child: CardBox(model: data),
+                  );
             },
           ),
           SizedBox(width: getProportionateScreenWidth(20)),

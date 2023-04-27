@@ -37,8 +37,8 @@ class ItemsNotifier extends StateNotifier<ItemsState>{
   }
 
   Future<void>refreshItems() async {
-    state = state.copyWith(items: [],hasNext: false);
-
+    state = state.copyWith(items: [],hasNext: true);
     _page = 1;
+    await getItems();
   }
 }
