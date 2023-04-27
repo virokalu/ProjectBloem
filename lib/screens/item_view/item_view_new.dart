@@ -1,11 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:project_bloem/components/button_components.dart';
 import 'package:project_bloem/components/color_components.dart';
 //import 'package:project_bloem/screens/item_view/image_dialog.dart';
 import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:http/http.dart' as http;
+
+/////////////////////////////
+//import 'package:stripe_payment/stripe_payment.dart';
+/////////////////////////////
 
 import '../../config.dart';
 //import '../../models/item.dart';
@@ -36,6 +41,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
   final cardnumberController = TextEditingController();
   final dateController = TextEditingController();
   final ccvController = TextEditingController();
+  
 
   Future<void> fetchItemData() async {
     // ignore: prefer_interpolation_to_compose_strings
@@ -125,7 +131,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
     registerBuyItem();
   }
 
-
+  late Map<String,dynamic> paymentIntent; 
 
   @override
   Widget build(BuildContext context) {
@@ -333,21 +339,24 @@ class _ItemViewNewState extends State<ItemViewNew> {
       ),
       actions: [
         TextButton(
-          onPressed: () {
-            setState(() {
-              registerBuyItem();
-            });
-            streetController.clear();
-            cityController.clear();
-            postalCodeController.clear();
-            //open2Dialog();
-            Navigator.of(context).pop();
-            showModalBottomSheet(
-                          context: context,
-                          builder: (context) => bottomesheet(),
-                          backgroundColor: Colors.white,
-                        );
-          }, 
+          // onPressed: () {
+          //   setState(() {
+          //     registerBuyItem();
+          //   });
+          //   streetController.clear();
+          //   cityController.clear();
+          //   postalCodeController.clear();
+          //   //open2Dialog();
+          //   Navigator.of(context).pop();
+          //   // showModalBottomSheet(
+          //   //               context: context,
+          //   //               builder: (context) => bottomesheet(),
+          //   //               backgroundColor: Colors.white,
+          //   //             );
+          // }, 
+              onPressed : () async {
+                await makePayment();
+              },
           child: const Text("Next")
         ),
       ],
@@ -355,133 +364,225 @@ class _ItemViewNewState extends State<ItemViewNew> {
     context: context,
   );
 
-  
+  Future<void> makePayment() async {
+    try{
+      paymentIntent = await createPaymentIntent(data["data"]["price"].toString(),'USD');
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntent['client_secret'],
+          // applePay: const PaymentSheetApplePay(merchantCountryCode: '+94'),
+          // googlePay: const PaymentSheetGooglePay(testEnv: true,currencyCode: 'USD',merchantCountryCode: '+94'),
+          style: ThemeMode.dark,
+          merchantDisplayName: 'manoj')).then((value){
+        });
 
-//button click action for buy now button
-  Widget bottomesheet() {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 2,
-      width: MediaQuery.of(context).size.width,
-      child: Card(
-        margin: EdgeInsets.all(MediaQuery.of(context).size.width / 30),
-        child: ListView(
-          children: [
-            Column(
+        displayPaymentSheet();
+    }
+    catch(e){
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  displayPaymentSheet() async {
+    try{
+      await Stripe.instance.presentPaymentSheet(
+      ).then((value) {
+        showDialog(
+          context: context, 
+          builder: (_) => const AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                const Text("Card Holder name"),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller : cardholderController,
-                  decoration: InputDecoration(
-                      hintText: "Manoj Lakshan",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      )),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text("Card Number"),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller : cardnumberController,
-                  decoration: InputDecoration(
-                      hintText: "1234 5678 9012",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      )),
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 20),
                 Row(
                   children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          const Text("Date"),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            controller : dateController,
-                            decoration: InputDecoration(
-                                hintText: "04/03",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                )),
-                            keyboardType:
-                                const TextInputType.numberWithOptions(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 80),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          const Text("CCV"),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            controller : ccvController,
-                            decoration: InputDecoration(
-                                hintText: "123",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                )),
-                            keyboardType: TextInputType.number,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        style: greenButtonStyle,
-                        onPressed: () {},
-                        child: const Text(
-                          "Cash on Delivery",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            fontFamily: 'Poppins',
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: TextButton(
-                        style: greenButtonBorderStyle,
-                        onPressed: () {},
-                        child: Text(
-                          "Complete Order",
-                          style: TextStyle(
-                            color: HexColor.fromHex('#4CD964'),
-                            fontSize: 16.0,
-                            fontFamily: 'Poppins',
-                          ),
-                        ),
-                      ),
-                    ),
+                    Icon(Icons.check_circle,color: Colors.green,),
+                    Text("payment Successfully"),
                   ],
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-    );
+          )
+
+        );
+      }).onError((error, stackTrace) {
+          // ignore: avoid_print
+          print("error=>>>$error $stackTrace");
+      } );
+    } on StripeException catch(e) {
+      // ignore: avoid_print
+      print(e);
+
+      showDialog(
+        context: context, 
+        builder: (_) => const AlertDialog(
+          content: Text("concelled"),
+        ));
+    }catch(e){
+      // ignore: avoid_print
+      print(e);
+    }
+    
   }
+
+  createPaymentIntent(String amount,String currency) async {
+    try{
+      Map<String,dynamic> body = {
+        'amount' : calculateAmount(amount),
+        'currency' : currency,
+        'payment_method_types[]' : 'card',
+      };
+
+      var response = await http.post(
+        Uri.parse('https://api.stripe.com/v1/payment_intents'),
+        headers: {
+          'Authorization' : 'Bearer sk_test_51MlHd3KwlHMvGTglr20L5y1pZ4gFuriGRzxf6al9G0LIHQzAQyRX06PcLp54SG2TcAGtzku5ac6azSHgeEZB5TkV002PvcFuq0',
+          'Contert-Type' : 'application/x-www-form-urlencoded'
+        },
+        body: body,
+      );
+      // ignore: avoid_print
+      print('payment Intent body->>>${response.body.toString()}');
+      return jsonDecode(response.body);
+    }
+    catch(e){
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  calculateAmount(String amount) {
+    final calculateAmount = (int.parse(amount))*100 ;
+    return calculateAmount.toString();
+  }
+
+  
+
+//button click action for buy now button
+  // Widget bottomesheet() {
+  //   return SizedBox(
+  //     height: MediaQuery.of(context).size.height / 2,
+  //     width: MediaQuery.of(context).size.width,
+  //     child: Card(
+  //       margin: EdgeInsets.all(MediaQuery.of(context).size.width / 30),
+  //       child: ListView(
+  //         children: [
+  //           Column(
+  //             children: [
+  //               const Text("Card Holder name"),
+  //               const SizedBox(
+  //                 height: 20,
+  //               ),
+  //               TextFormField(
+  //                 controller : cardholderController,
+  //                 decoration: InputDecoration(
+  //                     hintText: "Manoj Lakshan",
+  //                     border: OutlineInputBorder(
+  //                       borderRadius: BorderRadius.circular(20),
+  //                     )),
+  //               ),
+  //               const SizedBox(
+  //                 height: 20,
+  //               ),
+  //               const Text("Card Number"),
+  //               const SizedBox(
+  //                 height: 20,
+  //               ),
+  //               TextFormField(
+  //                 controller : cardnumberController,
+  //                 decoration: InputDecoration(
+  //                     hintText: "1234 5678 9012",
+  //                     border: OutlineInputBorder(
+  //                       borderRadius: BorderRadius.circular(20),
+  //                     )),
+  //                 keyboardType: TextInputType.number,
+  //               ),
+  //               const SizedBox(height: 20),
+  //               Row(
+  //                 children: [
+  //                   Expanded(
+  //                     child: Column(
+  //                       children: [
+  //                         const Text("Date"),
+  //                         const SizedBox(
+  //                           height: 20,
+  //                         ),
+  //                         TextFormField(
+  //                           controller : dateController,
+  //                           decoration: InputDecoration(
+  //                               hintText: "04/03",
+  //                               border: OutlineInputBorder(
+  //                                 borderRadius: BorderRadius.circular(20),
+  //                               )),
+  //                           keyboardType:
+  //                               const TextInputType.numberWithOptions(),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   const SizedBox(width: 80),
+  //                   Expanded(
+  //                     child: Column(
+  //                       children: [
+  //                         const Text("CCV"),
+  //                         const SizedBox(
+  //                           height: 20,
+  //                         ),
+  //                         TextFormField(
+  //                           controller : ccvController,
+  //                           decoration: InputDecoration(
+  //                               hintText: "123",
+  //                               border: OutlineInputBorder(
+  //                                 borderRadius: BorderRadius.circular(20),
+  //                               )),
+  //                           keyboardType: TextInputType.number,
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //               const SizedBox(
+  //                 height: 20,
+  //               ),
+  //               Row(
+  //                 children: [
+  //                   Expanded(
+  //                     child: TextButton(
+  //                       style: greenButtonStyle,
+  //                       onPressed: () {},
+  //                       child: const Text(
+  //                         "Cash on Delivery",
+  //                         style: TextStyle(
+  //                           color: Colors.white,
+  //                           fontSize: 16.0,
+  //                           fontFamily: 'Poppins',
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   const SizedBox(width: 20),
+  //                   Expanded(
+  //                     child: TextButton(
+  //                       style: greenButtonBorderStyle,
+  //                       onPressed: () {},
+  //                       child: Text(
+  //                         "Complete Order",
+  //                         style: TextStyle(
+  //                           color: HexColor.fromHex('#4CD964'),
+  //                           fontSize: 16.0,
+  //                           fontFamily: 'Poppins',
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ],
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }
