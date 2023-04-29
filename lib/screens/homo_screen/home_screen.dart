@@ -180,7 +180,7 @@ class HomeScreen extends ConsumerWidget {
           return Center(child: Text(error.toString()));
         },
         loading: ()=> const Center(
-            child: CircularProgressIndicator()
+            child: LinearProgressIndicator()
         )
     );
   }

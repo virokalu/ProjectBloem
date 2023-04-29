@@ -223,10 +223,9 @@ class CategoryCardBox extends ConsumerWidget {
                       children: [
                         const SizedBox(height: 20),
                         ClipRRect(
-
                           borderRadius: BorderRadius.circular(10), // Image border
                           child: SizedBox.fromSize(
-                            size: const Size.fromRadius(48),
+                            size: Size.fromRadius(getProportionateScreenHeight(48)),
                             //###############################################image here###################// Image radius
                             child: Image.asset(img, fit: BoxFit.cover),
                           ),
@@ -321,7 +320,7 @@ class SellingCard extends StatelessWidget {
 
                       borderRadius: BorderRadius.circular(10), // Image border
                       child: SizedBox.fromSize(
-                        size: const Size.fromRadius(48),
+                        size: Size.fromRadius(getProportionateScreenHeight(48)),
                         //###############################################image here###################// Image radius
                         child: Image.asset("images/welcome.png", fit: BoxFit.cover),
                       ),
@@ -451,7 +450,7 @@ class ActiveCard extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10), // Image border
                         child: SizedBox.fromSize(
-                          size: const Size.fromRadius(35),
+                          size: Size.fromRadius(getProportionateScreenHeight(40)),
                           //###############################################image here###################// Image radius
                           child: Image.network(model!.imgone, fit: BoxFit.cover),
                         ),
