@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:project_bloem/screens/about_us/aboutus.dart';
 import 'package:project_bloem/screens/search_screen/categorypage.dart';
 import 'package:project_bloem/screens/search_screen/sresult.dart';
 //import 'package:device_preview/device_preview.dart';
@@ -88,6 +89,7 @@ class MyApp extends StatelessWidget {
           '/addListing':(context) => const PlaceListing(),
           '/search':(context) => const SearchResultScreen(),
           '/category':(context) => const CategoryPage(),
+          '/aboutus' : (context) => const AboutUs(),
         },
     );
   }
