@@ -225,7 +225,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
             flex: 3,
             child: Container(
               padding: EdgeInsets.all(width / 30),
-              alignment: Alignment.center,
+              alignment: Alignment.topLeft,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(10),
@@ -310,7 +310,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                     style: greenButtonBorderStyle,
                     onPressed: () {},
                     child: Text(
-                      "Add Basket",
+                      "Add to Basket",
                       style: TextStyle(
                         color: HexColor.fromHex('#4CD964'),
                         fontSize: 16.0,

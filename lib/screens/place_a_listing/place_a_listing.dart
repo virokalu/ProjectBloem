@@ -1343,7 +1343,7 @@ class _Preview extends State<Preview> {
                       //Navigator.pushNamed(context, '/login');
                     },
                     child: Text(
-                      "Add Basket",
+                      "Add to Basket",
                       style: TextStyle(
                         color: HexColor.fromHex('#4CD964'), fontSize: 16.0,
                         fontFamily: 'Poppins',),
@@ -1445,7 +1445,7 @@ Future<void> addListing(BuildContext context) async {
       animType: AnimType.topSlide,
       showCloseIcon: true,
       title: "Something went wrong",
-      desc: "Unable to add the item to the system please try again",
+      desc: "Unable to add the item to the system. Please try again",
       btnCancelOnPress: (){
         //nameController.clear();
 
