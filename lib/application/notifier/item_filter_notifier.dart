@@ -15,4 +15,5 @@ class ItemFilterNotifier extends StateNotifier<ItemFilterModel>{
   void setItemFilter(ItemFilterModel  model){
     state = model;
   }
+
 }

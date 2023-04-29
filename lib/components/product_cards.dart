@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:project_bloem/components/button_components.dart';
 import 'package:project_bloem/components/size.dart';
 import 'package:project_bloem/models/item.dart';
 import 'package:project_bloem/models/item_filter.dart';
@@ -393,7 +392,8 @@ class SellingCard extends StatelessWidget {
 }
 
 class ActiveCard extends StatelessWidget {
-  const ActiveCard({Key? key}) : super(key: key);
+  final Item? model;
+  const ActiveCard({Key? key,this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -453,7 +453,7 @@ class ActiveCard extends StatelessWidget {
                         child: SizedBox.fromSize(
                           size: const Size.fromRadius(35),
                           //###############################################image here###################// Image radius
-                          child: Image.asset("images/welcome.png", fit: BoxFit.cover),
+                          child: Image.network(model!.imgone, fit: BoxFit.cover),
                         ),
                       ),
 
@@ -462,7 +462,7 @@ class ActiveCard extends StatelessWidget {
                         height: getProportionateScreenWidth(15),
                         child: Text(
 //####################################################titlt here################################################
-                          "Sun Flower",
+                          model!.commonname,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: getProportionateScreenWidth(12),

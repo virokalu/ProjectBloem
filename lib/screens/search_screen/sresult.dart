@@ -3,7 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_bloem/models/item_sort.dart';
 //import 'package:project_bloem/components/color_components.dart';
 import '../../components/back_button_icon.dart';
+import '../../components/product_cards.dart';
 import '../../components/size.dart';
+import '../../models/item_filter.dart';
+import '../../models/pagination.dart';
+import '../../provider.dart';
 import '../homo_screen/home_components/home_components.dart';
 
 class SearchResultScreen extends StatefulWidget{
@@ -12,11 +16,12 @@ class SearchResultScreen extends StatefulWidget{
   @override
   // ignore: library_private_types_in_public_api
   _SearchResultScreenState createState() => _SearchResultScreenState();
-
 }
 
 class _SearchResultScreenState extends State<SearchResultScreen>{
-  String? category;
+
+
+  String? commonname;
   List<bool> expanded = [false, false];
 
   @override
@@ -29,333 +34,44 @@ class _SearchResultScreenState extends State<SearchResultScreen>{
       child: Scaffold(
         body: Container(
           margin: EdgeInsets.all(width/30),
-          child: ListView(
-              children: [
-                const BackButtonNHome(),
-                SizedBox(height: getProportionateScreenHeight(20)),
 
-                const SearchBar(),
-                // SizedBox(
-                //   height: height * 0.75,
-                //   child: SingleChildScrollView(
-                //     child: Column(
-                //       children: [
-                //         TextField(
-                //           decoration: InputDecoration(
-                //             contentPadding: EdgeInsets.symmetric(
-                //                 horizontal: getProportionateScreenWidth(30),
-                //                 vertical: getProportionateScreenWidth(20)),
-                //             border: InputBorder.none,
-                //             focusedBorder: InputBorder.none,
-                //             enabledBorder:  OutlineInputBorder(
-                //               borderSide: BorderSide(
-                //                   color: HexColor.fromHex('#86869E')
-                //               ),
-                //               borderRadius: BorderRadius.circular(20.0),
-                //             ),
-                //             hintText: "Sunflower",
-                //             hintStyle: TextStyle(color: HexColor.fromHex('#86869E')),
-                //             prefixIcon: Icon(
-                //                 Icons.search,
-                //                 color: HexColor.fromHex('#86869E')
-                //             ),
-                //             suffixIcon: Icon(
-                //                 Icons.close,
-                //                 color: HexColor.fromHex('#86869E')
-                //             )
-                //           ),
-                //         ),
-                //
-                //         SafeArea(
-                //             child: Row(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               children: [
-                //                 const CircleAvatar(
-                //                   radius: 40,
-                //                   backgroundImage: AssetImage('images/background1.jpg'),
-                //                 ),
-                //                 SizedBox(
-                //                     height: height /5,
-                //                     child: Column(
-                //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //
-                //                       children: [
-                //                         const Text(
-                //                           "Sunflower",
-                //                           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                //                         ),
-                //                         const Text(
-                //                           "Rs. 500",
-                //                           style: TextStyle(fontSize: 16.0),
-                //                         ),
-                //                         Row(
-                //                           children: [
-                //                             IconButton(
-                //                               onPressed: () { },
-                //                               //alignment: AlignmentDirectional.bottomCenter,
-                //                               icon: const Icon(Icons.favorite_border),
-                //                               color: HexColor.fromHex('#4CD964'),
-                //                             ),
-                //                             IconButton(
-                //                               onPressed: () { },
-                //                               icon: const Icon(Icons.shopping_basket),
-                //                               color: HexColor.fromHex('#4CD964'),
-                //                             ),
-                //                           ],
-                //                         ),
-                //                       ],
-                //                     ),
-                //                 ),
-                //               ],
-                //             )
-                //         ),
-                //         const Divider(height: 0.1,),
-                //         SafeArea(
-                //             child: Row(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               children: [
-                //                 const CircleAvatar(
-                //                   radius: 40,
-                //                   backgroundImage: AssetImage('images/background1.jpg'),
-                //                 ),
-                //                 SizedBox(
-                //                     height: height /5,
-                //                     child: Column(
-                //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //
-                //                       children: [
-                //                         const Text(
-                //                           "Sunflower",
-                //                           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                //                         ),
-                //                         const Text(
-                //                           "Rs. 500",
-                //                           style: TextStyle(fontSize: 16.0),
-                //                         ),
-                //                         Row(
-                //                           children: [
-                //                             IconButton(
-                //                               onPressed: () { },
-                //                               //alignment: AlignmentDirectional.bottomCenter,
-                //                               icon: const Icon(Icons.favorite_border),
-                //                               color: HexColor.fromHex('#4CD964'),
-                //                             ),
-                //                             IconButton(
-                //                               onPressed: () { },
-                //                               icon: const Icon(Icons.shopping_basket),
-                //                               color: HexColor.fromHex('#4CD964'),
-                //                             ),
-                //                           ],
-                //                         ),
-                //                       ],
-                //                     )
-                //                 ),
-                //               ],
-                //             )
-                //         ),
-                //         const Divider(height: 0.1,),
-                //         SafeArea(
-                //             child: Row(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               children: [
-                //                 const CircleAvatar(
-                //                   radius: 40,
-                //                   backgroundImage: AssetImage('images/background1.jpg'),
-                //                 ),
-                //                 SizedBox(
-                //                     height: height /5,
-                //                     child: Column(
-                //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //
-                //                       children: [
-                //                         const Text(
-                //                           "Sunflower",
-                //                           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                //                         ),
-                //                         const Text(
-                //                           "Rs. 500",
-                //                           style: TextStyle(fontSize: 16.0),
-                //                         ),
-                //                         Row(
-                //                           children: [
-                //                             IconButton(
-                //                               onPressed: () { },
-                //                               //alignment: AlignmentDirectional.bottomCenter,
-                //                               icon: const Icon(Icons.favorite_border),
-                //                               color: HexColor.fromHex('#4CD964'),
-                //                             ),
-                //                             IconButton(
-                //                               onPressed: () { },
-                //                               icon: const Icon(Icons.shopping_basket),
-                //                               color: HexColor.fromHex('#4CD964'),
-                //                             ),
-                //                           ],
-                //                         ),
-                //                       ],
-                //                     )
-                //                 ),
-                //               ],
-                //             )
-                //         ),
-                //         const Divider(height: 0.1,),
-                //         SafeArea(
-                //             child: Row(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               children: [
-                //                 const CircleAvatar(
-                //                   radius: 40,
-                //                   backgroundImage: AssetImage('images/background1.jpg'),
-                //                 ),
-                //                 SizedBox(
-                //                     height: height /5,
-                //                     child: Column(
-                //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //
-                //                       children: [
-                //                         const Text(
-                //                           "Sunflower",
-                //                           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                //                         ),
-                //                         const Text(
-                //                           "Rs. 500",
-                //                           style: TextStyle(fontSize: 16.0),
-                //                         ),
-                //                         Row(
-                //                           children: [
-                //                             IconButton(
-                //                               onPressed: () { },
-                //                               //alignment: AlignmentDirectional.bottomCenter,
-                //                               icon: const Icon(Icons.favorite_border),
-                //                               color: HexColor.fromHex('#4CD964'),
-                //                             ),
-                //                             IconButton(
-                //                               onPressed: () { },
-                //                               icon: const Icon(Icons.shopping_basket),
-                //                               color: HexColor.fromHex('#4CD964'),
-                //                             ),
-                //                           ],
-                //                         ),
-                //                       ],
-                //                     )
-                //                 ),
-                //               ],
-                //             )
-                //         ),
-                //         const Divider(height: 0.1,),
-                //         SafeArea(
-                //             child: Row(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               children: [
-                //                 const CircleAvatar(
-                //                   radius: 40,
-                //                   backgroundImage: AssetImage('images/background1.jpg'),
-                //                 ),
-                //                 SizedBox(
-                //                     height: height /5,
-                //                     child: Column(
-                //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //
-                //                       children: [
-                //                         const Text(
-                //                           "Sunflower",
-                //                           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                //                         ),
-                //                         const Text(
-                //                           "Rs. 500",
-                //                           style: TextStyle(fontSize: 16.0),
-                //                         ),
-                //                         Row(
-                //                           children: [
-                //                             IconButton(
-                //                               onPressed: () { },
-                //                               //alignment: AlignmentDirectional.bottomCenter,
-                //                               icon: const Icon(Icons.favorite_border),
-                //                               color: HexColor.fromHex('#4CD964'),
-                //                             ),
-                //                             IconButton(
-                //                               onPressed: () { },
-                //                               icon: const Icon(Icons.shopping_basket),
-                //                               color: HexColor.fromHex('#4CD964'),
-                //                             ),
-                //                           ],
-                //                         ),
-                //                       ],
-                //                     )
-                //                 ),
-                //               ],
-                //             )
-                //         ),
-                //         const Divider(height: 0.1,),
-                //         SafeArea(
-                //             child: Row(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               children: [
-                //                 const CircleAvatar(
-                //                   radius: 40,
-                //                   backgroundImage: AssetImage('images/background1.jpg'),
-                //                 ),
-                //                 SizedBox(
-                //                     height: height /5,
-                //                     child: Column(
-                //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //
-                //                       children: [
-                //                         const Text(
-                //                           "Sunflower",
-                //                           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                //                         ),
-                //                         const Text(
-                //                           "Rs. 500",
-                //                           style: TextStyle(fontSize: 16.0),
-                //                         ),
-                //                         Row(
-                //                           children: [
-                //                             IconButton(
-                //                               onPressed: () { },
-                //                               //alignment: AlignmentDirectional.bottomCenter,
-                //                               icon: const Icon(Icons.favorite_border),
-                //                               color: HexColor.fromHex('#4CD964'),
-                //                             ),
-                //                             IconButton(
-                //                               onPressed: () { },
-                //                               icon: const Icon(Icons.shopping_basket),
-                //                               color: HexColor.fromHex('#4CD964'),
-                //                             ),
-                //                           ],
-                //                         ),
-                //                       ],
-                //                     )
-                //                 ),
-                //               ],
-                //             ),
-                //         ),
-                //         const Divider(height: 0.1,),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                Container(
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _ItemFilters(category: category,)
-                    ],
-                  ),
-                )
-              ],
-            ),
+            child: Column(
+                children: [
+                  const BackButtonNHome(),
+                  SizedBox(height: getProportionateScreenHeight(20)),
+
+                  const SearchBar(),
+                  SizedBox(height: getProportionateScreenHeight(20)),
+
+                  Flexible(
+                    child: Container(
+                      color: Colors.white,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+                            _ItemFilters(commonname: commonname),
+                            _ItemList(),
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+
           ),
         ),
     );
   }
   @override
   void didChangeDependencies(){
-    final Map? arguments = ModalRoute.of(context)!.settings.arguments as Map;
-    if(arguments !=null){
-      category = arguments['category'];
-    }
+    final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    commonname = arguments['commonname'];
     super.didChangeDependencies();
   }
 }
@@ -367,23 +83,117 @@ class _ItemFilters extends ConsumerWidget{
   ];
 
   _ItemFilters({
-    Key? key,
-    this.category,
+    this.commonname,
   });
-  final String? category;
+  final String? commonname;
 
   @override
   Widget build(BuildContext context,WidgetRef ref){
+    final filterProvider = ref.watch(itemsFilterProvider);
+    // return Container(
+    //   height: 51,
+    //   margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+    //   child: Row(
+    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //     children: [
+    //       Text("Search result for ${commonname!}")
+    //     ],
+    //   ),
+    // );
     return Container(
       height: 51,
       margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(category!)
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Search for - $commonname",
+              style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+            ),
+          ),
+          Container(
+            decoration: const BoxDecoration(
+                color: Colors.white
+            ),
+            child: PopupMenuButton(
+              onSelected: (sortBy){
+                ItemFilterModel filterModel = ItemFilterModel(
+                    paginationModel: PaginationModel(page: 0,pageSize: 10),
+                    commonname: filterProvider.commonname,
+                    //commonname:"test",
+                    sortBy: sortBy.toString());
+                ref
+                    .read(itemsFilterProvider.notifier)
+                    .setItemFilter(filterModel);
+                ref.read(itemNotifierProvider.notifier).getItems();
+
+              },
+              initialValue: filterProvider.sortBy,
+              itemBuilder: (BuildContext context) {
+                return _sortByOptions.map((item){
+                  return PopupMenuItem(
+                      value: item.value,
+                      child: InkWell(
+                        child: Text(item.label!),
+                      )
+                  );
+                }).toList();
+              },
+              icon: const Icon(Icons.filter_list_alt),
+            ),
+          )
         ],
       ),
     );
   }
 
+}
+
+class _ItemList extends ConsumerWidget{
+  final ScrollController _scrollController = ScrollController();
+  @override
+  Widget build(BuildContext context,WidgetRef ref){
+    final itemsState = ref.watch(itemNotifierProvider);
+    _scrollController.addListener(() {
+      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+        final itemsViewModel = ref.read(itemNotifierProvider.notifier);
+        final itemsState = ref.watch(itemNotifierProvider);
+        if(itemsState.hasNext){
+          itemsViewModel.getItems();
+        }
+      }
+    });
+
+    if(itemsState.items.isEmpty){
+      if(!itemsState.hasNext && !itemsState.isLoading){
+        return const Center(child: Text("No Items"),
+        );
+      }
+      return const LinearProgressIndicator();
+    }
+    return RefreshIndicator(
+      onRefresh: () async{
+        ref.read(itemNotifierProvider.notifier).refreshItems();
+      },
+      child: GridView.count(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        physics: const AlwaysScrollableScrollPhysics(),
+        crossAxisCount: 2,
+        childAspectRatio: 0.75,
+        children:
+        //#####################################card start here#####################################################
+        List.generate(
+          itemsState.items.length,
+              (index) {
+            var data = itemsState.items[index];
+            return CardBox(model: data);
+          },
+        ),
+        //SizedBox(width: getProportionateScreenWidth(20)),
+      ),
+    );
+  }
 }

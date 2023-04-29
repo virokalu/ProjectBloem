@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_bloem/components/size.dart';
 
 import '../../../components/button_components.dart';
 import '../../../components/color_components.dart';
-
 
 class IconRow extends StatefulWidget {
   const IconRow({Key? key}) : super(key: key);
@@ -96,10 +96,14 @@ class _IconRowState extends State<IconRow> {
 }
 
 class SearchBarFilter extends StatelessWidget {
+
   const SearchBarFilter({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    final searchBarController = TextEditingController();
+
     return Row(
 
       children: [
@@ -112,7 +116,7 @@ class SearchBarFilter extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
           ),
           child: TextField(
-
+            controller: searchBarController,
             //onChanged: () { },
             //################################################Search Onchange#######################################
             decoration: InputDecoration(
@@ -124,6 +128,7 @@ class SearchBarFilter extends StatelessWidget {
               enabledBorder: InputBorder.none,
               hintText: "Search product",
               hintStyle: TextStyle(color: HexColor.fromHex('#86869E')),
+
               // prefixIcon: Icon(
               //     Icons.search,
               //     color: HexColor.fromHex('#86869E',
@@ -159,7 +164,17 @@ class SearchBarFilter extends StatelessWidget {
             child: IconButton(
               padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
               onPressed: () {
-                Navigator.pushNamed(context, '/search');
+                //print(searchBarController.text);
+                  Navigator.of(context).pushNamed(
+                      '/search',
+
+                      arguments: {
+                        'commonname':searchBarController.text,
+                      }
+
+                  );
+
+
               },
               //###################################################go to item when click##########
               icon: const Icon(Icons.search),
@@ -173,13 +188,14 @@ class SearchBarFilter extends StatelessWidget {
   }
 }
 
-class SearchBar extends StatelessWidget {
+class SearchBar extends ConsumerWidget {
   const SearchBar({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+    final searchController = TextEditingController();
+    //final filterProvider = ref.watch(itemsFilterProvider);
     return Row(
-
       children: [
         SizedBox(width: getProportionateScreenWidth(10)),
         Container(
@@ -190,7 +206,7 @@ class SearchBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
           ),
           child: TextField(
-
+            controller: searchController,
             //onChanged: () { },
             //################################################Search Onchange#######################################
             decoration: InputDecoration(
@@ -211,40 +227,68 @@ class SearchBar extends StatelessWidget {
           ),
 
         ),
-        // IconButton(
-        //   style: ,
-        //   padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-        //   //###############################################Filter ICon#################################
-        //   onPressed: () {
-        //
-        //   },
-        //   icon: const Icon(Icons.search),
-        //   color: HexColor.fromHex('#33363F'),
-        // ),
         SizedBox(width: getProportionateScreenWidth(10)),
 
-        InkWell(
-          borderRadius: BorderRadius.circular(50),
-          onTap: () {},
-          child: Container(
-            padding: EdgeInsets.all(getProportionateScreenWidth(0)),
-            height: getProportionateScreenWidth(55),
-            width: getProportionateScreenWidth(55),
-            decoration: BoxDecoration(
-              color: HexColor.fromHex('#E7FFED'),
-              shape: BoxShape.circle,
-            ),
-            child: IconButton(
-              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-              onPressed: () {
-                Navigator.pushNamed(context, '/search');
-              },
-              //###################################################go to item when click##########
-              icon: const Icon(Icons.search),
-              color: HexColor.fromHex('#4CD964'),
-            ),
-          ),
+        IconButton(
+          //style: ,
+          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+          //###############################################Filter ICon#################################
+          onPressed: () {
+            Navigator.of(context).pushNamed(
+                '/search',
+                arguments: {
+                  'commonname':searchController.text,
+                }
+
+            );
+
+          },
+          icon: const Icon(Icons.search),
+          color: HexColor.fromHex('#33363F'),
         ),
+        SizedBox(width: getProportionateScreenWidth(10)),
+
+        // InkWell(
+        //   borderRadius: BorderRadius.circular(50),
+        //   onTap: () {},
+        //   child: Container(
+        //     padding: EdgeInsets.all(getProportionateScreenWidth(0)),
+        //     height: getProportionateScreenWidth(55),
+        //     width: getProportionateScreenWidth(55),
+        //     decoration: BoxDecoration(
+        //       color: HexColor.fromHex('#E7FFED'),
+        //       shape: BoxShape.circle,
+        //     ),
+        //     child: IconButton(
+        //       padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+        //       onPressed: () {
+        //         ItemFilterModel filterModel = ItemFilterModel(
+        //           paginationModel: PaginationModel(
+        //               pageSize:  10,
+        //               page: 1),
+        //           commonname: userNameController.text,
+        //         );
+        //
+        //         ref
+        //             .read(itemsFilterProvider.notifier)
+        //             .setItemFilter(filterModel);
+        //         ref.read(itemNotifierProvider.notifier).getItems();
+        //
+        //         //print(ref);
+        //         Navigator.of(context).pushNamed(
+        //             '/search',
+        //             arguments: {
+        //               'commonname':userNameController.text,
+        //             }
+        //
+        //         );
+        //       },
+        //       //###################################################go to item when click##########
+        //       icon: const Icon(Icons.search),
+        //       color: HexColor.fromHex('#4CD964'),
+        //     ),
+        //   ),
+        // ),
 
       ],
     );

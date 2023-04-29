@@ -18,7 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ItemFilterModel {
   PaginationModel get paginationModel => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
+  String? get commonname => throw _privateConstructorUsedError;
   String? get sortBy => throw _privateConstructorUsedError;
+  String? get username => throw _privateConstructorUsedError;
+  String? get activestatus => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ItemFilterModelCopyWith<ItemFilterModel> get copyWith =>
@@ -32,7 +35,12 @@ abstract class $ItemFilterModelCopyWith<$Res> {
       _$ItemFilterModelCopyWithImpl<$Res, ItemFilterModel>;
   @useResult
   $Res call(
-      {PaginationModel paginationModel, String? category, String? sortBy});
+      {PaginationModel paginationModel,
+      String? category,
+      String? commonname,
+      String? sortBy,
+      String? username,
+      String? activestatus});
 
   $PaginationModelCopyWith<$Res> get paginationModel;
 }
@@ -52,7 +60,10 @@ class _$ItemFilterModelCopyWithImpl<$Res, $Val extends ItemFilterModel>
   $Res call({
     Object? paginationModel = null,
     Object? category = freezed,
+    Object? commonname = freezed,
     Object? sortBy = freezed,
+    Object? username = freezed,
+    Object? activestatus = freezed,
   }) {
     return _then(_value.copyWith(
       paginationModel: null == paginationModel
@@ -63,9 +74,21 @@ class _$ItemFilterModelCopyWithImpl<$Res, $Val extends ItemFilterModel>
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as String?,
+      commonname: freezed == commonname
+          ? _value.commonname
+          : commonname // ignore: cast_nullable_to_non_nullable
+              as String?,
       sortBy: freezed == sortBy
           ? _value.sortBy
           : sortBy // ignore: cast_nullable_to_non_nullable
+              as String?,
+      username: freezed == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String?,
+      activestatus: freezed == activestatus
+          ? _value.activestatus
+          : activestatus // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -88,7 +111,12 @@ abstract class _$$_ItemFilterModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {PaginationModel paginationModel, String? category, String? sortBy});
+      {PaginationModel paginationModel,
+      String? category,
+      String? commonname,
+      String? sortBy,
+      String? username,
+      String? activestatus});
 
   @override
   $PaginationModelCopyWith<$Res> get paginationModel;
@@ -107,7 +135,10 @@ class __$$_ItemFilterModelCopyWithImpl<$Res>
   $Res call({
     Object? paginationModel = null,
     Object? category = freezed,
+    Object? commonname = freezed,
     Object? sortBy = freezed,
+    Object? username = freezed,
+    Object? activestatus = freezed,
   }) {
     return _then(_$_ItemFilterModel(
       paginationModel: null == paginationModel
@@ -118,9 +149,21 @@ class __$$_ItemFilterModelCopyWithImpl<$Res>
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as String?,
+      commonname: freezed == commonname
+          ? _value.commonname
+          : commonname // ignore: cast_nullable_to_non_nullable
+              as String?,
       sortBy: freezed == sortBy
           ? _value.sortBy
           : sortBy // ignore: cast_nullable_to_non_nullable
+              as String?,
+      username: freezed == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String?,
+      activestatus: freezed == activestatus
+          ? _value.activestatus
+          : activestatus // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -130,18 +173,29 @@ class __$$_ItemFilterModelCopyWithImpl<$Res>
 
 class _$_ItemFilterModel implements _ItemFilterModel {
   _$_ItemFilterModel(
-      {required this.paginationModel, this.category, this.sortBy});
+      {required this.paginationModel,
+      this.category,
+      this.commonname,
+      this.sortBy,
+      this.username,
+      this.activestatus});
 
   @override
   final PaginationModel paginationModel;
   @override
   final String? category;
   @override
+  final String? commonname;
+  @override
   final String? sortBy;
+  @override
+  final String? username;
+  @override
+  final String? activestatus;
 
   @override
   String toString() {
-    return 'ItemFilterModel(paginationModel: $paginationModel, category: $category, sortBy: $sortBy)';
+    return 'ItemFilterModel(paginationModel: $paginationModel, category: $category, commonname: $commonname, sortBy: $sortBy, username: $username, activestatus: $activestatus)';
   }
 
   @override
@@ -153,12 +207,18 @@ class _$_ItemFilterModel implements _ItemFilterModel {
                 other.paginationModel == paginationModel) &&
             (identical(other.category, category) ||
                 other.category == category) &&
-            (identical(other.sortBy, sortBy) || other.sortBy == sortBy));
+            (identical(other.commonname, commonname) ||
+                other.commonname == commonname) &&
+            (identical(other.sortBy, sortBy) || other.sortBy == sortBy) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.activestatus, activestatus) ||
+                other.activestatus == activestatus));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, paginationModel, category, sortBy);
+  int get hashCode => Object.hash(runtimeType, paginationModel, category,
+      commonname, sortBy, username, activestatus);
 
   @JsonKey(ignore: true)
   @override
@@ -171,14 +231,23 @@ abstract class _ItemFilterModel implements ItemFilterModel {
   factory _ItemFilterModel(
       {required final PaginationModel paginationModel,
       final String? category,
-      final String? sortBy}) = _$_ItemFilterModel;
+      final String? commonname,
+      final String? sortBy,
+      final String? username,
+      final String? activestatus}) = _$_ItemFilterModel;
 
   @override
   PaginationModel get paginationModel;
   @override
   String? get category;
   @override
+  String? get commonname;
+  @override
   String? get sortBy;
+  @override
+  String? get username;
+  @override
+  String? get activestatus;
   @override
   @JsonKey(ignore: true)
   _$$_ItemFilterModelCopyWith<_$_ItemFilterModel> get copyWith =>
