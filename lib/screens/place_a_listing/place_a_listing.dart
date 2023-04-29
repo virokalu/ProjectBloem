@@ -1238,7 +1238,7 @@ class _Preview extends State<Preview> {
                     width: width,
                     child: Text(
                       // ignore: unnecessary_string_interpolations
-                      "${noOfItemsController.text}",
+                      "${noOfItemsController.text} items available",
                       style: const TextStyle(fontSize: 24),
                       textAlign: TextAlign.left,
                     ),
@@ -1246,7 +1246,7 @@ class _Preview extends State<Preview> {
               SizedBox(
                 width: width,
                 child: Text(
-                  "Rs.${priceController.text} items available",
+                  "Rs.${priceController.text} ",
                   style: const TextStyle(fontSize: 24),
                   textAlign: TextAlign.left,
                 ),
