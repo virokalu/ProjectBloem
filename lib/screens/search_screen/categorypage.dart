@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:project_bloem/application/notifier/item_filter_notifier.dart';
 import 'package:project_bloem/components/product_cards.dart';
 import 'package:project_bloem/models/item_filter.dart';
 import 'package:project_bloem/models/pagination.dart';
@@ -453,7 +452,6 @@ class _ItemList extends ConsumerWidget{
         );
       }
       return const LinearProgressIndicator();
-
     }
     return SingleChildScrollView(
         scrollDirection: Axis.vertical,

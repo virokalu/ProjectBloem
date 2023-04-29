@@ -8,6 +8,10 @@ abstract class ItemFilterModel with _$ItemFilterModel{
   factory ItemFilterModel({
     required PaginationModel paginationModel,
     String? category,
+    String? commonname,
     String? sortBy,
+    String? username,
+    String? activestatus,
+
   }) = _ItemFilterModel;
 }

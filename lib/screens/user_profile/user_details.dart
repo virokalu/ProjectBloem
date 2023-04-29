@@ -28,7 +28,6 @@ class ProfileCard extends StatefulWidget {
 
 class _ProfileCardState extends State<ProfileCard> {
 
-
   late SharedPreferences preference;
   String fullname="";
   String username="";

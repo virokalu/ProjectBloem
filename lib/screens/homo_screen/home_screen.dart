@@ -15,7 +15,6 @@ import 'home_components/home_components.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     // List<Item> list = List<Item>.empty(growable: true);
@@ -36,6 +35,7 @@ class HomeScreen extends ConsumerWidget {
    // Item model =
     SizeConfig().init(context);
     return Scaffold(
+
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -164,6 +164,7 @@ class HomeScreen extends ConsumerWidget {
       homeItemProvider(
         ItemFilterModel(
           paginationModel: PaginationModel(page: 1,pageSize: 10),
+
         ),
       ),
     );
@@ -190,6 +191,8 @@ class HomeScreen extends ConsumerWidget {
       child: Row(
         children: [
           //#####################################card start here#####################################################
+          if (items.isEmpty)
+            const Text('No items to display'),
           ...List.generate(
             items.length,
                 (index) {
@@ -198,9 +201,11 @@ class HomeScreen extends ConsumerWidget {
                     height: 275,
                     child: CardBox(model: data),
                   );
+
             },
           ),
           SizedBox(width: getProportionateScreenWidth(20)),
+
         ],
       ),
     );

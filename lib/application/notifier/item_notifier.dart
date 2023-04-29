@@ -28,7 +28,7 @@ class ItemsNotifier extends StateNotifier<ItemsState>{
     final items = await _apiService.getItems(filterModel);
     final newItems = [...state.items,...items!];
 
-    if(items.length % 10 != 0 || items.isEmpty){
+    if(items.length % 4 != 0 || items.isEmpty){
       state = state.copyWith(hasNext: false);
     }
     state = state.copyWith(items: newItems);
