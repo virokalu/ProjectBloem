@@ -44,7 +44,7 @@ class PaymentSheet  {
                 Row(
                   children: [
                     Icon(Icons.check_circle,color: Colors.green,),
-                    Text("payment Successfully"),
+                    Text("Payment Succeeded"),
                   ],
                 ),
               ],
@@ -63,7 +63,7 @@ class PaymentSheet  {
       showDialog(
         context: context, 
         builder: (_) => const AlertDialog(
-          content: Text("concelled"),
+          content: Text("Cancelled"),
         ));
     }catch(e){
       // ignore: avoid_print
@@ -77,7 +77,7 @@ class PaymentSheet  {
       Map<String,dynamic> body = {
         'amount' : calculateAmount(amount),
         'currency' : currency,
-        'payment_method_types[]' : 'card',
+        'payment_method_types[]' : 'Card',
       };
 
       var response = await http.post(
