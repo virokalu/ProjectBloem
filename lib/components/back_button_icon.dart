@@ -87,6 +87,92 @@ class ButtonText extends StatelessWidget {
   }
 }
 
+class ButtonTextLogin extends StatelessWidget {
+
+
+  final String text;
+  final IconData icon;
+
+  const ButtonTextLogin({super.key, required this.text, required this.icon});
+
+
+  @override
+  Widget build(BuildContext context) {
+
+
+
+    return Column(
+      children: [
+        Row(
+          children: [
+            Ink(
+              decoration: BoxDecoration(
+
+                  border: Border.all(color: HexColor.fromHex('#4CD964'), width: 2),
+                  borderRadius: BorderRadius.circular(35.0)
+              ),
+              width: 60,
+              child:IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  );
+                },
+                icon: const Icon(Icons.arrow_back,),
+                color: HexColor.fromHex('#4CD964'),
+
+              ),
+
+
+            ),
+
+
+            const Spacer(),
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                );
+              },
+              icon: const Icon(Icons.home_rounded),
+              color: HexColor.fromHex('#33363F'),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+
+              child: Icon(
+                icon,
+                size: 30,
+                color: HexColor.fromHex('#33363F'),
+              ),
+            ),
+            Text(
+              text,
+              style: TextStyle(
+                color: HexColor.fromHex('#33363F'),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+        //SizedBox(height: height*75),
+        Container(
+
+        ),
+      ],
+    );
+  }
+}
+
+
 class BackButtonNHome extends StatelessWidget {
 
   const BackButtonNHome({super.key});

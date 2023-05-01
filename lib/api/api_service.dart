@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 
 import '../config.dart';
+import '../models/cart.dart';
 import '../models/item.dart';
 
 final apiService = Provider((ref) => APIService());
@@ -49,4 +50,68 @@ class APIService {
       return null;
     }
   }
+
+  Future<Cart?> getCart() async{
+
+    Map<String,String> requestHeader={
+      'Content-Type':'application/json',
+    };
+    var url = Uri.http(apiURL,cartAPI);
+    var response =  await http.get(url,headers: requestHeader);
+
+    if(response.statusCode==200){
+      var data=jsonDecode(response.body);
+      return Cart.fromJson(data["data"]);
+    }else{
+      return null;
+    }
+  }
+  Future<bool?> addCartItem(id,qty,username) async{
+
+    Map<String,String> requestHeader={
+      'Content-Type':'application/json',
+    };
+    var url = Uri.http(apiURL,cartAPI);
+    var response =  await http.post(
+        url,
+        headers: requestHeader,
+        body: jsonEncode({
+          "username":username,
+          "items":[
+            {"item":id,"qty":qty}
+          ]
+        })
+    );
+
+    if(response.statusCode==200){
+      return true;
+    }else{
+      return null;
+    }
+  }
+
+  Future<bool?> removeCartItem(id,qty,username) async{
+
+    Map<String,String> requestHeader={
+      'Content-Type':'application/json',
+    };
+    var url = Uri.http(apiURL,cartAPI);
+    var response =  await http.delete(
+        url,
+        headers: requestHeader,
+        body: jsonEncode({
+          "username":username,
+          "items":[
+            {"item":id,"qty":qty}
+          ]
+        })
+    );
+
+    if(response.statusCode==200){
+      return true;
+    }else{
+      return null;
+    }
+  }
 }
+
