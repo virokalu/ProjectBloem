@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:dotted_line/dotted_line.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 import '../../components/color_components.dart';
 
@@ -56,13 +58,7 @@ class _AboutUsState extends State<AboutUs> {
                 fontSize: 15,
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Image(image: AssetImage('images/abus.png')),
-            SizedBox(
-              height: 10,
-            ),
+            Image(image: AssetImage('images/im1.jpg')),
             Text(
               "Our story",
               style: TextStyle(
@@ -73,9 +69,19 @@ class _AboutUsState extends State<AboutUs> {
               ),
             ),
             Text(
-                "Bloem was founded in 2023 by a group of students who were passionate about the floricultural industry. We saw a need for a user-friendly platform that could connect buyers and sellers, and we decided to build it ourselves."),
+              "Bloem was founded in 2023 by a group of students who were passionate about the floricultural industry. We saw a need for a user-friendly platform that could connect buyers and sellers, and we decided to build it ourselves.",
+              textAlign: TextAlign.justify,
+            ),
             SizedBox(
               height: 5,
+            ),
+            ClipPath(
+              clipper: OvalLeftBorderClipper(),
+              child: Container(
+                height: 25,
+                width: 25,
+                color: HexColor.fromHex('#4CD964'),
+              ),
             ),
             Row(
               children: [
@@ -95,7 +101,9 @@ class _AboutUsState extends State<AboutUs> {
                         ),
                       ),
                       Text(
-                          "At Bloem, our mission is to make it easy and affordable for people to buy and sell high-quality floricultural items. We believe in promoting sustainability and supporting local growers"),
+                        "At Bloem, our mission is to make it easy and affordable for people to buy and sell high-quality floricultural items. We believe in promoting sustainability and supporting local growers",
+                        textAlign: TextAlign.justify,
+                      ),
                     ],
                   ),
                 ),
@@ -103,6 +111,14 @@ class _AboutUsState extends State<AboutUs> {
             ),
             SizedBox(
               height: 5,
+            ),
+            ClipPath(
+              clipper: OvalRightBorderClipper(),
+              child: Container(
+                height: 25,
+                width: 25,
+                color: HexColor.fromHex('#4CD964'),
+              ),
             ),
             Row(
               children: [
@@ -121,47 +137,117 @@ class _AboutUsState extends State<AboutUs> {
                         ),
                       ),
                       Text(
-                          "Our vision at Bloem is to become the go-to destination for floricultural enthusiasts, where they can easily discover, buy, and sell the highest-quality floral products from around the Sri Lanka. We are committed to fostering a sustainable and ethical marketplace that empowers local growers and connects people through the beauty and joy of flowers."),
+                        "Our vision at Bloem is to become the go-to destination for floricultural enthusiasts, where they can easily discover, buy, and sell the highest-quality floral products from around the Sri Lanka. We are committed to fostering a sustainable and ethical marketplace that empowers local growers and connects people through the beauty and joy of flowers.",
+                        textAlign: TextAlign.justify,
+                      ),
                     ],
                   ),
                 ),
                 Expanded(flex: 1, child: Icon(Icons.remove_red_eye_rounded))
               ],
             ),
+            SizedBox(
+              height: 15,
+            ),
+            DottedLine(
+              direction: Axis.horizontal,
+              lineLength: double.infinity,
+              lineThickness: 5.0,
+              dashLength: 4.0,
+              dashGradient: [Colors.green, Colors.black],
+              dashRadius: 10.0,
+            ),
+            SizedBox(
+              height: 15,
+            ),
             Text(
                 "If you have any questions or feedback, please don't hesitate to reach out to us! "),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButton(
-                    icon: Icon(
-                      Icons.call,
-                      size: 30,
-                    ),
-                    onPressed: () => _launchUrl(phno)),
-                IconButton(
-                  icon: FaIcon(FontAwesomeIcons.message),
-                  onPressed: () => _launchUrl(msgno),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color.fromARGB(255, 9, 88, 12),
+                  ),
+                  child: IconButton(
+                      icon: Icon(
+                        Icons.call,
+                        //size: 30,
+                        color: Colors.white,
+                      ),
+                      onPressed: () => _launchUrl(phno)),
                 ),
-                IconButton(
-                  icon: Icon(Icons.email),
-                  onPressed: () => _launchUrl(mailto),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.lightBlue),
+                  child: IconButton(
+                    icon: FaIcon(FontAwesomeIcons.message),
+                    color: Colors.white,
+                    onPressed: () => _launchUrl(msgno),
+                  ),
                 ),
-                IconButton(
-                  icon: FaIcon(FontAwesomeIcons.whatsapp),
-                  onPressed: () => _launchUrl(whatsapp),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.red,
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.email),
+                    color: Colors.white,
+                    onPressed: () => _launchUrl(mailto),
+                  ),
                 ),
-                IconButton(
-                  icon: FaIcon(FontAwesomeIcons.facebook),
-                  onPressed: () => _launchUrl(fbpg),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.lightGreen,
+                  ),
+                  child: IconButton(
+                    icon: FaIcon(FontAwesomeIcons.whatsapp),
+                    color: Colors.white,
+                    onPressed: () => _launchUrl(whatsapp),
+                  ),
                 ),
-                IconButton(
-                  icon: FaIcon(FontAwesomeIcons.youtube),
-                  onPressed: () => _launchUrl(url),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.blue,
+                  ),
+                  child: IconButton(
+                    icon: FaIcon(FontAwesomeIcons.facebook),
+                    color: Colors.white,
+                    onPressed: () => _launchUrl(fbpg),
+                  ),
                 ),
-                IconButton(
-                  icon: FaIcon(FontAwesomeIcons.instagram),
-                  onPressed: () => _launchUrl(instpg),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.redAccent,
+                  ),
+                  child: IconButton(
+                    icon: FaIcon(FontAwesomeIcons.youtube),
+                    color: Colors.white,
+                    onPressed: () => _launchUrl(url),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color.fromARGB(255, 246, 43, 192),
+                  ),
+                  child: IconButton(
+                    icon: FaIcon(FontAwesomeIcons.instagram),
+                    color: Colors.white,
+                    onPressed: () => _launchUrl(instpg),
+                  ),
                 )
               ],
             ),

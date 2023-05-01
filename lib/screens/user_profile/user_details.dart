@@ -149,7 +149,7 @@ class _ProfileCardState extends State<ProfileCard> {
 
                         showCloseIcon: true,
                         title: "Success!",
-                        desc: "Profile Image Changed",
+                        desc: "Profile Photo Changed",
 
                         btnOkOnPress: () {
 
@@ -173,7 +173,7 @@ class _ProfileCardState extends State<ProfileCard> {
 
                         showCloseIcon: true,
                         title: "Fails!",
-                        desc: "Profile Image Doesn't Changed Successfully",
+                        desc: "Profile Photo Doesn't Changed Successfully",
 
                         btnOkOnPress: () {
 

@@ -22,15 +22,13 @@ bool _isLoading = true;
 
 class ItemViewNew extends StatefulWidget {
   final String id;
-  const ItemViewNew({super.key,required this.id});
- 
+  const ItemViewNew({super.key, required this.id});
 
   @override
   State<ItemViewNew> createState() => _ItemViewNewState();
 }
 
 class _ItemViewNewState extends State<ItemViewNew> {
-
   // ignore: prefer_typing_uninitialized_variables
   var data;
   final streetController = TextEditingController();
@@ -41,22 +39,20 @@ class _ItemViewNewState extends State<ItemViewNew> {
   final dateController = TextEditingController();
   final ccvController = TextEditingController();
   int counter = 0;
-  
 
   Future<void> fetchItemData() async {
     // ignore: prefer_interpolation_to_compose_strings
     setState(() {
       _isLoading = true;
     });
-    try{
+    try {
       // ignore: prefer_interpolation_to_compose_strings
-      final url = Uri.parse(itemAdd+"/"+widget.id);
+      final url = Uri.parse(itemAdd + "/" + widget.id);
       final response = await http.get(url);
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         data = jsonDecode(response.body);
       }
-    }
-    catch(e){
+    } catch (e) {
       // ignore: avoid_print
       print(e);
     }
@@ -68,19 +64,20 @@ class _ItemViewNewState extends State<ItemViewNew> {
 
   Future<void> registerBuyItem() async {
     var reqbody = {
-      "street" : streetController.text,
-      "town" : cityController.text,
-      "postalCode" : postalCodeController.text,
-      "username" : data["data"]["username"],
-      "id" : widget.id,
+      "street": streetController.text,
+      "town": cityController.text,
+      "postalCode": postalCodeController.text,
+      "username": data["data"]["username"],
+      "id": widget.id,
     };
 
     final url = Uri.parse(regBuyItem);
     // ignore: unused_local_variable
     var response = await http.post(
       url,
-      headers: {"Content-Type":"application/json",
-          "Access-Control-Allow-Origin": "*"
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
       },
       body: jsonEncode(reqbody),
     );
@@ -97,19 +94,20 @@ class _ItemViewNewState extends State<ItemViewNew> {
 
   Future<void> registeCard() async {
     var reqbody = {
-      "cardholdername" : cardholderController.text,
-      "cardnumber" : cardnumberController.text,
-      "date" : dateController.text,
-      "ccv" : ccvController.text,
-      "username" : widget.id,
+      "cardholdername": cardholderController.text,
+      "cardnumber": cardnumberController.text,
+      "date": dateController.text,
+      "ccv": ccvController.text,
+      "username": widget.id,
     };
 
     final url = Uri.parse(regBuyItem);
     // ignore: unused_local_variable
     var response = await http.post(
       url,
-      headers: {"Content-Type":"application/json",
-          "Access-Control-Allow-Origin": "*"
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
       },
       body: jsonEncode(reqbody),
     );
@@ -124,278 +122,285 @@ class _ItemViewNewState extends State<ItemViewNew> {
     // }
   }
 
-   @override
+  @override
   void initState() {
     super.initState();
     fetchItemData();
     registerBuyItem();
   }
 
-  late Map<String,dynamic> paymentIntent; 
+  late Map<String, dynamic> paymentIntent;
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var width = size.width;
     int currentIndex = 0;
-     //List<String> images = ['$imgOne', '$imgTwo', '$imgThree'];
-    List<String> images = data == null ? [] : [data["data"]["imgone"], data["data"]["imgtwo"], data["data"]["imgthree"]];
+    //List<String> images = ['$imgOne', '$imgTwo', '$imgThree'];
+    List<String> images = data == null
+        ? []
+        : [
+            data["data"]["imgone"],
+            data["data"]["imgtwo"],
+            data["data"]["imgthree"]
+          ];
     // ignore: no_leading_underscores_for_local_identifiers
     final PageController _pageController = PageController(initialPage: 0);
 
     return SafeArea(
         child: Scaffold(
-        body: _isLoading 
-                ? const Center(child: CircularProgressIndicator())
-                : Container(
-        margin: EdgeInsets.all(width / 30),
-        child: Column(children: [
-          ItemViewComponents(text: data["data"]["commonname"],category: data["data"]["category"],),
-          const SizedBox(
-            height: 10,
-          ),
-          Stack(
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width * 0.7,
-                child: PageView.builder(
-                  controller: _pageController,
-                  itemCount: images.length,
-                  onPageChanged: (index) {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    String? image = images[index];
-                    if (image != 'null' && image.isNotEmpty) {
-                      return Image.network(
-                        image,
-                        fit: BoxFit.cover,
-                      );
-                    } else {
-                      return Container();
-                    }
-                  },
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Container(
+              margin: EdgeInsets.all(width / 30),
+              child: ListView(children: [
+                ItemViewComponents(
+                  text: data["data"]["commonname"],
+                  category: data["data"]["category"],
                 ),
-              ),
-              Positioned(
-                left: 0,
-                top: MediaQuery.of(context).size.width * 0.35,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  color: HexColor.fromHex('#4CD964'),
-                  onPressed: () {
-                    setState(() {
-                      currentIndex = (currentIndex - 1) % images.length;
-                    });
-                    _pageController.animateToPage(
-                      currentIndex,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.ease,
-                    );
-                  },
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              Positioned(
-                right: 0,
-                top: MediaQuery.of(context).size.width * 0.35,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_forward),
-                  color: HexColor.fromHex('#4CD964'),
-                  onPressed: () {
-                    setState(() {
-                      currentIndex = (currentIndex + 1) % images.length;
-                    });
-                    _pageController.animateToPage(
-                      currentIndex,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.ease,
-                    );
-                  },
+                Stack(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width * 0.7,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemCount: images.length,
+                        onPageChanged: (index) {
+                          setState(() {
+                            currentIndex = index;
+                          });
+                        },
+                        itemBuilder: (BuildContext context, int index) {
+                          String? image = images[index];
+                          if (image != 'null' && image.isNotEmpty) {
+                            return Image.network(
+                              image,
+                              fit: BoxFit.cover,
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      left: 0,
+                      top: MediaQuery.of(context).size.width * 0.35,
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_back),
+                        color: HexColor.fromHex('#4CD964'),
+                        onPressed: () {
+                          setState(() {
+                            currentIndex = (currentIndex - 1) % images.length;
+                          });
+                          _pageController.animateToPage(
+                            currentIndex,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.ease,
+                          );
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      top: MediaQuery.of(context).size.width * 0.35,
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_forward),
+                        color: HexColor.fromHex('#4CD964'),
+                        onPressed: () {
+                          setState(() {
+                            currentIndex = (currentIndex + 1) % images.length;
+                          });
+                          _pageController.animateToPage(
+                            currentIndex,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.ease,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            flex: 3,
-            child: Container(
-              padding: EdgeInsets.all(width / 30),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child:Column(
-                children: [
-                  const Text(
-                    "Description",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                      data["data"]["description"],
-                  )
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Text(
-                // ignore: prefer_interpolation_to_compose_strings
-                "Rs."+data["data"]["price"].toString(),
-                style: const TextStyle(fontSize: 24),
-                textAlign: TextAlign.left,
-              ),
-              Spacer(),
-              TextButton(
-                onPressed: (){
-                  if(counter > 1){
-                    setState(() {
-                      counter--;
-                    });
-                  }
-                }, 
-                child: Text("-")
-              ),
-              Text(counter.toString()),
-              TextButton(
-                onPressed: (){
-                  if(counter < 5){
-                    setState(() {
-                      counter++;
-                    });
-                  }
-                }, 
-                child: Text("+")
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            flex: 3,
-            child: Container(
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: TextButton(
-                      style: greenButtonStyle,
-                      onPressed: () {
-                        
-                        openDialog();
-                      },
-                      child: const Text(
-                        "Buy Now",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                          fontFamily: 'Poppings',
+                const SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    padding: EdgeInsets.all(width / 30),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        const Text(
+                          "Description",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                      ),
+                        Text(
+                          data["data"]["description"],
+                        )
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Expanded(
-                      child: TextButton(
-                    style: greenButtonBorderStyle,
-                    onPressed: () {},
-                    child: Text(
-                      "Add Basket",
-                      style: TextStyle(
-                        color: HexColor.fromHex('#4CD964'),
-                        fontSize: 16.0,
-                        fontFamily: 'Poppins',
-                      ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      // ignore: prefer_interpolation_to_compose_strings
+                      "Rs." + data["data"]["price"].toString(),
+                      style: const TextStyle(fontSize: 24),
+                      textAlign: TextAlign.left,
                     ),
-                  )),
-                  const SizedBox(height: 10),
-                  Expanded(
-                      child: TextButton(
-                    style: greenButtonBorderStyle,
-                    onPressed: () {},
-                    child: Text(
-                      "Chat",
-                      style: TextStyle(
-                        color: HexColor.fromHex('#4CD964'),
-                        fontSize: 16.0,
-                        fontFamily: 'Poppins',
-                      ),
+                    Spacer(),
+                    TextButton(
+                        onPressed: () {
+                          if (counter > 1) {
+                            setState(() {
+                              counter--;
+                            });
+                          }
+                        },
+                        child: Text("-")),
+                    Text(counter.toString()),
+                    TextButton(
+                        onPressed: () {
+                          if (counter < 5) {
+                            setState(() {
+                              counter++;
+                            });
+                          }
+                        },
+                        child: Text("+")),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: TextButton(
+                            style: greenButtonStyle,
+                            onPressed: () {
+                              openDialog();
+                            },
+                            child: const Text(
+                              "Buy Now",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                                fontFamily: 'Poppings',
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Expanded(
+                            child: TextButton(
+                          style: greenButtonBorderStyle,
+                          onPressed: () {},
+                          child: Text(
+                            "Add Basket",
+                            style: TextStyle(
+                              color: HexColor.fromHex('#4CD964'),
+                              fontSize: 16.0,
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                        )),
+                        const SizedBox(height: 10),
+                        Expanded(
+                            child: TextButton(
+                          style: greenButtonBorderStyle,
+                          onPressed: () {},
+                          child: Text(
+                            "Chat",
+                            style: TextStyle(
+                              color: HexColor.fromHex('#4CD964'),
+                              fontSize: 16.0,
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                        ))
+                      ],
                     ),
-                  ))
-                ],
-              ),
+                  ),
+                ),
+              ]),
             ),
-          ),
-        ]),
-      ),
     ));
   }
 
   Future openDialog() => showDialog(
-    builder: (context) => AlertDialog(
-      title: const Text("Enter your location for deliver"),
-      content: SizedBox(
-        height: MediaQuery.of(context).size.height/4,
-        child: ListView(
-          children: [
-          TextFormField(
-              controller: streetController,
-              decoration: const InputDecoration(hintText: "Street Name"),
+        builder: (context) => AlertDialog(
+          title: const Text("Enter your location for deliver"),
+          content: SizedBox(
+            height: MediaQuery.of(context).size.height / 4,
+            child: ListView(
+              children: [
+                TextFormField(
+                  controller: streetController,
+                  decoration: const InputDecoration(hintText: "Street Name"),
+                ),
+                TextFormField(
+                  controller: cityController,
+                  decoration: const InputDecoration(hintText: "Town Name"),
+                ),
+                TextFormField(
+                  controller: postalCodeController,
+                  decoration: const InputDecoration(hintText: "Postal Code"),
+                ),
+              ],
+            ),
           ),
-          TextFormField(
-              controller: cityController,
-              decoration: const InputDecoration(hintText: "Town Name"),
-          ),
-          TextFormField(
-              controller: postalCodeController,
-              decoration: const InputDecoration(hintText: "Postal Code"),
-          ),
-        ],
-        ),
-      ),
-      actions: [
-        TextButton(
-          // onPressed: () {
-          //   setState(() {
-          //     registerBuyItem();
-          //   });
-            // streetController.clear();
-            // cityController.clear();
-            // postalCodeController.clear();
-          //   //open2Dialog();
-              // Navigator.of(context).pop();
-          //   // showModalBottomSheet(
-          //   //               context: context,
-          //   //               builder: (context) => bottomesheet(),
-          //   //               backgroundColor: Colors.white,
-          //   //             );
-          // }, 
-              onPressed : () {
+          actions: [
+            TextButton(
+                // onPressed: () {
+                //   setState(() {
+                //     registerBuyItem();
+                //   });
+                // streetController.clear();
+                // cityController.clear();
+                // postalCodeController.clear();
+                //   //open2Dialog();
+                // Navigator.of(context).pop();
+                //   // showModalBottomSheet(
+                //   //               context: context,
+                //   //               builder: (context) => bottomesheet(),
+                //   //               backgroundColor: Colors.white,
+                //   //             );
+                // },
+                onPressed: () {
                   streetController.clear();
                   cityController.clear();
                   postalCodeController.clear();
                   Navigator.of(context).pop();
                   setState(() {
-                      PaymentSheet payment = PaymentSheet(amount: (data["data"]["price"]*counter).toString(), context: context);
-                      payment.makePayment();
+                    PaymentSheet payment = PaymentSheet(
+                        amount: (data["data"]["price"] * counter).toString(),
+                        context: context);
+                    payment.makePayment();
                   });
-              },
-          child: const Text("Next")
+                },
+                child: const Text("Next")),
+          ],
         ),
-      ],
-    ), 
-    context: context,
-  );
+        context: context,
+      );
 
   // Future<void> makePayment() async {
   //   try{
@@ -422,7 +427,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
   //     await Stripe.instance.presentPaymentSheet(
   //     ).then((value) {
   //       showDialog(
-  //         context: context, 
+  //         context: context,
   //         builder: (_) => const AlertDialog(
   //           content: Column(
   //             mainAxisSize: MainAxisSize.min,
@@ -447,7 +452,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
   //     print(e);
 
   //     showDialog(
-  //       context: context, 
+  //       context: context,
   //       builder: (_) => const AlertDialog(
   //         content: Text("concelled"),
   //       ));
@@ -455,7 +460,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
   //     // ignore: avoid_print
   //     print(e);
   //   }
-    
+
   // }
 
   // createPaymentIntent(String amount,String currency) async {
@@ -488,8 +493,6 @@ class _ItemViewNewState extends State<ItemViewNew> {
   //   final calculateAmount = (int.parse(amount))*100 ;
   //   return calculateAmount.toString();
   // }
-
-  
 
 //button click action for buy now button
   // Widget bottomesheet() {
