@@ -1,10 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_bloem/components/button_components.dart';
 import 'package:project_bloem/components/color_components.dart';
+import 'package:project_bloem/components/widget_custom_stepper.dart';
+import 'package:project_bloem/provider.dart';
 import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/size.dart';
 /////////////////////////////
@@ -21,15 +25,15 @@ String? imgThree;
 bool imageAdded = true;
 bool _isLoading = true;
 
-class ItemViewNew extends StatefulWidget {
+class ItemViewNew extends ConsumerStatefulWidget {
   final String id;
   const ItemViewNew({super.key, required this.id});
 
   @override
-  State<ItemViewNew> createState() => _ItemViewNewState();
+  _ItemViewNewState createState() => _ItemViewNewState();
 }
 
-class _ItemViewNewState extends State<ItemViewNew> {
+class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   // ignore: prefer_typing_uninitialized_variables
   var data;
   final streetController = TextEditingController();
@@ -40,6 +44,9 @@ class _ItemViewNewState extends State<ItemViewNew> {
   final dateController = TextEditingController();
   final ccvController = TextEditingController();
   int counter = 0;
+  late SharedPreferences preference;
+  String username = "";
+
 
   Future<void> fetchItemData() async {
     // ignore: prefer_interpolation_to_compose_strings
@@ -47,6 +54,9 @@ class _ItemViewNewState extends State<ItemViewNew> {
       _isLoading = true;
     });
     try {
+      preference = await SharedPreferences.getInstance();
+      String? username = preference.getString('username');
+      setState(() => this.username = username!);
       // ignore: prefer_interpolation_to_compose_strings
       final url = Uri.parse(itemAdd + "/" + widget.id);
       final response = await http.get(url);
@@ -127,7 +137,6 @@ class _ItemViewNewState extends State<ItemViewNew> {
   void initState() {
     super.initState();
     fetchItemData();
-    //registerBuyItem();
   }
 
   late Map<String, dynamic> paymentIntent;
@@ -158,12 +167,12 @@ class _ItemViewNewState extends State<ItemViewNew> {
               child: ListView(
                   children: [
                     ItemViewComponents(
-                      text: data["data"]["category"],
-                      category: " ",
+                      text: " ",
+                      category: data["data"]["category"],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                // SizedBox(
+                //   height: getProportionateScreenHeight(),
+                // ),
                 Stack(
                   children: [
                     SizedBox(
@@ -228,8 +237,8 @@ class _ItemViewNewState extends State<ItemViewNew> {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: getProportionateScreenHeight(10),
                 ),
                     SizedBox(
                       width: width,
@@ -327,25 +336,36 @@ class _ItemViewNewState extends State<ItemViewNew> {
                       textAlign: TextAlign.left,
                     ),
                     const Spacer(),
-                    TextButton(
-                        onPressed: () {
-                          if (counter > 1) {
-                            setState(() {
-                              counter--;
-                            });
-                          }
-                        },
-                        child: const Text("-")),
-                    Text(counter.toString()),
-                    TextButton(
-                        onPressed: () {
-                          if (counter < 5) {
-                            setState(() {
-                              counter++;
-                            });
-                          }
-                        },
-                        child: const Text("+")),
+                    // TextButton(
+                    //     onPressed: () {
+                    //       if (counter > 1) {
+                    //         setState(() {
+                    //           counter--;
+                    //         });
+                    //       }
+                    //     },
+                    //     child: const Text("-")),
+                    // Text(counter.toString()),
+                    // TextButton(
+                    //     onPressed: () {
+                    //       if (counter < 5) {
+                    //         setState(() {
+                    //           counter++;
+                    //         });
+                    //       }
+                    //     },
+                    //     child: const Text("+")),
+
+                    CustomStepper(
+                        lowerLimit: 1,
+                        upperLimit: 5,
+                        stepValue: 1,
+                        iconSize: 22,
+                        value: counter,
+                        onChanged: (value){
+                          counter = value["qty"];
+                        }
+                    )
                   ],
                 ),
                 const SizedBox(
@@ -428,7 +448,8 @@ class _ItemViewNewState extends State<ItemViewNew> {
                       style: greenButtonBorderStyle,
                       //############################Add Basket##########################################
                       onPressed: () {
-                        //Navigator.pushNamed(context, '/login');
+                        final cartViewModel = ref.read(cartItemsProvider.notifier);
+                        cartViewModel.addCartItem(data["data"]["id"], counter, username);
                       },
                       child: Text(
                         "Add Basket",
