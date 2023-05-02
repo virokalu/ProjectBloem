@@ -6,6 +6,7 @@ import 'package:project_bloem/components/color_components.dart';
 import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:http/http.dart' as http;
 
+import '../../components/size.dart';
 /////////////////////////////
 //import 'package:stripe_payment/stripe_payment.dart';
 /////////////////////////////
@@ -126,7 +127,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
   void initState() {
     super.initState();
     fetchItemData();
-    registerBuyItem();
+    //registerBuyItem();
   }
 
   late Map<String, dynamic> paymentIntent;
@@ -147,16 +148,18 @@ class _ItemViewNewState extends State<ItemViewNew> {
     // ignore: no_leading_underscores_for_local_identifiers
     final PageController _pageController = PageController(initialPage: 0);
 
+
     return SafeArea(
         child: Scaffold(
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : Container(
               margin: EdgeInsets.all(width / 30),
-              child: ListView(children: [
-                ItemViewComponents(
-                  text: data["data"]["commonname"],
-                  category: data["data"]["category"],
+              child: ListView(
+                  children: [
+                    ItemViewComponents(
+                      text: data["data"]["category"],
+                      category: " ",
                 ),
                 const SizedBox(
                   height: 10,
@@ -228,28 +231,90 @@ class _ItemViewNewState extends State<ItemViewNew> {
                 const SizedBox(
                   height: 10,
                 ),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    padding: EdgeInsets.all(width / 30),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      children: [
-                        const Text(
-                          "Description",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                    SizedBox(
+                      width: width,
+                      child:Text(
+                        data["data"]["commonname"],
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: getProportionateScreenWidth(20),
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
                         ),
-                        Text(
-                          data["data"]["description"],
-                        )
-                      ],
+                      ),
                     ),
-                  ),
-                ),
+                    SizedBox(
+                      width: width,
+                      child: Text(
+                        data["data"]["sciname"].isNotEmpty? data["data"]["sciname"] : '',
+                        style: TextStyle(
+                          fontSize: getProportionateScreenWidth(11),
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    SizedBox(
+                      width: width,
+                      child: const Text(
+                        "Description",
+                        textAlign: TextAlign.right,
+
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                // Expanded(
+                //   flex: 3,
+                //   child: Container(
+                //     padding: EdgeInsets.all(width / 30),
+                //     alignment: Alignment.center,
+                //     decoration: BoxDecoration(
+                //       border: Border.all(color: Colors.black),
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //     child: Column(
+                //       children: [
+                //         const Text(
+                //           "Description",
+                //           style: TextStyle(fontWeight: FontWeight.bold),
+                //         ),
+                //         Text(
+                //           data["data"]["description"],
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: width,
+                        maxWidth: width,
+                        minHeight: 70,
+                        maxHeight: 70,
+                      ),
+                      child: LimitedBox(
+                        maxHeight: 4 * 20.0, // assuming font size is 20
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            data["data"]["description"],
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    ),
+
+
                 const SizedBox(
                   height: 10,
                 ),
@@ -261,7 +326,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                       style: const TextStyle(fontSize: 24),
                       textAlign: TextAlign.left,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     TextButton(
                         onPressed: () {
                           if (counter > 1) {
@@ -270,7 +335,7 @@ class _ItemViewNewState extends State<ItemViewNew> {
                             });
                           }
                         },
-                        child: Text("-")),
+                        child: const Text("-")),
                     Text(counter.toString()),
                     TextButton(
                         onPressed: () {
@@ -280,66 +345,119 @@ class _ItemViewNewState extends State<ItemViewNew> {
                             });
                           }
                         },
-                        child: Text("+")),
+                        child: const Text("+")),
                   ],
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: TextButton(
-                            style: greenButtonStyle,
-                            onPressed: () {
-                              openDialog();
-                            },
-                            child: const Text(
-                              "Buy Now",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.0,
-                                fontFamily: 'Poppings',
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Expanded(
-                            child: TextButton(
-                          style: greenButtonBorderStyle,
-                          onPressed: () {},
-                          child: Text(
-                            "Add Basket",
-                            style: TextStyle(
-                              color: HexColor.fromHex('#4CD964'),
-                              fontSize: 16.0,
-                              fontFamily: 'Poppins',
-                            ),
-                          ),
-                        )),
-                        const SizedBox(height: 10),
-                        Expanded(
-                            child: TextButton(
-                          style: greenButtonBorderStyle,
-                          onPressed: () {},
-                          child: Text(
-                            "Chat",
-                            style: TextStyle(
-                              color: HexColor.fromHex('#4CD964'),
-                              fontSize: 16.0,
-                              fontFamily: 'Poppins',
-                            ),
-                          ),
-                        ))
-                      ],
+                // Expanded(
+                //   flex: 3,
+                //   child: Container(
+                //     alignment: Alignment.center,
+                //     child: Column(
+                //       children: [
+                //         Expanded(
+                //           child: TextButton(
+                //             style: greenButtonStyle,
+                //             onPressed: () {
+                //               openDialog();
+                //             },
+                //             child: const Text(
+                //               "Buy Now",
+                //               style: TextStyle(
+                //                 color: Colors.white,
+                //                 fontSize: 16.0,
+                //                 fontFamily: 'Poppings',
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //         const SizedBox(height: 10),
+                //         Expanded(
+                //             child: TextButton(
+                //           style: greenButtonBorderStyle,
+                //           onPressed: () {},
+                //           child: Text(
+                //             "Add Basket",
+                //             style: TextStyle(
+                //               color: HexColor.fromHex('#4CD964'),
+                //               fontSize: 16.0,
+                //               fontFamily: 'Poppins',
+                //             ),
+                //           ),
+                //         )),
+                //         const SizedBox(height: 10),
+                //         Expanded(
+                //             child: TextButton(
+                //           style: greenButtonBorderStyle,
+                //           onPressed: () {},
+                //           child: Text(
+                //             "Chat",
+                //             style: TextStyle(
+                //               color: HexColor.fromHex('#4CD964'),
+                //               fontSize: 16.0,
+                //               fontFamily: 'Poppins',
+                //             ),
+                //           ),
+                //         ))
+                //       ],
+                //     ),
+                //   ),
+                // ),
+
+                    TextButton(
+                      style: greenButtonStyle,
+                      //############################Save the view##########################################
+                      onPressed: () {
+                        openDialog();
+                      },
+                      child: const Text(
+                        "Buy Now",
+                        style: TextStyle(
+                          color: Colors.white,fontSize: 16.0,
+                          fontFamily: 'Poppins',),
+                      ),
                     ),
-                  ),
-                ),
+
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    TextButton(
+                      style: greenButtonBorderStyle,
+                      //############################Add Basket##########################################
+                      onPressed: () {
+                        //Navigator.pushNamed(context, '/login');
+                      },
+                      child: Text(
+                        "Add Basket",
+                        style: TextStyle(
+                          color: HexColor.fromHex('#4CD964'), fontSize: 16.0,
+                          fontFamily: 'Poppins',),
+                      ),
+                    ),
+
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+
+                    TextButton(
+                      style: data["data"]["chatactivate"] ? greenButtonBorderStyle
+                          : greyButtonStyle,
+                      //############################Chat#######################################
+                      onPressed: data["data"]["chatactivate"]
+                          ? () {}
+                          : null,
+                      child: Text(
+                        "Chat",
+                        style: TextStyle(
+                          color: data["data"]["chatactivate"]? HexColor.fromHex('#4CD964') : Colors.grey,
+                          fontSize: 16.0,
+                          fontFamily: 'Poppins',),
+                      ),
+                    ),
               ]),
             ),
     ));
