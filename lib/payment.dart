@@ -10,6 +10,7 @@ class PaymentSheet  {
   final String amount;
   final BuildContext context;
   late Map<String,dynamic> paymentIntent; 
+  bool isSuccess = false;
 
   Future<void> makePayment() async {
     try{
@@ -35,6 +36,7 @@ class PaymentSheet  {
     try{
       await Stripe.instance.presentPaymentSheet(
       ).then((value) {
+        isSuccess = true;
         showDialog(
           context: context, 
           builder: (_) => const AlertDialog(
