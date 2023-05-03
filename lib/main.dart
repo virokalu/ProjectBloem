@@ -25,6 +25,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
+final GlobalKey<NavigatorState>navigatorKey=GlobalKey<NavigatorState>();
+
 
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,6 +70,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         //home: const UserProfile());
+        navigatorKey:navigatorKey,
+
         initialRoute: '/',
         routes: {
           '/':(context) => const WelcomeScreen(),
@@ -89,7 +93,7 @@ class MyApp extends StatelessWidget {
           '/addListing':(context) => const PlaceListing(),
           '/search':(context) => const SearchResultScreen(),
           '/category':(context) => const CategoryPage(),
-          '/aboutus' : (context) => const AboutUs(),
+          '/about us' : (context) => const AboutUs(),
         },
     );
   }

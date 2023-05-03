@@ -35,6 +35,7 @@ class _CategoryPageState extends State<CategoryPage> {
               const BackButtonNHome(),
               SizedBox(height: getProportionateScreenHeight(20)),
 
+
               //const SearchBar(),
               // SizedBox(
               //   height: height * 0.75,
@@ -453,10 +454,7 @@ class _ItemList extends ConsumerWidget{
       }
       return const LinearProgressIndicator();
     }
-    return SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-          physics: const AlwaysScrollableScrollPhysics(),
-        child: RefreshIndicator(
+    return RefreshIndicator(
           onRefresh: () async{
             //print(" here");
             ref.read(itemNotifierProvider.notifier).refreshItems();
@@ -480,7 +478,7 @@ class _ItemList extends ConsumerWidget{
               //SizedBox(width: getProportionateScreenWidth(20)),
             ),
 
-        ),
+
 
 
     );

@@ -229,7 +229,7 @@ class _SellingPageState extends State<SellingPage> {
   }
   Widget _buildItemList(List<Item> items) {
     if(_isLoading){
-      return const Center(child: CircularProgressIndicator());
+      return const Center(child: LinearProgressIndicator());
     }else{
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,

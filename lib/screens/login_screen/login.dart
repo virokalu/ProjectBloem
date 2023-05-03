@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
           child: ListView(
             children: [
         
-              const ButtonText(text: "User Login", icon: Icons.login),
+              const ButtonTextLogin(text: "User Login", icon: Icons.login),
         
               SizedBox(height: height / 30,),
               SizedBox(
