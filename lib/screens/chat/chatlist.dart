@@ -42,7 +42,7 @@ class _ChatListState extends State<ChatList> {
       "name" : receiverController.text,
       "currentpage" : "jjj",
       "users" : [user,receiverController.text],
-      "img" : "jj",
+      "img" : "images/camera.jpg",
       "id" : "5",
     };
     //var response = await http.post(Uri.parse(insertchats),
