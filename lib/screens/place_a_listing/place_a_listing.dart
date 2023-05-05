@@ -1239,7 +1239,7 @@ class _Preview extends State<Preview> {
                     child: Text(
                       // ignore: unnecessary_string_interpolations
                       "${noOfItemsController.text} items available",
-                      style: const TextStyle(fontSize: 24),
+                      style: const TextStyle(fontSize: 10),
                       textAlign: TextAlign.left,
                     ),
                   ),
