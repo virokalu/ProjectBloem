@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
           '/addListing':(context) => const PlaceListing(),
           '/search':(context) => const SearchResultScreen(),
           '/category':(context) => const CategoryPage(),
-          '/about us' : (context) => const AboutUs(),
+          '/aboutus' : (context) => const AboutUs(),
         },
     );
   }
