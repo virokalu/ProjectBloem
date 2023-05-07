@@ -58,7 +58,7 @@ class _AboutUsState extends State<AboutUs> {
             ),
             SizedBox(height: getProportionateScreenWidth(20)),
 
-            Image.asset("images/im1.jpg", fit: BoxFit.cover),
+            //Image.asset("images/im1.jpg", fit: BoxFit.cover),
             const Image(image: AssetImage('images/im1.jpg')),
             SizedBox(height: getProportionateScreenWidth(20)),
 
