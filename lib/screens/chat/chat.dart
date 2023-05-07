@@ -6,6 +6,7 @@ import '../../Model/chatmodel.dart';
 import '../../Model/messagemodel.dart';
 import '../../components/color_components.dart';
 import '../login_screen/loginuserdetails.dart';
+import 'othermessage.dart';
 import 'ownmessagecard.dart';
 import '../../config.dart';
 // ignore: library_prefixes
@@ -211,17 +212,22 @@ class _ChatPageState extends State<ChatPage> {
                   controller: _scrollcontroller,
                   itemCount: messages.length,
                   itemBuilder: (context, index){
-                   // print(messages[index].type);
-                    //if(messages[index].type == 'source'){
+                  //if(messages[index].targetName == widget.chatmodel.name){
+                        print(messages[index].message);
                         if(messages[index].sourceName == widget.sourceName && messages[index].targetName == widget.chatmodel.name){
-                            return OwnMessageCard(message: messages[index].message);
+                          print("my message");
+                          return OwnMessageCard(message: messages[index].message);
                         }
-                        else{
-                          //if(messages[index].targetName == widget.sourceName && messages[index].sourceName == widget.chatmodel.name){
-                            return ReplyCard(message: messages[index].message);
-                          //}
+                        else if (messages[index].targetName == widget.sourceName && messages[index].sourceName == widget.chatmodel.name){
+                          print("reply message");
+                          return ReplyCard(message: messages[index].message);
+                        } else {
+                          print("Other message");
+                          return const OtherMsg();
                         }
-              
+                  // else{
+                  //   return null;
+                  // }
                   },
                 ),
               ),
