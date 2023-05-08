@@ -84,7 +84,7 @@ class _ItemViewState extends State<ItemView> {
                   Expanded(
                     child: Column(
                       children: [
-                        const Text("CCV"),
+                        const Text("CVV"),
                         const SizedBox(height: 20,),
                         TextFormField(
                           decoration: InputDecoration(

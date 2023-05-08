@@ -117,7 +117,7 @@ class _UserProfileState extends State<UserProfile> {
                 name: 'About Us',
                 onPressed: () {
 
-                  Navigator.pushNamed(context, '/about us');
+                  Navigator.pushNamed(context, '/aboutus');
                   // Do something when the bar is clicked
                 },
               ),
