@@ -29,7 +29,8 @@ class _DeliveryScreenState extends State<DeliveryScreen>{
             child: ListView(
               children: [
                 const ButtonText(text: "Delivery", icon: Icons.delivery_dining),
-
+                SizedBox(height: getProportionateScreenHeight(18),),
+                const Image(image: AssetImage('images/delivery.jpg')),
                 SizedBox(height: getProportionateScreenHeight(18),),
 
                 SingleChildScrollView(
@@ -50,7 +51,7 @@ class _DeliveryScreenState extends State<DeliveryScreen>{
                           },
                           body: Container(
                               padding: const EdgeInsets.all(2),
-                              child: const Text("Pronto Lanka (Pvt) Ltd.\n https://www.prontolanka.lk/\n(+94) 112 102 700\ninfopronto@transnational-grp.com")
+                              child: Text("Pronto Lanka (Pvt) Ltd.\n https://www.prontolanka.lk/\n(+94) 112 102 700\ninfopronto@transnational-grp.com")
                           ),
                           isExpanded: expanded[0]
                       ),
