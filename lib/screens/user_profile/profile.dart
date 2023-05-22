@@ -15,6 +15,7 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
 
   late SharedPreferences preference;
+  late bool? sellerStates;
 
 
   @override
@@ -26,6 +27,7 @@ class _UserProfileState extends State<UserProfile> {
     preference = await SharedPreferences.getInstance();
     //String? fullname=preference.getString('fullname');
     String? token=preference.getString('token');
+    sellerStates = preference.getBool('sellerStates');
     //print(token);
 
     if(token==null){
@@ -33,7 +35,7 @@ class _UserProfileState extends State<UserProfile> {
       // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, '/login');
     }
-    //setState(() =>this.username=username!);
+    setState(() =>this.sellerStates=sellerStates!);
     //setState(() =>this.fullname=fullname!);
 
   }
@@ -43,6 +45,12 @@ class _UserProfileState extends State<UserProfile> {
     var size = MediaQuery.of(context).size;
     var width = size.width;
 
+    // if(sellerStates == true){
+    //   print("ok");
+    // }
+    // else{
+    //   print("not ok");
+    // }
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -81,7 +89,8 @@ class _UserProfileState extends State<UserProfile> {
                 icon: Icons.sell ,
                 name: 'Sell',
                 onPressed: () {
-                  Navigator.pushNamed(context, '/selling');
+                  sellerStates == true ? Navigator.pushNamed(context, '/selling') : Navigator.pushNamed(context, '/sellerreg');
+                  //Navigator.pushNamed(context, '/selling');
                   // Do something when the bar is clicked
                 },
               ),

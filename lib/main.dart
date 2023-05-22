@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project_bloem/screens/about_us/aboutus.dart';
 import 'package:project_bloem/screens/search_screen/categorypage.dart';
 import 'package:project_bloem/screens/search_screen/sresult.dart';
+import 'package:project_bloem/screens/selling/registersellerform.dart';
 //import 'package:device_preview/device_preview.dart';
 import 'package:project_bloem/screens/summery/summery.dart';
 import 'package:project_bloem/screens/basket_screen/mybasket.dart';
@@ -94,6 +95,7 @@ class MyApp extends StatelessWidget {
           '/search':(context) => const SearchResultScreen(),
           '/category':(context) => const CategoryPage(),
           '/aboutus' : (context) => const AboutUs(),
+          '/sellerreg' : (context) => const SellerRegister(),
         },
     );
   }
