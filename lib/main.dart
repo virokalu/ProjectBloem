@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
       //home: const SettingScreen());
       navigatorKey: navigatorKey,
 
-      initialRoute: '/setting',
+      initialRoute: '/',
       routes: {
         '/': (context) => const WelcomeScreen(),
         '/mybusket': (context) => const MyBasketScreen(),
