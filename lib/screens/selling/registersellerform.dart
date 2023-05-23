@@ -36,19 +36,8 @@ class _SellerRegisterState extends State<SellerRegister> {
   }
   Future init() async{
     preference = await SharedPreferences.getInstance();
-    //String? fullname=preference.getString('fullname');
     String? username=preference.getString('username');
-    //String? token=preference.getString('token');
-    //print(token);
-
-    // if(token==null){
-    //   //print(token);
-
-    //   // ignore: use_build_context_synchronously
-    //   Navigator.pushNamed(context, '/login');
-    // }
     setState(() =>this.username=username!);
-    //setState(() =>this.fullname=fullname!);
 
   }
 
@@ -76,7 +65,31 @@ class _SellerRegisterState extends State<SellerRegister> {
             },
 
         body: encodeBody,
-  );
+        );
+
+        preference.setBool("sellerStates", true);
+    }
+
+    Future<void> registerAccDetails() async {
+
+      final Map<String , dynamic> reqBody = {
+          "username" : username,
+          "publishable_key" : publicKeyController.text,
+          "stripe_id" : stripeIdController.text,
+      };
+
+      final response = await http.post(
+        Uri.parse(regseller),
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: jsonEncode(reqBody),
+      );
+
+      if(response.statusCode == 201) {
+          print("success");
+      }
+
     }
 
     return SafeArea(
@@ -198,8 +211,11 @@ class _SellerRegisterState extends State<SellerRegister> {
                     if(_formField.currentState!.validate()){
                       print("success");
                       setState(() {
-                        //updateSeller(loginusername!,true);
+
+                        registerAccDetails();
                         updateSeller(username!,true);
+                        Navigator.pushNamed(context, '/selling');
+
                       });
                       //registerUser(context);
 

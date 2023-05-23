@@ -18,6 +18,7 @@ const addmessage = "${url}message";
 const apiURL = "10.0.2.2:3000";
 //const apiURL = "192.168.42.216:3000";
 const upSellerStates = "${url}updateseller";
+const regseller = "${url}sellerdetails";
 //const apiURL = "10.0.2.2:3000";
 //const apiURL = "10.0.2.2:3000";
 const cartAPI="item/cart";
