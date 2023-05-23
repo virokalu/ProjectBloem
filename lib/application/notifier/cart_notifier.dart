@@ -8,6 +8,7 @@ class CartNotifier extends StateNotifier<CartState>{
   final APIService _apiService;
 
   CartNotifier(this._apiService) : super(const CartState()){
+
     getCartItems();
   }
   Future<void> getCartItems() async{
