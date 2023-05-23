@@ -15,6 +15,7 @@ const barchartdata = "${url}barchartdata";
 const messages = "${url}viewmessages";
 const addmessage = "${url}message";
 const upSellerStates = "${url}updateseller";
+const regseller = "${url}sellerdetails";
 //const apiURL = "10.0.2.2:3000";
 //const apiURL = "10.0.2.2:3000";
 const cartAPI="item/cart";
