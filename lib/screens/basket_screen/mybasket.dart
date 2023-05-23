@@ -10,23 +10,23 @@ class MyBasketScreen extends StatefulWidget {
   State<MyBasketScreen> createState() => _MyBasketScreenState();
 }
 
-
 class _MyBasketScreenState extends State<MyBasketScreen> {
   late SharedPreferences preference;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     init();
   }
-  Future init() async{
+
+  Future init() async {
     preference = await SharedPreferences.getInstance();
     //String? fullname=preference.getString('fullname');
     //String? username=preference.getString('username');
-    String? token=preference.getString('token');
+    String? token = preference.getString('token');
     //print(token);
 
-    if(token==null){
+    if (token == null) {
       //print(token);
 
       // ignore: use_build_context_synchronously
@@ -34,8 +34,8 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
     }
     //setState(() =>this.username=username!);
     //setState(() =>this.fullname=fullname!);
-
   }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -67,7 +67,8 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                   vertical: width / 90, horizontal: height / 90),
               child: Column(
                 children: [
-                  const ButtonText(text: "My Basket", icon: Icons.shopping_cart),
+                  const ButtonText(
+                      text: "My Basket", icon: Icons.shopping_cart),
                   const SizedBox(height: 20),
                   SizedBox(
                     height: height * 0.38,
@@ -79,8 +80,9 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const CircleAvatar(
-                                    radius: 30,
-                                    backgroundImage: AssetImage('images/background1.jpg'),
+                                  radius: 30,
+                                  backgroundImage:
+                                      AssetImage('images/background1.jpg'),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -134,8 +136,9 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                                   width: width / 7,
                                   child: const CircleAvatar(
                                     radius: 30,
-                                    backgroundImage: AssetImage('images/background1.jpg'),
-                                ),
+                                    backgroundImage:
+                                        AssetImage('images/background1.jpg'),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -187,8 +190,9 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                                   width: width / 7,
                                   child: const CircleAvatar(
                                     radius: 30,
-                                    backgroundImage: AssetImage('images/background1.jpg'),
-                                ),
+                                    backgroundImage:
+                                        AssetImage('images/background1.jpg'),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -240,8 +244,9 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                                   width: width / 7,
                                   child: const CircleAvatar(
                                     radius: 30,
-                                    backgroundImage: AssetImage('images/background1.jpg'),
-                                ),
+                                    backgroundImage:
+                                        AssetImage('images/background1.jpg'),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -293,8 +298,9 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                                   width: width / 7,
                                   child: const CircleAvatar(
                                     radius: 30,
-                                    backgroundImage: AssetImage('images/background1.jpg'),
-                                ),
+                                    backgroundImage:
+                                        AssetImage('images/background1.jpg'),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -346,8 +352,9 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                                   width: width / 7,
                                   child: const CircleAvatar(
                                     radius: 30,
-                                    backgroundImage: AssetImage('images/background1.jpg'),
-                                ),
+                                    backgroundImage:
+                                        AssetImage('images/background1.jpg'),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -399,8 +406,9 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                                   width: width / 7,
                                   child: const CircleAvatar(
                                     radius: 30,
-                                    backgroundImage: AssetImage('images/background1.jpg'),
-                                ),
+                                    backgroundImage:
+                                        AssetImage('images/background1.jpg'),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: height / 7,
@@ -488,11 +496,287 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
                           ),
                         ),
                         SizedBox(
-                          //height: height * 0.1,
                           width: width * 0.4,
                           child: TextButton(
                             style: greenButtonStyle,
-                            onPressed: () {},
+                            onPressed: () {
+                              showModalBottomSheet(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Scaffold(
+                                    body: Column(
+                                      children: [
+                                        Container(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              10.0, 0, 10.0, 0),
+                                          height: height * 0.5,
+                                          width: width,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const SizedBox(
+                                                    height: 20.0,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text(
+                                                        "Card Holder's Name",
+                                                        style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 15.0,
+                                                      ),
+                                                      TextFormField(
+                                                        decoration:
+                                                            InputDecoration(
+                                                          hintText: "Manoj ABC",
+                                                          filled: true,
+                                                          fillColor:
+                                                              Colors.white38,
+                                                          border:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 25.0,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text(
+                                                        "Card Number",
+                                                        style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 15.0,
+                                                      ),
+                                                      TextFormField(
+                                                        decoration:
+                                                            InputDecoration(
+                                                          filled: true,
+                                                          hintText:
+                                                              'xxxx xxxx xxxx xxxx',
+                                                          fillColor:
+                                                              Colors.white38,
+                                                          border:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 25.0,
+                                              ),
+                                              Row(
+                                                //crossAxisAlignment:CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                    width: width * 0.3,
+                                                    child: Column(children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              const Text(
+                                                                "Date",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 15.0,
+                                                              ),
+                                                              TextFormField(
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  hintText:
+                                                                      "10/30",
+                                                                  filled: true,
+                                                                  fillColor: Colors
+                                                                      .white38,
+                                                                  border:
+                                                                      OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ]),
+                                                  ),
+                                                  SizedBox(
+                                                    width: width * 0.3,
+                                                    child: Column(children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              const Text(
+                                                                "CCV",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 15.0,
+                                                              ),
+                                                              TextFormField(
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  hintText:
+                                                                      "548",
+                                                                  filled: true,
+                                                                  fillColor: Colors
+                                                                      .white38,
+                                                                  border:
+                                                                      OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ]),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 25.0,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                    //height: height * 0.1,
+                                                    width: width * 0.4,
+                                                    child: TextButton(
+                                                      style: greenButtonStyle,
+                                                      onPressed: () {},
+                                                      child: const Text(
+                                                        "Cash on Delivery",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 18.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    //height: height * 0.1,
+                                                    width: width * 0.4,
+                                                    child: TextButton(
+                                                      style:
+                                                          greenButtonBorderStyle,
+                                                      //style: ButtonStyle(),
+                                                      onPressed: () {},
+                                                      child: const Text(
+                                                        "Complete Order",
+                                                        style: TextStyle(
+                                                            color: Colors.green,
+                                                            fontSize: 18.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    floatingActionButton: Container(
+                                      transform: Matrix4.translationValues(
+                                          0.0, -70, 0.0),
+                                      child: FloatingActionButton(
+                                        backgroundColor: Colors.white,
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Icon(
+                                          Icons.cancel_sharp,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                    floatingActionButtonLocation:
+                                        FloatingActionButtonLocation.centerTop,
+                                  );
+                                },
+                              );
+                            },
                             child: const Text(
                               "Checkout",
                               style: TextStyle(
@@ -512,4 +796,3 @@ class _MyBasketScreenState extends State<MyBasketScreen> {
     );
   }
 }
-
