@@ -1,4 +1,4 @@
-const url = 'http://10.0.2.2:3000/';
+//const url = 'http://10.0.2.2:3000/';
 //const url = 'http://localhost:3000/';
 //const url = 'http://192.168.42.216:3000/';
 //const url = 'http://192.168.185.122:3000/';
@@ -15,7 +15,7 @@ const insertchats = "${url}insertchatlistdata";
 const barchartdata = "${url}barchartdata";
 const messages = "${url}viewmessages";
 const addmessage = "${url}message";
-const apiURL = "10.0.2.2:3000";
+const apiURL = "192.168.185.122:3000";
 //const apiURL = "192.168.42.216:3000";
 const upSellerStates = "${url}updateseller";
 const regseller = "${url}sellerdetails";
