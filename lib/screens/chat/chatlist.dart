@@ -56,7 +56,7 @@ class _ChatListState extends State<ChatList> {
   }
 
   Future<void> fetchData(String user) async {
-
+    //print(UserDetails.);
     var reqbody = {"user" : user};
     setState(() {
       _isLoading = true;
