@@ -489,7 +489,6 @@ class _MyBasketScreenState extends ConsumerState<MyBasketScreen> {
       },
     );
   }
-
 // Widget to build the list of cart items
   Widget _buildCartItems(List<CartItem> cartItems, WidgetRef ref) {
     return ListView.builder(

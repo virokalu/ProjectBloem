@@ -108,6 +108,7 @@ class CartItemWidget extends StatelessWidget {
                           color: HexColor.fromHex('#4CD964'),
                         ),
                         onTap: () {
+                          print(model);
                           onItemRemove!(model);
                         },
                       ),
