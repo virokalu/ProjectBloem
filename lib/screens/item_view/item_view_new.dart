@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -44,9 +45,23 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   final cardnumberController = TextEditingController();
   final dateController = TextEditingController();
   final ccvController = TextEditingController();
-  int counter = 0;
+  int counter = 1;
   late SharedPreferences preference;
   String username = "";
+
+  bool showText = true;
+
+  void toggleTextAndIcon() {
+    setState(() {
+      showText = !showText;
+    });
+
+    Timer(const Duration(seconds: 2), () {
+      setState(() {
+        showText = true;
+      });
+    });
+  }
 
 
   Future<void> fetchItemData() async {
@@ -449,14 +464,21 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                       style: greenButtonBorderStyle,
                       //############################Add Basket##########################################
                       onPressed: () {
+
                         final cartViewModel = ref.read(cartItemsProvider.notifier);
                         cartViewModel.addCartItem(data["data"]["id"], counter, username);
+                        toggleTextAndIcon();
                       },
-                      child: Text(
+                      child: showText ? Text(
                         "Add Basket",
                         style: TextStyle(
                           color: HexColor.fromHex('#4CD964'), fontSize: 16.0,
                           fontFamily: 'Poppins',),
+                      ): Icon(
+                          Icons.check_circle,
+                          color: HexColor.fromHex('#4CD964'),
+                          size: 30,
+
                       ),
                     ),
 
