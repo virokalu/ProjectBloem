@@ -190,7 +190,7 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
                             ),
                             InkWell(
                               child: const Text(
-                                "visit certislanka.com",
+                                "Visit certislanka.com",
                                 style: TextStyle(
                                   color: Colors.blue,
                                   decoration: TextDecoration.underline,
@@ -229,7 +229,7 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
                             ),
                             InkWell(
                               child: const Text(
-                                "visit fedex.com",
+                                "Visit fedex.com",
                                 style: TextStyle(
                                   color: Colors.blue,
                                   decoration: TextDecoration.underline,
@@ -268,7 +268,7 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
                             ),
                             InkWell(
                               child: const Text(
-                                "visit parcel.lk",
+                                "Visit parcel.lk",
                                 style: TextStyle(
                                   color: Colors.blue,
                                   decoration: TextDecoration.underline,
