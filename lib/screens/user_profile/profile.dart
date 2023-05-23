@@ -17,7 +17,6 @@ class _UserProfileState extends State<UserProfile> {
   late SharedPreferences preference;
   late bool? sellerStates;
 
-
   @override
   void initState(){
     super.initState();
