@@ -14,7 +14,7 @@ class HelpScreen extends StatefulWidget{
 
 class _HelpScreenState extends State<HelpScreen> {
 
-  List<bool> expanded = [false, false];
+  List<bool> expanded = [false, false, false, false, false];
   final queController = TextEditingController();
 
   @override
@@ -105,7 +105,7 @@ class _HelpScreenState extends State<HelpScreen> {
                               ),
                             ),
                           ),
-                          isExpanded: expanded[0]
+                          isExpanded: expanded[1]
                       ),
 
                       ExpansionPanel(
@@ -135,7 +135,7 @@ class _HelpScreenState extends State<HelpScreen> {
                               ),
                             ),
                           ),
-                          isExpanded: expanded[0]
+                          isExpanded: expanded[2]
                       ),
 
                       ExpansionPanel(
@@ -164,7 +164,7 @@ class _HelpScreenState extends State<HelpScreen> {
                               ),
                             ),
                           ),
-                          isExpanded: expanded[0]
+                          isExpanded: expanded[3]
                       ),
 
                       ExpansionPanel(
@@ -193,7 +193,7 @@ class _HelpScreenState extends State<HelpScreen> {
                               ),
                             ),
                           ),
-                          isExpanded: expanded[0]
+                          isExpanded: expanded[4]
                       ),
                     ],
                   ),

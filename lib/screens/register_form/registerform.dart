@@ -86,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
           showCloseIcon: true,
           title: "Email Already Exist",
-          desc: "${emailController.text} Already in use. Please Try Another or Login",
+          desc: "${emailController.text} is already in use. Please try another email address or Login",
           btnCancelOnPress: (){
             emailController.clear();
             completer.complete();
@@ -115,7 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
             animType: AnimType.topSlide,
             showCloseIcon: true,
             title: "Username Already Exist",
-            desc: "${nameController.text} is Already in Use Please try Another One",
+            desc: "${nameController.text} is already in use. Please try another username",
             btnCancelOnPress: (){
               nameController.clear();
 
