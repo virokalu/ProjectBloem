@@ -1,4 +1,10 @@
+import "dart:convert";
+import 'package:http/http.dart' as http;
+import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
+import "package:project_bloem/config.dart";
+import "package:shared_preferences/shared_preferences.dart";
+import "package:url_launcher/url_launcher.dart";
 
 import "../../components/back_button_icon.dart";
 import "../../components/button_components.dart";
@@ -14,12 +20,37 @@ class SellerRegister extends StatefulWidget {
 class _SellerRegisterState extends State<SellerRegister> {
 
   final _formField = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final nameController = TextEditingController();
-  final passController = TextEditingController();
-  final conformPassController = TextEditingController();
-  final fulNameController = TextEditingController();
+  final publicKeyController = TextEditingController();
+  final stripeIdController = TextEditingController();
   bool passToggle = true;
+
+  late SharedPreferences preference;
+  
+  String? username;
+  
+  
+  @override
+  void initState(){
+    super.initState();
+    init();
+  }
+  Future init() async{
+    preference = await SharedPreferences.getInstance();
+    //String? fullname=preference.getString('fullname');
+    String? username=preference.getString('username');
+    //String? token=preference.getString('token');
+    //print(token);
+
+    // if(token==null){
+    //   //print(token);
+
+    //   // ignore: use_build_context_synchronously
+    //   Navigator.pushNamed(context, '/login');
+    // }
+    setState(() =>this.username=username!);
+    //setState(() =>this.fullname=fullname!);
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +58,26 @@ class _SellerRegisterState extends State<SellerRegister> {
     var size = MediaQuery.of(context).size;
     var width = size.width;
     var height = size.height;
+
+    Future<void> updateSeller(String username,bool sellerStates) async {
+        final Map<String,dynamic> requestBody = {
+          "upsellerStates" : sellerStates,
+        };
+
+
+        final String encodeBody = jsonEncode(requestBody);
+        print(encodeBody);
+
+        final response = await http.put(
+            // ignore: prefer_interpolation_to_compose_strings
+            Uri.parse(upSellerStates+"/"+username),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+
+        body: encodeBody,
+  );
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -37,16 +88,27 @@ class _SellerRegisterState extends State<SellerRegister> {
             child: ListView(
               children: [
           
-                const ButtonText(text: "Registor Seller", icon: Icons.account_circle_outlined),
+                const ButtonText(text: "Register Seller", icon: Icons.account_circle_outlined),
           
                 SizedBox(height: height/30),
+
+                const Text(
+                  "Enter your Stripe account details ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.black54,
+                  ),
+                ),
+
+                SizedBox(height: height/30,),
                 SizedBox(
                   height: height/10,
                   child: TextFormField(
-                    controller: nameController,
+                    controller: publicKeyController,
                     decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.person),
-                        labelText: "Preferred Username",
+                        prefixIcon: const Icon(Icons.key),
+                        labelText: "Publishable Key",
                         filled: true,
                         fillColor: HexColor.fromHex('#F3F1F1'),
                         border: OutlineInputBorder(
@@ -68,10 +130,10 @@ class _SellerRegisterState extends State<SellerRegister> {
                 SizedBox(
                   height: height/10,
                   child: TextFormField(
-                    controller: fulNameController,
+                    controller: stripeIdController,
                     decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.person_pin_sharp),
-                        labelText: "Full Name",
+                        labelText: "Stripe Id",
                         filled: true,
                         fillColor: HexColor.fromHex('#F3F1F1'),
                         border: OutlineInputBorder(
@@ -89,100 +151,56 @@ class _SellerRegisterState extends State<SellerRegister> {
           
                   ),
                 ),
-          
-                SizedBox(
-                  height: height/10,
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
-                    decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.mail_outline_rounded),
-                        labelText: "Email",
-                        filled: true,
-                        fillColor: HexColor.fromHex('#F3F1F1'),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        )
-                    ),
 
-                    validator: (value){
-                      if(value!.isEmpty){
-                        return "";
-                      }
-                      bool emailValid = RegExp(
-                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"
-                      ).hasMatch(value);
+                SizedBox(height: height/10,),
 
-                      if(!emailValid){
-                        return "Enter valid email address";
-                      }
-                      return null;
-                    },
-          
+                const Text(
+                  "Your didn't have a Stripe account ! ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.black54,
                   ),
                 ),
-          
-                SizedBox(
-                  height: height/10,
-                  child: TextFormField(
-                    controller: passController,
-                    decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.lock),
-                        labelText: "Password",
-                        filled: true,
-                        fillColor: HexColor.fromHex('#F3F1F1'),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        )
+                SizedBox(height: height/30,),
+
+                RichText(
+                  text: TextSpan(
+                      text: 'Click here to Create Stripe account',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                          fontSize: 16,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                          _launchURL('https://dashboard.stripe.com/register');
+                      },
                     ),
+                    textAlign : TextAlign.center,
+                ),
 
-                    validator: (value){
-                      if(value!.isEmpty){
-                        return "";
-                      }
-                      
-                      return null;
-                    },
+                SizedBox(height: height/30,),
 
-
+                const Text(
+                  "Now enter your publishble key and stripe id and register by click register button",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.black54,
                   ),
                 ),
-          
-                SizedBox(
-                  height: height/10,
-                  child: TextFormField(
-                    controller: conformPassController,
-                    decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.lock),
-                        labelText: "Confirm Password",
-                        filled: true,
-                        fillColor: HexColor.fromHex('#F3F1F1'),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        )
-                    ),
-
-                    validator: (value){
-                      if(value!.isEmpty){
-                        return "Re-Enter Your Password";
-                      }
-                      else if(passController.text != conformPassController.text){
-                        passController.clear();
-                        conformPassController.clear();
-                        return "Password not confirmed!";
-                      }
-                      
-                      return null;
-                    },
-          
-                  ),
-                ),
+                SizedBox(height: height/30,),
                 TextButton(
                   style: greenButtonStyle,
                   //################################################Create Account#######################################
                   onPressed: () {
                     if(_formField.currentState!.validate()){
-                      //print("success");
+                      print("success");
+                      setState(() {
+                        //updateSeller(loginusername!,true);
+                        updateSeller(username!,true);
+                      });
                       //registerUser(context);
 
 
@@ -191,7 +209,7 @@ class _SellerRegisterState extends State<SellerRegister> {
 
                   },
                   child: const Text(
-                    "Create Account",
+                    "Register",
                     style: TextStyle(color: Colors.white, fontSize: 16.0,
                       fontFamily: 'Poppins',),
                   ),
@@ -199,28 +217,7 @@ class _SellerRegisterState extends State<SellerRegister> {
 
                 SizedBox(height: height / 30),
 
-                const Text(
-                  "Already have an account? ",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.black54,
-                  ),
-                ), //text
-
-                TextButton(
-                  style: greenButtonBorderStyle,
-                  //############################navigate to registration form##########################################
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/login');
-                  },
-                  child: Text(
-                    "Login",
-                    style: TextStyle(
-                      color: HexColor.fromHex('#4CD964'), fontSize: 16.0,
-                      fontFamily: 'Poppins',),
-                  ),
-                ),
+                
               ],
             ),
           ),
@@ -228,4 +225,15 @@ class _SellerRegisterState extends State<SellerRegister> {
       ),
     );
   }
+
+  void _launchURL(String url) async {
+    // ignore: deprecated_member_use
+    if (await canLaunch(url)) {
+      // ignore: deprecated_member_use
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
 }
