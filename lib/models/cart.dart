@@ -16,6 +16,7 @@ abstract class Cart with _$Cart{
 
 extension CartExt on Cart {
   double get grandTotal {
-    return items.map((e)=>e.item.price).fold(0,(p,c)=>p+c);
+    return items.map((e)=>e.item.price * e.qty)
+        .fold(0,(p,c)=>p+c);
   }
 }
