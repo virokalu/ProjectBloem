@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/back_button_icon.dart';
 import '../../components/button_components.dart';
 
-class MyBasketScreen extends StatefulWidget {
+class MyBasketScreen extends ConsumerStatefulWidget {
   const MyBasketScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyBasketScreen> createState() => _MyBasketScreenState();
+  _MyBasketScreenState createState() => _MyBasketScreenState();
 }
 
-class _MyBasketScreenState extends State<MyBasketScreen> {
+class _MyBasketScreenState extends ConsumerState<MyBasketScreen> {
   late SharedPreferences preference;
 
   @override

@@ -128,8 +128,10 @@ class _UserProfileState extends State<UserProfile> {
                 icon: Icons.logout,
                 name: 'Logout',
                 onPressed: () {
+                  preference.remove('username');
                   preference.remove('token');
                   preference.remove('imgPath');
+                  preference.remove('sellerStates');
                   Navigator.pushNamed(context, '/login');
                 },
               ),

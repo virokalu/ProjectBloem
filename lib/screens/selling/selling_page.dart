@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
 import 'package:project_bloem/components/product_cards.dart';
-import 'package:project_bloem/screens/place_a_listing/place_a_listing.dart';
 import 'package:project_bloem/screens/user_profile/iconwith_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
