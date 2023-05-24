@@ -51,6 +51,24 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
 
   bool showText = true;
 
+
+  Future init() async{
+    preference = await SharedPreferences.getInstance();
+    //String? fullname=preference.getString('fullname');
+    String? token=preference.getString('token');
+    //sellerStates = preference.getBool('sellerStates');
+    //print(token);
+
+    if(token==null){
+      //print(token);
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamed(context, '/login');
+    }
+    //setState(() =>this.sellerStates=sellerStates!);
+    //setState(() =>this.fullname=fullname!);
+
+  }
+
   void toggleTextAndIcon() {
     setState(() {
       showText = !showText;
@@ -152,6 +170,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   @override
   void initState() {
     super.initState();
+    init();
     fetchItemData();
   }
 
@@ -333,7 +352,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             data["data"]["description"],
-                            style: const TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 18),
                           ),
                         ),
                       ),

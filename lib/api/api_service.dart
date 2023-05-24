@@ -109,9 +109,9 @@ class APIService {
         headers: requestHeader,
         body: jsonEncode({
           "username":username,
-          "items":[
-            {"item":id,"qty":qty}
-          ]
+          "item":id,
+          "qty":qty,
+
         })
     );
 
