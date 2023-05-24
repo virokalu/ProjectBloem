@@ -9,6 +9,7 @@ const login = "${url}login";
 const profileImg = "${url}profile/img";
 const profileGetImg = "${url}profile/getimg";
 const itemAdd = "${url}item";
+const itemSearch = "item/search";
 const chatdetails = "${url}chatlistdata";
 const viewmessages = "${url}viewmessages";
 const insertchats = "${url}insertchatlistdata";
