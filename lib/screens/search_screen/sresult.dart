@@ -30,14 +30,21 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
   String? commonname;
   List<bool> expanded = [false, false];
 
+  int i=1;
 
   Future<void> _fetchNews() async {
+    setState(() {
+      searchItems.clear();
+    });
+    i++;
+    print("run$i");
+
     Map<String, String> requestHeader = {'Content-Type': 'application/json'};
     Map<String, String> queryString = {
       'commonname': commonname!,
       'activestatus': "true"
     };
-    searchItems.clear();
+
     var url = Uri.http(apiURL, itemGet, queryString);
     //print(url.toString());
     var response = await http.get(url, headers: requestHeader);
@@ -70,6 +77,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
     //print(data);
     if (data["status"]) {
       //print(data["data"]);
+      searchItems.clear();
       searchItems.addAll(itemsFromJson(data["data"]));
       setState(() => _isLoading = false);
     } else {
@@ -118,27 +126,46 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
     if(_isLoading){
       return const Center(child: LinearProgressIndicator());
     }else{
-      return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            //#####################################card start here#####################################################
-            if (items.isEmpty)
-              const Center(child: Text('Create Listing to Display......')),
-            ...List.generate(
-              items.length,
-                  (index) {
-                var data = items[index];
-                return SizedBox(
-                  height: getProportionateScreenWidth(250),
-                  child: CardBox(model: data),
-                );
-              },
-            ),
-            SizedBox(width: getProportionateScreenWidth(20)),
-          ],
+      return GridView.count(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        crossAxisCount: 2,
+        childAspectRatio: 0.75,
+        children:
+        //#####################################card start here#####################################################
+        List.generate(
+          items.length,
+              (index) {
+            var data = items[index];
+            return CardBox(model: data);
+          },
+
         ),
+
+        //SizedBox(width: getProportionateScreenWidth(20)),
       );
+
+      //   SingleChildScrollView(
+      //   scrollDirection: Axis.horizontal,
+      //   child: Row(
+      //     children: [
+      //       //#####################################card start here#####################################################
+      //       if (items.isEmpty)
+      //         const Center(child: Text('No such Item, Please try Another..')),
+      //       ...List.generate(
+      //         items.length,
+      //             (index) {
+      //           var data = items[index];
+      //           return SizedBox(
+      //             height: getProportionateScreenWidth(250),
+      //             child: CardBox(model: data),
+      //           );
+      //         },
+      //       ),
+      //       SizedBox(width: getProportionateScreenWidth(20)),
+      //     ],
+      //   ),
+      // );
     }
   }
   // Widget _buildItemList(List<Item> items) {
