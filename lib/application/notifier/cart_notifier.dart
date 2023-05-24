@@ -17,6 +17,8 @@ class CartNotifier extends StateNotifier<CartState>{
     final cartData = await _apiService.getCart();
     state=state.copyWith(cartModel: cartData);
     state=state.copyWith(isLoading: false);
+
+
   }
 
   Future<void>addCartItem(id,qty,username)async{
@@ -33,6 +35,8 @@ class CartNotifier extends StateNotifier<CartState>{
 
     updatedItems.items.remove(isCartItemExist);
     state=state.copyWith(cartModel: updatedItems);
+
+
   }
   
   Future<void>updateQty(id,qty,type,username)async{
