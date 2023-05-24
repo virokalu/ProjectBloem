@@ -446,7 +446,10 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                       style: greenButtonStyle,
                       //############################Save the view##########################################
                       onPressed: () {
-                        openDialog();
+                        //openDialog();
+                        setState(() {
+                          makePayment();
+                        });
                       },
                       child: const Text(
                         "Buy Now",
@@ -507,64 +510,66 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     ));
   }
 
-  Future openDialog() => showDialog(
-        builder: (context) => AlertDialog(
-          title: const Text("Enter your location for deliver"),
-          content: SizedBox(
-            height: MediaQuery.of(context).size.height / 4,
-            child: ListView(
-              children: [
-                TextFormField(
-                  controller: streetController,
-                  decoration: const InputDecoration(hintText: "Street Name"),
-                ),
-                TextFormField(
-                  controller: cityController,
-                  decoration: const InputDecoration(hintText: "Town Name"),
-                ),
-                TextFormField(
-                  controller: postalCodeController,
-                  decoration: const InputDecoration(hintText: "Postal Code"),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-                // onPressed: () {
-                //   setState(() {
-                //     registerBuyItem();
-                //   });
-                // streetController.clear();
-                // cityController.clear();
-                // postalCodeController.clear();
-                //   //open2Dialog();
-                // Navigator.of(context).pop();
-                //   // showModalBottomSheet(
-                //   //               context: context,
-                //   //               builder: (context) => bottomesheet(),
-                //   //               backgroundColor: Colors.white,
-                //   //             );
-                // },
-                onPressed: () {
-                  streetController.clear();
-                  cityController.clear();
-                  postalCodeController.clear();
-                  Navigator.of(context).pop();
-                  setState(() {
-                      // PaymentSheet payment = PaymentSheet(amount: (data["data"]["price"]*counter).toString(), context: context);
-                      // payment.makePayment();
-                      // if(payment.isSuccess){
-                      //   print("success");
-                      // }
-                      makePayment();
-                  });
-                },
-                child: const Text("Next")),
-          ],
-        ),
-        context: context,
-      );
+  // Future openDialog() => showDialog(
+  //       builder: (context) => AlertDialog(
+  //         title: const Text("Enter your location for deliver"),
+  //         content: SizedBox(
+  //           height: MediaQuery.of(context).size.height / 4,
+  //           child: ListView(
+  //             children: [
+  //               TextFormField(
+  //                 controller: streetController,
+  //                 decoration: const InputDecoration(hintText: "Street Name"),
+  //               ),
+  //               TextFormField(
+  //                 controller: cityController,
+  //                 decoration: const InputDecoration(hintText: "Town Name"),
+  //               ),
+  //               TextFormField(
+  //                 controller: postalCodeController,
+  //                 decoration: const InputDecoration(hintText: "Postal Code"),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //               // onPressed: () {
+  //               //   setState(() {
+  //               //     registerBuyItem();
+  //               //   });
+  //               // streetController.clear();
+  //               // cityController.clear();
+  //               // postalCodeController.clear();
+  //               //   //open2Dialog();
+  //               // Navigator.of(context).pop();
+  //               //   // showModalBottomSheet(
+  //               //   //               context: context,
+  //               //   //               builder: (context) => bottomesheet(),
+  //               //   //               backgroundColor: Colors.white,
+  //               //   //             );
+  //               // },
+  //               onPressed: () {
+  //                 streetController.clear();
+  //                 cityController.clear();
+  //                 postalCodeController.clear();
+  //                 Navigator.of(context).pop();
+  //                 setState(() {
+  //                     // PaymentSheet payment = PaymentSheet(amount: (data["data"]["price"]*counter).toString(), context: context);
+  //                     // payment.makePayment();
+  //                     // if(payment.isSuccess){
+  //                     //   print("success");
+  //                     // }
+  //                     makePayment();
+  //                 });
+  //               },
+  //               child: const Text("Next")),
+  //         ],
+  //       ),
+  //       context: context,
+  //     );
+
+
 
   Future<void> makePayment() async {
     try{
