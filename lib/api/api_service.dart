@@ -103,18 +103,18 @@ class APIService {
     Map<String,String> requestHeader={
       'Content-Type':'application/json',
     };
+    var JsonModel=jsonEncode({
+      "username":username,
+      "item":id,
+      "qty":qty,
+    });
+    print(JsonModel);
     var url = Uri.http(apiURL,cartAPI);
     var response =  await http.delete(
         url,
         headers: requestHeader,
-        body: jsonEncode({
-          "username":username,
-          "item":id,
-          "qty":qty,
-
-        })
+        body: JsonModel,
     );
-
     if(response.statusCode==200){
       return true;
     }else{

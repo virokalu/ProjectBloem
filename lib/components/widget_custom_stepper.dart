@@ -31,7 +31,7 @@ class _CustomStepperState extends State<CustomStepper> {
     return Container(
       decoration: BoxDecoration(
         color: HexColor.fromHex('#E7FFED'),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(10),
       ),
       margin: const EdgeInsets.only(top: 10),
       padding: const EdgeInsets.all(8),
@@ -59,7 +59,7 @@ class _CustomStepperState extends State<CustomStepper> {
           SizedBox(width: getProportionateScreenWidth(5),),
 
           SizedBox(
-            width: widget.iconSize,
+            width: widget.iconSize*2,
             child: Text(
               widget.value.toString(),
               style: TextStyle(

@@ -26,18 +26,34 @@ class CartNotifier extends StateNotifier<CartState>{
   }
 
   Future<void>removeCartItem(id,qty,username)async{
-    await _apiService.removeCartItem(id, qty,username);
+    await _apiService.removeCartItem(id,qty,username);
     var isCartItemExist = state.cartModel!.items
         .firstWhere((element) => element.item.id == id);
+
+    //print(isCartItemExist);
 
     var updatedItems = state.cartModel!;
 
     updatedItems.items.remove(isCartItemExist);
     state=state.copyWith(cartModel: updatedItems);
-
-
   }
-  
+  // Future<void> removeCartItem(id, qty, username) async {
+  //   await _apiService.removeCartItem(id, qty, username);
+  //
+  //   try {
+  //     var isCartItemExist = state.cartModel!.items
+  //         .firstWhere((element) => element.item.id == id);
+  //
+  //     var updatedItems = state.cartModel!;
+  //
+  //     updatedItems.items.remove(isCartItemExist);
+  //     state = state.copyWith(cartModel: updatedItems);
+  //   } catch (e) {
+  //     // Handle the case when the item is not found in the list
+  //     print('Item not found in cart $e');
+  //   }
+  // }
+  //
   Future<void>updateQty(id,qty,type,username)async{
     var cItem =  state.cartModel!.items
         .firstWhere((element) => element.item.id==id);

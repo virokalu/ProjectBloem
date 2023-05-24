@@ -95,6 +95,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       final url = Uri.parse(itemAdd + "/" + widget.id);
       final response = await http.get(url);
       if (response.statusCode == 200) {
+        print(response.toString());
         data = jsonDecode(response.body);
       }
     } catch (e) {
