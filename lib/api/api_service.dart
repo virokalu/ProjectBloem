@@ -55,7 +55,7 @@ class APIService {
   Future<Cart?> getCart() async{
     String? username = await SharedPreferencesHelper.getUsername();
     if (username == null) {
-      print("username not available");
+      //print("username not available");
       // Use the retrieved username
     }
 

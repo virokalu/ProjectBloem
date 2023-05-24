@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_bloem/api/api_service.dart';
 import 'package:project_bloem/application/state/cart_state.dart';
-import 'package:project_bloem/models/cart.dart';
 import 'package:project_bloem/models/cart_item.dart';
 
 class CartNotifier extends StateNotifier<CartState>{

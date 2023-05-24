@@ -40,7 +40,7 @@ class _CustomStepperState extends State<CustomStepper> {
         children: [
           GestureDetector(
             child: Padding(
-              padding: EdgeInsets.only(right: 2),
+              padding: const EdgeInsets.only(right: 2),
               child: Icon(
                 Icons.remove,
                 color: HexColor.fromHex('#4CD964'),
