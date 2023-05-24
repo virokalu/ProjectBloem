@@ -142,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
         .size;
     var height = size.height;
     var width = size.width;
-    //bool _isObscure = true;
+    bool _isObscure = true;
     return Scaffold(
       //backgroundColor: Colors.white,
 
@@ -186,7 +186,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: height / 10,
                 child: TextFormField(
                   controller: passwordController,
-                  //obscureText: _isObscure,
+                  obscureText: _isObscure,
                   //############################################password#############################################
                   decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock),
