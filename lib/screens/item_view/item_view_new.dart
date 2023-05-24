@@ -113,8 +113,10 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       "street": streetController.text,
       "town": cityController.text,
       "postalCode": postalCodeController.text,
-      "username": data["data"]["username"],
-      "id": widget.id,
+      "sellername": data["data"]["username"],
+      "buyername" : username,
+      "itemid": widget.id,
+      "itemprice" : data["data"]["price"],
     };
 
     final url = Uri.parse(regBuyItem);
@@ -467,9 +469,6 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                       //############################Save the view##########################################
                       onPressed: () {
                         openDialog();
-                        // setState(() {
-                        //   makePayment();
-                        // });
                       },
                       child: const Text(
                         "Buy Now",
@@ -614,13 +613,14 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       actions: [
         TextButton(
           onPressed: () {
-            streetController.clear();
-            cityController.clear();
-            postalCodeController.clear();
-            Navigator.of(context).pop();
             setState(() {
+              // registerBuyItem();
               makePayment();
             });
+            // streetController.clear();
+            // cityController.clear();
+            // postalCodeController.clear();
+            Navigator.of(context).pop();
           },
           child: const Text("Next"),
         ),
@@ -655,6 +655,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       await Stripe.instance.presentPaymentSheet(
       ).then((value) {
         //print("success");in here you can handle anything after successfull payments
+        registerBuyItem();
         showDialog(
           context: context, 
           builder: (_) => const AlertDialog(
