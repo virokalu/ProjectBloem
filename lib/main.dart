@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:project_bloem/screens/about_us/aboutus.dart';
 import 'package:project_bloem/screens/search_screen/categorypage.dart';
 import 'package:project_bloem/screens/search_screen/sresult.dart';
-import 'package:project_bloem/screens/setting_screen/account_info/gender_info/gender.dart';
+import 'package:project_bloem/screens/selling/registersellerform.dart';
+
 import 'package:project_bloem/screens/setting_screen/account_info/info.dart';
-import 'package:project_bloem/screens/setting_screen/address_book/address.dart';
+
 import 'package:project_bloem/screens/setting_screen/password_info/password.dart';
 import 'package:project_bloem/screens/setting_screen/policies/policy.dart';
 //import 'package:device_preview/device_preview.dart';
@@ -78,7 +79,7 @@ class MyApp extends StatelessWidget {
       //home: const SettingScreen());
       navigatorKey: navigatorKey,
 
-      initialRoute: '/setting',
+      initialRoute: '/',
       routes: {
         '/': (context) => const WelcomeScreen(),
         '/mybusket': (context) => const MyBasketScreen(),
@@ -105,6 +106,7 @@ class MyApp extends StatelessWidget {
 
         '/policy': (context) => const PolicyScreen(),
         '/password': (context) => const PasswordScreen(),
+        '/sellerreg' : (context) => const SellerRegister(),
       },
     );
   }

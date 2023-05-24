@@ -55,11 +55,12 @@ class _ChatPageState extends State<ChatPage> {
 
     var reqbody = {"user" : sourceName};
 
-    final response = await http.post(Uri.parse("http://192.168.8.124:3000/viewmessages"),
-    headers: {"Content-Type":"application/json",
+    final response = await http.post(Uri.parse(viewmessages),
+      headers: {"Content-Type":"application/json",
           "Access-Control-Allow-Origin": "*"
         },
         body: jsonEncode(reqbody));
+    
     final List<dynamic> responseData = jsonDecode(response.body);
     messages = responseData
         .map((json) => MessageModel(
@@ -114,7 +115,7 @@ class _ChatPageState extends State<ChatPage> {
   
 
   void connect(){
-    socket = IO.io("http://192.168.8.124:3001",<String, dynamic>{
+    socket = IO.io(urlforsocket,<String, dynamic>{
       "transports": ["websocket"],
       "autoconnect": false,
   });
