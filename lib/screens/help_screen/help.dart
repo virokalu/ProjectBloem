@@ -59,7 +59,7 @@ class _HelpScreenState extends State<HelpScreen> {
                                       "How to sign in for BLOEM?",
                                       style: TextStyle(
                                         fontFamily: "Poppins",
-                                        fontSize: 20,
+                                        fontSize: 18,
                                         color: HexColor.fromHex('#4CD964'),
                                      ),
                                   ),
@@ -88,7 +88,7 @@ class _HelpScreenState extends State<HelpScreen> {
                                       "How can I change my account details?",
                                       style: TextStyle(
                                         fontFamily: "Poppins",
-                                        fontSize: 20,
+                                        fontSize: 18,
                                         color: HexColor.fromHex('#4CD964'),
                                     ),
                                   )
@@ -118,7 +118,7 @@ class _HelpScreenState extends State<HelpScreen> {
                                 "How can I buy a product?",
                                 style: TextStyle(
                                   fontFamily: "Poppins",
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   color: HexColor.fromHex('#4CD964'),
                                 ),
                               ),
@@ -147,7 +147,7 @@ class _HelpScreenState extends State<HelpScreen> {
                                 "Can I save a product to purchase in future?",
                                 style: TextStyle(
                                   fontFamily: "Poppins",
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   color: HexColor.fromHex('#4CD964'),
                                 ),
                               ),
@@ -176,7 +176,7 @@ class _HelpScreenState extends State<HelpScreen> {
                                 "How can I add a product to sell?",
                                 style: TextStyle(
                                   fontFamily: "Poppins",
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   color: HexColor.fromHex('#4CD964'),
                                 ),
                               ),
@@ -209,7 +209,7 @@ class _HelpScreenState extends State<HelpScreen> {
                         style: TextStyle(
                           color: HexColor.fromHex('#ffffff'),
                           fontFamily: "Poppins",
-                          fontSize: 20,
+                          fontSize: 18,
                       ),
                     ),
                     onPressed: () {
@@ -252,7 +252,7 @@ class _HelpScreenState extends State<HelpScreen> {
                                           style: TextStyle(
                                             color: HexColor.fromHex('#ffffff'),
                                             fontFamily: "Poppins",
-                                            fontSize: 20,
+                                            fontSize: 18,
                                         ),
                                       ),
                                       onPressed: () {
