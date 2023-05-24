@@ -2,19 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:project_bloem/models/item_sort.dart';
-//import 'package:project_bloem/components/color_components.dart';
 import '../../components/back_button_icon.dart';
 import '../../components/product_cards.dart';
 import '../../components/size.dart';
 import '../../config.dart';
 import '../../models/item.dart';
 import 'package:http/http.dart' as http;
-
-import '../../models/item_filter.dart';
-import '../../models/pagination.dart';
-import '../../provider.dart';
-import '../homo_screen/home_components/home_components.dart';
 
 class SearchResultScreen extends StatefulWidget {
   const SearchResultScreen({super.key});
@@ -30,14 +23,14 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
   String? commonname;
   List<bool> expanded = [false, false];
 
-  int i=1;
+  //int i=1;
 
   Future<void> _fetchNews() async {
     setState(() {
       searchItems.clear();
     });
-    i++;
-    print("run$i");
+    //i++;
+    //print("run$i");
 
     Map<String, String> requestHeader = {'Content-Type': 'application/json'};
     Map<String, String> queryString = {
@@ -45,7 +38,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
       'activestatus': "true"
     };
 
-    var url = Uri.http(apiURL, itemGet, queryString);
+    var url = Uri.http(apiURL, itemSearch, queryString);
     //print(url.toString());
     var response = await http.get(url, headers: requestHeader);
     // print(response.body);
@@ -211,14 +204,14 @@ class _ItemFilters extends ConsumerWidget {
   //   ItemSortModel(value: "productPrice", label: "Price: Low to High"),
   // ];
 
-  _ItemFilters({
+  const _ItemFilters({
     this.commonname,
   });
   final String? commonname;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final filterProvider = ref.watch(itemsFilterProvider);
+    //final filterProvider = ref.watch(itemsFilterProvider);
     // return Container(
     //   height: 51,
     //   margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
