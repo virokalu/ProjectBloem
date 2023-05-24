@@ -236,6 +236,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: height/10,
                   child: TextFormField(
                     controller: passController,
+                    obscureText: true,
                     decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.lock),
                         labelText: "Password",
@@ -262,6 +263,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: height/10,
                   child: TextFormField(
                     controller: conformPassController,
+                    obscureText: true,
                     decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.lock),
                         labelText: "Confirm Password",
