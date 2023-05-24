@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_bloem/api/api_service.dart';
 import 'package:project_bloem/application/state/cart_state.dart';
-import 'package:project_bloem/models/cart.dart';
 import 'package:project_bloem/models/cart_item.dart';
 
 class CartNotifier extends StateNotifier<CartState>{
   final APIService _apiService;
 
   CartNotifier(this._apiService) : super(const CartState()){
+
     getCartItems();
   }
   Future<void> getCartItems() async{
@@ -16,6 +16,8 @@ class CartNotifier extends StateNotifier<CartState>{
     final cartData = await _apiService.getCart();
     state=state.copyWith(cartModel: cartData);
     state=state.copyWith(isLoading: false);
+
+
   }
 
   Future<void>addCartItem(id,qty,username)async{
@@ -24,16 +26,34 @@ class CartNotifier extends StateNotifier<CartState>{
   }
 
   Future<void>removeCartItem(id,qty,username)async{
-    await _apiService.removeCartItem(id, qty,username);
+    await _apiService.removeCartItem(id,qty,username);
     var isCartItemExist = state.cartModel!.items
         .firstWhere((element) => element.item.id == id);
+
+    //print(isCartItemExist);
 
     var updatedItems = state.cartModel!;
 
     updatedItems.items.remove(isCartItemExist);
     state=state.copyWith(cartModel: updatedItems);
   }
-  
+  // Future<void> removeCartItem(id, qty, username) async {
+  //   await _apiService.removeCartItem(id, qty, username);
+  //
+  //   try {
+  //     var isCartItemExist = state.cartModel!.items
+  //         .firstWhere((element) => element.item.id == id);
+  //
+  //     var updatedItems = state.cartModel!;
+  //
+  //     updatedItems.items.remove(isCartItemExist);
+  //     state = state.copyWith(cartModel: updatedItems);
+  //   } catch (e) {
+  //     // Handle the case when the item is not found in the list
+  //     print('Item not found in cart $e');
+  //   }
+  // }
+  //
   Future<void>updateQty(id,qty,type,username)async{
     var cItem =  state.cartModel!.items
         .firstWhere((element) => element.item.id==id);

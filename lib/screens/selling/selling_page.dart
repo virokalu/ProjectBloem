@@ -37,15 +37,13 @@ class _SellingPageState extends State<SellingPage> {
     String? username = preference.getString('username');
     setState(() => this.username = username!);
     _fetchNews();
-
-
   }
 
   Future<void> _fetchNews() async {
     Map<String, String> requestHeader = {'Content-Type': 'application/json'};
     Map<String, String> queryString = {
       'username': username,
-      'pageSize': "true"
+      'activestatus': "true"
     };
     var url = Uri.http(apiURL, itemGet, queryString);
     //print(url.toString());

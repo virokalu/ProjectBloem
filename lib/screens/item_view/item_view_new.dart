@@ -51,6 +51,24 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
 
   bool showText = true;
 
+
+  Future init() async{
+    preference = await SharedPreferences.getInstance();
+    //String? fullname=preference.getString('fullname');
+    String? token=preference.getString('token');
+    //sellerStates = preference.getBool('sellerStates');
+    //print(token);
+
+    if(token==null){
+      //print(token);
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamed(context, '/login');
+    }
+    //setState(() =>this.sellerStates=sellerStates!);
+    //setState(() =>this.fullname=fullname!);
+
+  }
+
   void toggleTextAndIcon() {
     setState(() {
       showText = !showText;
@@ -77,6 +95,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       final url = Uri.parse(itemAdd + "/" + widget.id);
       final response = await http.get(url);
       if (response.statusCode == 200) {
+        print(response.toString());
         data = jsonDecode(response.body);
       }
     } catch (e) {
@@ -94,8 +113,10 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       "street": streetController.text,
       "town": cityController.text,
       "postalCode": postalCodeController.text,
-      "username": data["data"]["username"],
-      "id": widget.id,
+      "sellername": data["data"]["username"],
+      "buyername" : username,
+      "itemid": widget.id,
+      "itemprice" : data["data"]["price"],
     };
 
     final url = Uri.parse(regBuyItem);
@@ -152,6 +173,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   @override
   void initState() {
     super.initState();
+    init();
     fetchItemData();
   }
 
@@ -333,7 +355,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             data["data"]["description"],
-                            style: const TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 18),
                           ),
                         ),
                       ),
@@ -507,64 +529,106 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     ));
   }
 
+  // Future openDialog() => showDialog(
+  //       builder: (context) => AlertDialog(
+  //         title: const Text("Enter your location for deliver"),
+  //         content: SizedBox(
+  //           height: MediaQuery.of(context).size.height / 4,
+  //           child: ListView(
+  //             children: [
+  //               TextFormField(
+  //                 controller: streetController,
+  //                 decoration: const InputDecoration(hintText: "Street Name"),
+  //               ),
+  //               TextFormField(
+  //                 controller: cityController,
+  //                 decoration: const InputDecoration(hintText: "Town Name"),
+  //               ),
+  //               TextFormField(
+  //                 controller: postalCodeController,
+  //                 decoration: const InputDecoration(hintText: "Postal Code"),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //               // onPressed: () {
+  //               //   setState(() {
+  //               //     registerBuyItem();
+  //               //   });
+  //               // streetController.clear();
+  //               // cityController.clear();
+  //               // postalCodeController.clear();
+  //               //   //open2Dialog();
+  //               // Navigator.of(context).pop();
+  //               //   // showModalBottomSheet(
+  //               //   //               context: context,
+  //               //   //               builder: (context) => bottomesheet(),
+  //               //   //               backgroundColor: Colors.white,
+  //               //   //             );
+  //               // },
+  //               onPressed: () {
+  //                 streetController.clear();
+  //                 cityController.clear();
+  //                 postalCodeController.clear();
+  //                 Navigator.of(context).pop();
+  //                 setState(() {
+  //                     // PaymentSheet payment = PaymentSheet(amount: (data["data"]["price"]*counter).toString(), context: context);
+  //                     // payment.makePayment();
+  //                     // if(payment.isSuccess){
+  //                     //   print("success");
+  //                     // }
+  //                     makePayment();
+  //                 });
+  //               },
+  //               child: const Text("Next")),
+  //         ],
+  //       ),
+  //       context: context,
+  //     );
+
   Future openDialog() => showDialog(
-        builder: (context) => AlertDialog(
-          title: const Text("Enter your location for deliver"),
-          content: SizedBox(
-            height: MediaQuery.of(context).size.height / 4,
-            child: ListView(
-              children: [
-                TextFormField(
-                  controller: streetController,
-                  decoration: const InputDecoration(hintText: "Street Name"),
-                ),
-                TextFormField(
-                  controller: cityController,
-                  decoration: const InputDecoration(hintText: "Town Name"),
-                ),
-                TextFormField(
-                  controller: postalCodeController,
-                  decoration: const InputDecoration(hintText: "Postal Code"),
-                ),
-              ],
+    builder: (context) => AlertDialog(
+      title: const Text("Enter your location for delivery"),
+      content: SizedBox(
+        height: MediaQuery.of(context).size.height / 4,
+        child: Column(
+          children: [
+            TextFormField(
+              controller: streetController,
+              decoration: const InputDecoration(hintText: "Street Name"),
             ),
-          ),
-          actions: [
-            TextButton(
-                // onPressed: () {
-                //   setState(() {
-                //     registerBuyItem();
-                //   });
-                // streetController.clear();
-                // cityController.clear();
-                // postalCodeController.clear();
-                //   //open2Dialog();
-                // Navigator.of(context).pop();
-                //   // showModalBottomSheet(
-                //   //               context: context,
-                //   //               builder: (context) => bottomesheet(),
-                //   //               backgroundColor: Colors.white,
-                //   //             );
-                // },
-                onPressed: () {
-                  streetController.clear();
-                  cityController.clear();
-                  postalCodeController.clear();
-                  Navigator.of(context).pop();
-                  setState(() {
-                      // PaymentSheet payment = PaymentSheet(amount: (data["data"]["price"]*counter).toString(), context: context);
-                      // payment.makePayment();
-                      // if(payment.isSuccess){
-                      //   print("success");
-                      // }
-                      makePayment();
-                  });
-                },
-                child: const Text("Next")),
+            TextFormField(
+              controller: cityController,
+              decoration: const InputDecoration(hintText: "Town Name"),
+            ),
+            TextFormField(
+              controller: postalCodeController,
+              decoration: const InputDecoration(hintText: "Postal Code"),
+            ),
           ],
         ),
-        context: context,
-      );
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            setState(() {
+              // registerBuyItem();
+              makePayment();
+            });
+            // streetController.clear();
+            // cityController.clear();
+            // postalCodeController.clear();
+            Navigator.of(context).pop();
+          },
+          child: const Text("Next"),
+        ),
+      ],
+    ),
+    context: context,
+  );
+
 
   Future<void> makePayment() async {
     try{
@@ -591,6 +655,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       await Stripe.instance.presentPaymentSheet(
       ).then((value) {
         //print("success");in here you can handle anything after successfull payments
+        registerBuyItem();
         showDialog(
           context: context, 
           builder: (_) => const AlertDialog(

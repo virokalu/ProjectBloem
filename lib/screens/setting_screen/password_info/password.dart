@@ -27,10 +27,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
             children: [
               const ButtonText(text: 'Change Password', icon: Icons.password),
               const SizedBox(height: 20),
-              const Divider(
+              /*const Divider(
                 height: 0.1,
                 thickness: 10.0,
-              ),
+              ),*/
               const SizedBox(height: 20),
               TextFormField(
                 decoration: InputDecoration(
@@ -50,12 +50,6 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              const Text(
-                'Minimum 6 characters with a number and a letter',
-                style: TextStyle(
-                  fontWeight: FontWeight.w200,
-                ),
-              ),
               const SizedBox(height: 20),
               TextFormField(
                 decoration: InputDecoration(
@@ -70,7 +64,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               const SizedBox(height: 20),
               TextFormField(
                 decoration: InputDecoration(
-                  hintText: 'ReType Password',
+                  hintText: 'Confirm Password',
                   filled: true,
                   fillColor: Colors.white38,
                   border: OutlineInputBorder(
