@@ -7,6 +7,7 @@ const urlforsocket = 'http://10.0.2.2:3001/';
 const registration = "${url}registration";
 const login = "${url}login";
 const email = "${url}email";
+const password = "${url}password";
 const profileImg = "${url}profile/img";
 const profileGetImg = "${url}profile/getimg";
 const itemAdd = "${url}item";

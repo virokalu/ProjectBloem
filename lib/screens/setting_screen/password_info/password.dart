@@ -1,8 +1,16 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/button_components.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../components/back_button_icon.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../components/color_components.dart';
+import '../../../config.dart';
 
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({super.key});
@@ -15,6 +23,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
   late SharedPreferences preference;
   String? username;
+  bool _isObscure = true;
+  bool _isObscureConfirm=true;
+  bool _isObscureOld=true;
+
 
 
   @override
@@ -33,6 +45,60 @@ class _PasswordScreenState extends State<PasswordScreen> {
   final newPasswordController = TextEditingController();
   final confirmNewPasswordController = TextEditingController();
 
+  Future<void> changePassword(BuildContext context) async {
+    final completer = Completer<void>();
+    var passwordBody = {
+      "username": username,
+      "oldpassword": oldPasswordController.text,
+      "newpassword": newPasswordController.text,
+    };
+    var response = await http.post(Uri.parse(password),
+        headers: {"Content-Type":"application/json"},
+        body: jsonEncode(passwordBody)
+    );
+    var jsonResponse = jsonDecode(response.body);
+
+    if(jsonResponse['status']){
+      // ignore: use_build_context_synchronously
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        //dialogBackgroundColor: Colors.black,
+        animType: AnimType.topSlide,
+
+        showCloseIcon: true,
+        title: "Password Changed",
+        desc: "Password Changed Successfully!",
+
+        btnOkOnPress: (){
+          Navigator.pushNamed(context, '/profile');
+
+        },
+        btnOkText: "OK",
+        btnOkColor: HexColor.fromHex('#4CD964'),
+      ).show();
+      return completer.future;
+    }else if(!jsonResponse['status']){
+      // ignore: use_build_context_synchronously
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.warning,
+        //dialogBackgroundColor: Colors.black,
+        animType: AnimType.topSlide,
+
+        showCloseIcon: true,
+        title: "Incorrect Password",
+        desc: "Please Try Again!",
+
+        btnOkOnPress: (){
+          oldPasswordController.clear();
+        },
+        btnOkText: "OK",
+        btnOkColor: HexColor.fromHex('#4CD964'),
+      ).show();
+      return completer.future;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,14 +126,33 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 const SizedBox(height: 20),
                 TextFormField(
                   decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.lock),
                     hintText: 'Current Password',
                     filled: true,
                     fillColor: Colors.white38,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        _isObscureOld
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+
+                        setState(() {
+                          _isObscureOld=!_isObscureOld;
+                        });
+                      },
+                    ),
 
                   ),
+                  controller: oldPasswordController,
+                  obscureText: _isObscureConfirm,
+
                   validator: (value){
                     if(value!.isEmpty){
                       return "";
@@ -81,20 +166,40 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 const Text(
                   'Please enter your new password below',
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 17,
+                    fontFamily: 'poppins',
                     fontWeight: FontWeight.w400,
+                    color: Colors.grey
                   ),
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
                   decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.lock),
                     hintText: 'New Password',
                     filled: true,
                     fillColor: Colors.white38,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        _isObscure
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+
+                        setState(() {
+                          _isObscure=!_isObscure;
+                        });
+                      },
+                    ),
                   ),
+                  controller: newPasswordController,
+                  obscureText: _isObscure,
                   validator: (value){
                     if(value!.isEmpty){
                       return "";
@@ -106,13 +211,32 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 const SizedBox(height: 20),
                 TextFormField(
                   decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.lock),
                     hintText: 'Confirm Password',
                     filled: true,
+
                     fillColor: Colors.white38,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        _isObscureConfirm
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+
+                        setState(() {
+                          _isObscureConfirm=!_isObscureConfirm;
+                        });
+                      },
+                    ),
                   ),
+                  controller: confirmNewPasswordController,
+                  obscureText: _isObscureConfirm,
                   validator: (value){
                     if(value!.isEmpty){
                       return "Re-Enter Your Password";
@@ -133,7 +257,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     style: greenButtonStyle,
                     onPressed: () {
                       if(_formField.currentState!.validate()){
-                        print("success");
+                        //print("success");
+                        changePassword(context);
                       }
                     },
                     child: const Text(
