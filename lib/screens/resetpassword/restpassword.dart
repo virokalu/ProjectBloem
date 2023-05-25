@@ -1,15 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:email_auth/email_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/back_button_icon.dart';
 import '../../components/button_components.dart';
 import '../../components/color_components.dart';
 import 'package:http/http.dart' as http;
 
+
 import '../../config.dart';
+
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key? key}) : super(key: key);
@@ -19,21 +24,75 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ResetPasswordState extends State<ResetPassword> {
+
+  //OTP class Initialization
+  //EmailOTP myAuth = EmailOTP();
+  bool emailVerified = false;
+  Random random = Random();
+  String? otpNumber;
+
+  late SharedPreferences preference;
+  String? username;
+
   final _formField = GlobalKey<FormState>();
+  final _formField2 = GlobalKey<FormState>();
+
   final emailController = TextEditingController();
   final otpController = TextEditingController();
-  late EmailAuth emailAuth;
 
   @override
   void initState() {
+
+    //setConfig() this function will config your OTP authentication.
+    // myAuth.setConfig(
+    //     appEmail: "virokemin@gmail.com",
+    //     appName: "Project_Bloem",
+    //     userEmail: emailController.text,
+    //     otpLength: 4,
+    //     otpType: OTPType.digitsOnly
+    // );
+    //
+    // myAuth.setSMTP(
+    //     host: "sandbox.smtp.mailtrap.io",
+    //     auth: true,
+    //     username: "557043fe507a81",
+    //     password: "3dca01067688b9",
+    //     secure: "TLS",
+    //     port: 587
+    // );
+
     super.initState();
     // Initialize the package
-    emailAuth = EmailAuth(
-      sessionName: "Sample session",
-
-    );
+    // emailAuth = EmailAuth(
+    //   sessionName: "Sample session",
+    //
+    // );
     /// Configuring the remote server
     //emailAuth.config("server": 'your-gmail-email', "serverKey": 'your-gmail-password');
+  }
+  void sendOTP(String sendEmail, String otp) async {
+    // Create a SMTP server configuration
+    final smtpServer = SmtpServer('mail.smtp2go.com',
+        username: 'projectBloem',
+        password: '51NmMSln01HhBNRq',
+        port: 2525, // Use the appropriate port number for your SMTP server
+        ssl: false);
+
+    // Create the email message
+    final message = Message()
+      ..from = const Address('virokemin@gmail.com')
+      ..recipients.add(sendEmail)
+      ..subject = 'OTP Verification'
+      ..text = 'Your OTP: $otp';
+
+    try {
+      await send(message, smtpServer);
+      setState(() {
+        emailVerified=true;
+      });
+    } catch (e) {
+      print('Failed to send OTP: $e');
+    }
   }
 
   Future<void> emailCheck(BuildContext context) async {
@@ -49,6 +108,18 @@ class _ResetPasswordState extends State<ResetPassword> {
 
     if(jsonResponse['status']){
 
+      username = jsonResponse['username'];
+      // Generate a random integer between 0 and 9
+      int randomNumber = random.nextInt(9000)+1000;
+      //print('Random number: $randomNumber');
+
+      otpNumber = randomNumber.toString();
+
+      //SendOTP
+      sendOTP(emailController.text, otpNumber!);
+
+       // bool? Check = await myAuth.sendOTP();
+       // print(Check);
       //sendOtp();#####################################################################################################################################################
 
     }else{
@@ -100,13 +171,14 @@ class _ResetPasswordState extends State<ResetPassword> {
       child: Scaffold(
         body: Container(
           margin: EdgeInsets.all(width/30),
-          child: Form(
-            key: _formField,
-            child: ListView(
+          child:  ListView(
               children: [
                 const ButtonText(text: 'Forget Password',icon:Icons.lock),
 
                 SizedBox(height: height / 30,),
+          Form(
+            key: _formField,
+            child:
                 SizedBox(
                   height: height/10,
                   child: TextFormField(
@@ -135,7 +207,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                     },
 
                   ),
-                ),//textfield 2
+                ),
+          ),//textfield 2
 
 
                 TextButton(
@@ -171,32 +244,56 @@ class _ResetPasswordState extends State<ResetPassword> {
 
                 Row(
                   children: [
-                    SizedBox(
-                      width: width/2.1,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.key),
-                            labelText: "Enter OTP",
-                            filled: true,
-                            fillColor: Colors.white38,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            )
+                    Form(
+                      key: _formField2,
+                      child: SizedBox(
+                        width: width/2.1,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.key),
+                              labelText: "Enter OTP",
+                              filled: true,
+                              fillColor: Colors.white38,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              )
+                          ),
+                          controller: otpController,
+                          validator: (value){
+                            if(value!.isEmpty){
+                              return "";
+                            }
+                            return null;
+                          },
                         ),
-                        controller: otpController,
-
-
                       ),
                     ),
                     SizedBox(width: width/100,),
                     SizedBox(
                       width: width/2.3,
                       child: TextButton(
-                        style: greenButtonStyle,
+                        style: emailVerified ? greenButtonStyle
+                        : greyButtonStyle,
                         //################################################Preview#######################################
-                        onPressed: () {
+                        onPressed: () async {
+
+                          if(emailVerified){
+                            if(_formField2.currentState!.validate()){
+                              //print("success");
+                              //emailCheck(context);
+                              if(otpNumber==otpController.text){
+
+
+
+                              }
+                            }
+                          }
                           //verify();
 
+                          // var inputOTP = otpController.text; //which is entered by client, after receive mail
+                          // await myAuth.verifyOTP(
+                          //     otp: inputOTP
+                          // );
                         },
                         child: const Text(
                           "Password Reset",
@@ -212,8 +309,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 

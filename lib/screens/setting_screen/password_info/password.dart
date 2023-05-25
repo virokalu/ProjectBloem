@@ -151,13 +151,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
                   ),
                   controller: oldPasswordController,
-                  obscureText: _isObscureConfirm,
+                  obscureText: _isObscureOld,
 
                   validator: (value){
                     if(value!.isEmpty){
                       return "";
                     }
-
                     return null;
                   },
 
