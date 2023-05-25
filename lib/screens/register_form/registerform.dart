@@ -20,6 +20,34 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
+var _values = [
+  "Ampara",
+  "Anuradhapura",
+  "Badulla",
+  "Batticaloa",
+  "Colombo",
+  "Galle",
+  "Gampaha",
+  "Hambantota",
+  "Jaffna",
+  "Kalutara",
+  "Kandy",
+  "Kegalle",
+  "Kilinochchi",
+  "Kurunegala",
+  "Mannar",
+  "Matale",
+  "Matara",
+  "Monaragala",
+  "Mullativu",
+  "Nuwara Eliya",
+  "Polonnaruwa",
+  "Puttalam",
+  "Ratnapura",
+  "Trincomalee",
+  "Vavuniya"
+];
+
 class _RegisterPageState extends State<RegisterPage> {
 
   final _formField = GlobalKey<FormState>();
@@ -28,6 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final passController = TextEditingController();
   final conformPassController = TextEditingController();
   final fulNameController = TextEditingController();
+  String? district;
   bool passToggle = true;
 
 
@@ -231,7 +260,45 @@ class _RegisterPageState extends State<RegisterPage> {
           
                   ),
                 ),
-          
+
+                SizedBox(
+                  height: height/10,
+                  child: DropdownButtonFormField<String>(
+                    value: district,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        district = newValue;
+                      });
+                    },
+                    decoration: InputDecoration(
+
+                      filled: true,
+                      //errorText: category == null ? 'This field is required' : null, // Add this line
+
+                      fillColor: HexColor.fromHex('#F3F1F1'),
+                      prefixIcon: const Icon(Icons.location_pin),
+                      labelText: "District",
+
+                      //labelText: 'Select an item',
+                      hintText: 'Choose your district',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Required Field';
+                      }
+                      return null;
+                    },
+                    items: _values.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
                 SizedBox(
                   height: height/10,
                   child: TextFormField(
