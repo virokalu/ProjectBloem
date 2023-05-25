@@ -12,6 +12,9 @@ import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
+
 import '../../components/size.dart';
 /////////////////////////////
 //import 'package:stripe_payment/stripe_payment.dart';
@@ -50,6 +53,36 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   String username = "";
 
   bool showText = true;
+
+
+  //////////////////send email to seller ////////////////////////
+ 
+
+
+
+void sendEmail() async {
+  String username = 'bloemapp1@gmail.com'; // Replace with your email
+  String password = 'bloem1234'; // Replace with your password
+
+  final smtpServer = gmail(username, password);
+
+  // Create the email message
+  final message = Message()
+    ..from = 'bloemapp1@gmail.com' // Replace with your email
+    ..recipients.add('bloemappsecond@gmail.com') // Replace with the seller's email
+    ..subject = 'Your item has been sold'
+    ..text = 'Congratulations! Your item has been sold.';
+
+  try {
+    await send(message, smtpServer);
+    print('Message sent successfully');
+  } catch (e) {
+    print('Error occurred while sending email: $e');
+  }
+}
+
+
+  ///////////////////////////////////////////////////////////////
 
 
   Future init() async{
@@ -468,6 +501,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                       style: greenButtonStyle,
                       //############################Save the view##########################################
                       onPressed: () {
+                        sendEmail();
                         openDialog();
                       },
                       child: const Text(
@@ -656,6 +690,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       ).then((value) {
         //print("success");in here you can handle anything after successfull payments
         registerBuyItem();
+        //sendEmail();
         showDialog(
           context: context, 
           builder: (_) => const AlertDialog(
