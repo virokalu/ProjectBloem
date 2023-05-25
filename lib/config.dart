@@ -8,6 +8,7 @@ const registration = "${url}registration";
 const login = "${url}login";
 const email = "${url}email";
 const password = "${url}password";
+const resetpassword = "${url}resetpassword";
 const update = "${url}update";
 const profileImg = "${url}profile/img";
 const profileGetImg = "${url}profile/getimg";

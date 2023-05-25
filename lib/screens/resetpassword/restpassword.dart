@@ -40,36 +40,26 @@ class _ResetPasswordState extends State<ResetPassword> {
   final emailController = TextEditingController();
   final otpController = TextEditingController();
 
-  @override
-  void initState() {
-
-    //setConfig() this function will config your OTP authentication.
-    // myAuth.setConfig(
-    //     appEmail: "virokemin@gmail.com",
-    //     appName: "Project_Bloem",
-    //     userEmail: emailController.text,
-    //     otpLength: 4,
-    //     otpType: OTPType.digitsOnly
-    // );
-    //
-    // myAuth.setSMTP(
-    //     host: "sandbox.smtp.mailtrap.io",
-    //     auth: true,
-    //     username: "557043fe507a81",
-    //     password: "3dca01067688b9",
-    //     secure: "TLS",
-    //     port: 587
-    // );
-
-    super.initState();
-    // Initialize the package
-    // emailAuth = EmailAuth(
-    //   sessionName: "Sample session",
-    //
-    // );
-    /// Configuring the remote server
-    //emailAuth.config("server": 'your-gmail-email', "serverKey": 'your-gmail-password');
-  }
+  // @override
+  // void initState(){
+  //   super.initState();
+  //   init();
+  // }
+  // Future init() async{
+  //   //String? fullname=preference.getString('fullname');
+  //   //String? token=preference.getString('token');
+  //   //bool? sellerStates = preference.getBool('sellerStates');
+  //   //print(token);
+  //
+  //   // if(token==null){
+  //   //   //print(token);
+  //   //   // ignore: use_build_context_synchronously
+  //   //   Navigator.pushNamed(context, '/login');
+  //   // }
+  //   // setState(() =>this.sellerStates=sellerStates!);
+  //   //setState(() =>this.fullname=fullname!);
+  //
+  // }
   void sendOTP(String sendEmail, String otp) async {
     // Create a SMTP server configuration
     final smtpServer = SmtpServer('mail.smtp2go.com',
@@ -282,8 +272,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                               //print("success");
                               //emailCheck(context);
                               if(otpNumber==otpController.text){
-
-
+                                preference = await SharedPreferences.getInstance();
+                                preference.setString('username', username!);
+                                otpController.clear();
+                                otpNumber=null;
+                                Navigator.pushNamed(context, '/resetpassword');
 
                               }
                             }

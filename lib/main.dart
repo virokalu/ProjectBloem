@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project_bloem/screens/about_us/aboutus.dart';
+import 'package:project_bloem/screens/resetpassword/updatepassword.dart';
 import 'package:project_bloem/screens/search_screen/categorypage.dart';
 import 'package:project_bloem/screens/search_screen/sresult.dart';
 import 'package:project_bloem/screens/selling/registersellerform.dart';
@@ -106,7 +107,9 @@ class MyApp extends StatelessWidget {
         '/policy': (context) => const PolicyScreen(),
         '/password': (context) => const PasswordScreen(),
         '/sellerreg' : (context) => const SellerRegister(),
-        '/reset': (context)=> ResetPassword(),
+        '/reset': (context)=> const ResetPassword(),
+        '/resetpassword': (context)=> const UpdatePasswordScreen(),
+
       },
     );
   }
