@@ -379,8 +379,8 @@ void sendEmail() async {
                       constraints: BoxConstraints(
                         minWidth: width,
                         maxWidth: width,
-                        minHeight: 70,
-                        maxHeight: 70,
+                        minHeight: 170,
+                        maxHeight: 270,
                       ),
                       child: LimitedBox(
                         maxHeight: 4 * 20.0, // assuming font size is 20
