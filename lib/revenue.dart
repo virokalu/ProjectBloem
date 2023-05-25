@@ -38,6 +38,7 @@ class _ForAdminState extends State<ForAdmin> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Payments with details"),
+          leading: IconButton(onPressed: () {Navigator.pushNamed(context, '/');}, icon: Icon(Icons.back_hand)),
           actions: [
             IconButton(onPressed: () {}, icon: Icon(Icons.payment_outlined)),
           ],

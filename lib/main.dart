@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project_bloem/revenue.dart';
 import 'package:project_bloem/revenuecard.dart';
 import 'package:project_bloem/screens/about_us/aboutus.dart';
+import 'package:project_bloem/screens/login_screen/adminlogin.dart';
 import 'package:project_bloem/screens/search_screen/categorypage.dart';
 import 'package:project_bloem/screens/search_screen/sresult.dart';
 import 'package:project_bloem/screens/selling/registersellerform.dart';
@@ -110,6 +111,7 @@ class MyApp extends StatelessWidget {
         '/sellerreg' : (context) => const SellerRegister(),
         '/reset': (context)=> ResetPassword(),
         '/adminpage' :(context) => const ForAdmin(),
+        '/adminloginpage' : (context) => const AdminLoginPage(),
       },
     );
   }
