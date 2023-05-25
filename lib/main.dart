@@ -28,6 +28,7 @@ import 'package:project_bloem/screens/resetpassword/restpassword.dart';
 import 'package:project_bloem/screens/selling/selling_page.dart';
 import 'package:project_bloem/screens/user_profile/profile.dart';
 import 'package:project_bloem/screens/welcome_screen/welcome_screen.dart';
+import 'package:project_bloem/screens/wish_list/wish_list.dart';
 import 'components/size.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -110,6 +111,8 @@ class MyApp extends StatelessWidget {
         '/sellerreg' : (context) => const SellerRegister(),
         '/reset': (context)=> ResetPassword(),
         '/adminpage' :(context) => const ForAdmin(),
+        '/wishlist' :(context) => const WishListScreen(),
+
       },
     );
   }
