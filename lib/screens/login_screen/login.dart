@@ -74,6 +74,7 @@ class _LoginPageState extends State<LoginPage> {
       preference.setString('username', jsonResponse['username']);
       preference.setString('token', jsonResponse['token']);
       preference.setString('email', jsonResponse['email']);
+      preference.setString('district', jsonResponse['district']);
 
       preference.setBool('sellerStates', jsonResponse['sellerStates']);
       //String? token=preference.getString('token');

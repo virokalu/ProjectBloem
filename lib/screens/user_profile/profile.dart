@@ -140,6 +140,7 @@ class _UserProfileState extends State<UserProfile> {
                   preference.remove('token');
                   preference.remove('imgPath');
                   preference.remove('email');
+                  preference.remove('district');
 
                   preference.remove('sellerStates');
                   Navigator.pushNamed(context, '/login');
