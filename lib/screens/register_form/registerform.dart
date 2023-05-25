@@ -56,6 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final passController = TextEditingController();
   final conformPassController = TextEditingController();
   final fulNameController = TextEditingController();
+  final districtController = TextEditingController();
   String? district;
   bool passToggle = true;
 
@@ -67,7 +68,8 @@ class _RegisterPageState extends State<RegisterPage> {
       "username":nameController.text,
       "fullname":fulNameController.text,
       "email":emailController.text,
-      "password":passController.text
+      "password":passController.text,
+      "district":districtController.text
     };
     //print(registration);
     var response = await http.post(Uri.parse(registration),
