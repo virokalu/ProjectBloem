@@ -89,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
         showCloseIcon: true,
         title: "Success!",
-        desc: "Logged in Successfully",
+        desc: "Registered Successfully",
 
         btnOkOnPress: (){
           Navigator.pushNamed(context, '/login');
