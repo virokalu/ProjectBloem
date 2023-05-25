@@ -7,6 +7,8 @@ const urlforsocket = 'http://10.0.2.2:3001/';
 const registration = "${url}registration";
 const login = "${url}login";
 const email = "${url}email";
+const question = "${url}question";
+
 const password = "${url}password";
 const resetpassword = "${url}resetpassword";
 const update = "${url}update";
