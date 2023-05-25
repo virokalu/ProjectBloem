@@ -63,7 +63,7 @@ class _AboutUsState extends State<AboutUs> {
             SizedBox(height: getProportionateScreenWidth(20)),
 
             Text(
-              "Our story",
+              "Our Story",
               style: TextStyle(
                 fontFamily: "Poppins",
                 fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class _AboutUsState extends State<AboutUs> {
             SizedBox(height: getProportionateScreenWidth(10)),
 
             const Text(
-              "Bloem was founded in 2023 by a group of students who were passionate about the floricultural industry. We saw a need for a user-friendly platform that could connect buyers and sellers, and we decided to build it ourselves.",
+              "Bloem, a application related to the floricultural industry, was established in 2023 by a group of students from the Department of Computer Science at the University of Ruhuna as their final year project. We saw a need for a user-friendly platform that could connect buyers and sellers, and we decided to build it ourselves.",
               textAlign: TextAlign.justify,
             ),
             SizedBox(height: getProportionateScreenWidth(20)),
