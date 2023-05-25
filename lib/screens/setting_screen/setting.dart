@@ -23,12 +23,12 @@ class SettingScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const ButtonText(text: "Setting", icon: Icons.settings),
+              const ButtonText(text: "Settings", icon: Icons.settings),
               const SizedBox(height: 20),
               const Divider(color: Color.fromARGB(255, 243, 236, 236)),
               ClickableBar(
-                icon: Icons.account_box,
-                name: 'Account Information',
+                icon: Icons.account_circle_outlined,
+                name: 'Update Profile',
                 onPressed: () {
                   Navigator.pushNamed(context, '/changeinfo');
                 },

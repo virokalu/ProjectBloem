@@ -26,7 +26,7 @@ class _UserProfileState extends State<UserProfile> {
     preference = await SharedPreferences.getInstance();
     //String? fullname=preference.getString('fullname');
     String? token=preference.getString('token');
-    sellerStates = preference.getBool('sellerStates');
+    bool? sellerStates = preference.getBool('sellerStates');
     //print(token);
 
     if(token==null){
@@ -139,6 +139,8 @@ class _UserProfileState extends State<UserProfile> {
                   preference.remove('username');
                   preference.remove('token');
                   preference.remove('imgPath');
+                  preference.remove('email');
+
                   preference.remove('sellerStates');
                   Navigator.pushNamed(context, '/login');
                 },

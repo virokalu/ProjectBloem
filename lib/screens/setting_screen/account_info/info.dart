@@ -12,6 +12,7 @@ import 'package:project_bloem/components/color_components.dart';
 //import '../../components/button_components.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_bloem/config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //import '../../components/color_components.dart';
 
@@ -23,32 +24,59 @@ class UpdateDetails extends StatefulWidget {
 }
 
 class _UpdateDetailsState extends State<UpdateDetails> {
+  late SharedPreferences preference;
+
+  String? username;
+  String? fullname;
+  String? email;
   final _formField = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final nameController = TextEditingController();
-  final passController = TextEditingController();
-  final conformPassController = TextEditingController();
   final fulNameController = TextEditingController();
   bool passToggle = true;
 
-  Future<void> registerUser(BuildContext context) async {
+  @override
+  void initState(){
+    super.initState();
+    init();
+  }
+  Future init() async{
+    preference = await SharedPreferences.getInstance();
+    String? fullname=preference.getString('fullname');
+    String? username=preference.getString('username');
+    String? email=preference.getString('email');
+
+    setState(() =>nameController.text=username!);
+    setState(() =>this.username=username!);
+    setState(() =>this.fullname=fullname!);
+    setState(() =>this.email=email!);
+    setState(() =>fulNameController.text=fullname!);
+    setState(() =>emailController.text=email!);
+
+
+  }
+
+  Future<void> updateUser(BuildContext context) async {
     final completer = Completer<void>();
-    var regBody = {
-      "username": nameController.text,
+    var updateBody = {
+      "username": username,
+      "newusername": nameController.text,
       "fullname": fulNameController.text,
       "email": emailController.text,
-      "password": passController.text
     };
     //print(registration);
-    var response = await http.post(Uri.parse(registration),
+    var response = await http.post(Uri.parse(update),
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*"
         },
-        body: jsonEncode(regBody));
+        body: jsonEncode(updateBody));
     var jsonResponse = jsonDecode(response.body);
     //print(jsonResponse['status']);
     if (jsonResponse['status']) {
+      preference.setString('fullname', jsonResponse['fullname']);
+      preference.setString('username', jsonResponse['username']);
+      preference.setString('email', jsonResponse['email']);
       // ignore: use_build_context_synchronously
       AwesomeDialog(
         context: context,
@@ -58,10 +86,11 @@ class _UpdateDetailsState extends State<UpdateDetails> {
 
         showCloseIcon: true,
         title: "Success!",
-        desc: "Logged in Successfully",
+        desc: "Registered Successfully",
 
         btnOkOnPress: () {
-          Navigator.pushNamed(context, '/login');
+
+          Navigator.pushNamed(context, '/profile');
           //print("Inside Login");
           completer.complete();
         },
@@ -88,13 +117,13 @@ class _UpdateDetailsState extends State<UpdateDetails> {
             emailController.clear();
             completer.complete();
           },
-          btnOkOnPress: () {
-            Navigator.pushNamed(context, '/login');
-
-            //print("Inside Login");
-            completer.complete();
-          },
-          btnOkText: "Login",
+          // btnOkOnPress: () {
+          //   Navigator.pushNamed(context, '/login');
+          //
+          //   //print("Inside Login");
+          //   completer.complete();
+          // },
+          // btnOkText: "Login",
           btnCancelText: "OK",
           btnOkColor: HexColor.fromHex('#4CD964'),
         ).show();
@@ -215,8 +244,28 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                   //################################################Create Account#######################################
                   onPressed: () {
                     if (_formField.currentState!.validate()) {
-                      //print("success");
-                      registerUser(context);
+                      //print(email);
+                      //print(emailController.text);
+                      if(emailController.text==email && username==nameController.text && fullname==fulNameController.text){
+                        // ignore: use_build_context_synchronously
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.warning,
+                          animType: AnimType.topSlide,
+                          showCloseIcon: true,
+                          title: "No Change",
+                          desc:
+                          "There is no any Changes",
+                          btnCancelOnPress: () {
+
+                          },
+                          btnCancelText: "OK",
+                          btnCancelColor: HexColor.fromHex('#4CD964'),
+                        ).show();
+                      }else{
+                        updateUser(context);
+                      }
+
                     }
                   },
                   child: const Text(
