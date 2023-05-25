@@ -63,6 +63,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
   final fulNameController = TextEditingController();
   bool passToggle = true;
   String? district;
+  String? oldDistrict;
 
 
   @override
@@ -85,6 +86,9 @@ class _UpdateDetailsState extends State<UpdateDetails> {
     setState(() =>emailController.text=email!);
     setState(() {
       this.district=district;
+    });
+    setState(() {
+      oldDistrict=district;
     });
 
 
@@ -112,6 +116,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
       preference.setString('fullname', jsonResponse['fullname']);
       preference.setString('username', jsonResponse['username']);
       preference.setString('email', jsonResponse['email']);
+      preference.setString('district', jsonResponse['district']);
       // ignore: use_build_context_synchronously
       AwesomeDialog(
         context: context,
@@ -121,7 +126,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
 
         showCloseIcon: true,
         title: "Success!",
-        desc: "Registered Successfully",
+        desc: "Changed Successfully",
 
         btnOkOnPress: () {
 
@@ -319,7 +324,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                     if (_formField.currentState!.validate()) {
                       //print(email);
                       //print(emailController.text);
-                      if(emailController.text==email && username==nameController.text && fullname==fulNameController.text){
+                      if(emailController.text==email && username==nameController.text && fullname==fulNameController.text && district==oldDistrict){
                         // ignore: use_build_context_synchronously
                         AwesomeDialog(
                           context: context,

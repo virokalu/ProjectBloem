@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Model/chatmodel.dart';
 import '../../components/button_components.dart';
 import '../../components/color_components.dart';
@@ -19,6 +20,7 @@ class ChatList extends StatefulWidget {
 
 class _ChatListState extends State<ChatList> {
 
+  late SharedPreferences preference;
   //final _formField = GlobalKey<FormState>();
   final receiverController = TextEditingController();
   final senderController = TextEditingController();
@@ -32,8 +34,26 @@ class _ChatListState extends State<ChatList> {
   @override
   void initState() {
     super.initState();
-    fetchData(user);
+    init();
     //registerChat();
+  }
+  Future init() async{
+    preference = await SharedPreferences.getInstance();
+    //String? fullname=preference.getString('fullname');
+    String? username=preference.getString('username');
+    //bool? sellerStates = preference.getBool('sellerStates');
+    //print(token);
+
+    // if(token==null){
+    //   //print(token);
+    //   // ignore: use_build_context_synchronously
+    //   Navigator.pushNamed(context, '/login');
+    // }
+    setState(() =>user=username!);
+    fetchData(user);
+
+    //setState(() =>this.fullname=fullname!);
+
   }
 
   Future<void> registerChat(BuildContext context) async {

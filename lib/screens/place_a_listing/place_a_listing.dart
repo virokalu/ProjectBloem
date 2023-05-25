@@ -45,6 +45,7 @@ String? imgOne;
 String? imgTwo;
 String? imgThree;
 bool imageAdded = true;
+String? district;
 
 class PlaceListing extends StatefulWidget {
   const PlaceListing({Key? key}) : super(key: key);
@@ -68,9 +69,11 @@ class _PlaceListingState extends State<PlaceListing> {
     preference = await SharedPreferences.getInstance();
     //String? fullname=preference.getString('fullname');
     String? user=preference.getString('username');
+    String? newDistrict=preference.getString('district');
     //String? imgPath=preference.getString('imgPath');
 
     setState(() =>username=user!);
+    setState(() =>district=newDistrict!);
     //setState(() =>this.fullname=fullname!);
     // if(imgPath!=null){
     //   setState(() => profileimg=imgPath);
@@ -1390,6 +1393,7 @@ Future<void> addListing(BuildContext context) async {
     "imgone":imgOne,
     "imgtwo":imgTwo,
     "imgthree":imgThree,
+    "district":district,
     "activestatus":true,
   };
   //print(registration);
