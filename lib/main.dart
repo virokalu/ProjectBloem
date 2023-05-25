@@ -87,7 +87,6 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/listing': (context) => const PlaceListing(),
         '/register': (context) => const RegisterPage(),
-        '/resetpassword': (context) => const ResetPassword(),
         '/selling': (context) => const SellingPage(),
         '/profile': (context) => const UserProfile(),
         '/chat': (context) => const ChatList(),
@@ -107,6 +106,7 @@ class MyApp extends StatelessWidget {
         '/policy': (context) => const PolicyScreen(),
         '/password': (context) => const PasswordScreen(),
         '/sellerreg' : (context) => const SellerRegister(),
+        '/reset': (context)=> ResetPassword(),
       },
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/button_components.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../components/back_button_icon.dart';
 
@@ -11,83 +12,141 @@ class PasswordScreen extends StatefulWidget {
 }
 
 class _PasswordScreenState extends State<PasswordScreen> {
+
+  late SharedPreferences preference;
+  String? username;
+
+
+  @override
+  void initState(){
+    super.initState();
+    init();
+  }
+  Future init() async{
+    preference = await SharedPreferences.getInstance();
+    String? username = preference.getString('username');
+    setState(() =>this.username=username!);
+  }
+
+  final _formField = GlobalKey<FormState>();
+  final oldPasswordController = TextEditingController();
+  final newPasswordController = TextEditingController();
+  final confirmNewPasswordController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: width / 10,
-          horizontal: height / 90,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const ButtonText(text: 'Change Password', icon: Icons.password),
-              const SizedBox(height: 20),
-              /*const Divider(
-                height: 0.1,
-                thickness: 10.0,
-              ),*/
-              const SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Current Password',
-                  filled: true,
-                  fillColor: Colors.white38,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+      body: Form(
+        key: _formField,
+
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: width / 10,
+            horizontal: height / 90,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const ButtonText(text: 'Change Password', icon: Icons.password),
+                const SizedBox(height: 20),
+                /*const Divider(
+                  height: 0.1,
+                  thickness: 10.0,
+                ),*/
+                const SizedBox(height: 20),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'Current Password',
+                    filled: true,
+                    fillColor: Colors.white38,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+
+                  ),
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "";
+                    }
+
+                    return null;
+                  },
+
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Please enter your new password below',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Please enter your new password below',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'New Password',
-                  filled: true,
-                  fillColor: Colors.white38,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Confirm Password',
-                  filled: true,
-                  fillColor: Colors.white38,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: width,
-                child: TextButton(
-                  style: greenButtonStyle,
-                  onPressed: () {},
-                  child: const Text(
-                    'Change Password',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
+                const SizedBox(height: 20),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'New Password',
+                    filled: true,
+                    fillColor: Colors.white38,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "";
+                    }
+
+                    return null;
+                  },
                 ),
-              )
-            ],
+                const SizedBox(height: 20),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'Confirm Password',
+                    filled: true,
+                    fillColor: Colors.white38,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "Re-Enter Your Password";
+                    }
+                    else if(newPasswordController.text != confirmNewPasswordController.text){
+                      newPasswordController.clear();
+                      confirmNewPasswordController.clear();
+                      return "Password not confirmed!";
+                    }
+
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: width,
+                  child: TextButton(
+                    style: greenButtonStyle,
+                    onPressed: () {
+                      if(_formField.currentState!.validate()){
+                        print("success");
+                      }
+                    },
+                    child: const Text(
+                      'Change Password',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

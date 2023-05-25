@@ -232,8 +232,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 //#################################################need to navigate to forget password#########
                 onPressed: (){
-
-
+                  Navigator.pushNamed(context, '/reset');
 
                 },
                 child: const Text(

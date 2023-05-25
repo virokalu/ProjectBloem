@@ -6,6 +6,7 @@ const urlforsocket = 'http://10.0.2.2:3001/';
 //const url = 'http://192.168.1.10:3000/';//sulani's router
 const registration = "${url}registration";
 const login = "${url}login";
+const email = "${url}email";
 const profileImg = "${url}profile/img";
 const profileGetImg = "${url}profile/getimg";
 const itemAdd = "${url}item";

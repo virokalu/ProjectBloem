@@ -26,7 +26,7 @@ class _UserProfileState extends State<UserProfile> {
     preference = await SharedPreferences.getInstance();
     //String? fullname=preference.getString('fullname');
     String? token=preference.getString('token');
-    sellerStates = preference.getBool('sellerStates');
+    bool? sellerStates = preference.getBool('sellerStates');
     //print(token);
 
     if(token==null){
