@@ -69,7 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
       "fullname":fulNameController.text,
       "email":emailController.text,
       "password":passController.text,
-      "district":districtController.text
+      "district":district,
     };
     //print(registration);
     var response = await http.post(Uri.parse(registration),
@@ -199,7 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       if(value!.isEmpty){
                         return "";
                       }
-                      
+
                       return null;
                     },
           

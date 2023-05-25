@@ -16,6 +16,34 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //import '../../components/color_components.dart';
 
+var _values = [
+  "Ampara",
+  "Anuradhapura",
+  "Badulla",
+  "Batticaloa",
+  "Colombo",
+  "Galle",
+  "Gampaha",
+  "Hambantota",
+  "Jaffna",
+  "Kalutara",
+  "Kandy",
+  "Kegalle",
+  "Kilinochchi",
+  "Kurunegala",
+  "Mannar",
+  "Matale",
+  "Matara",
+  "Monaragala",
+  "Mullativu",
+  "Nuwara Eliya",
+  "Polonnaruwa",
+  "Puttalam",
+  "Ratnapura",
+  "Trincomalee",
+  "Vavuniya"
+];
+
 class UpdateDetails extends StatefulWidget {
   const UpdateDetails({super.key});
 
@@ -34,6 +62,8 @@ class _UpdateDetailsState extends State<UpdateDetails> {
   final nameController = TextEditingController();
   final fulNameController = TextEditingController();
   bool passToggle = true;
+  String? district;
+
 
   @override
   void initState(){
@@ -45,6 +75,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
     String? fullname=preference.getString('fullname');
     String? username=preference.getString('username');
     String? email=preference.getString('email');
+    String? district=preference.getString('district');
 
     setState(() =>nameController.text=username!);
     setState(() =>this.username=username!);
@@ -52,6 +83,9 @@ class _UpdateDetailsState extends State<UpdateDetails> {
     setState(() =>this.email=email!);
     setState(() =>fulNameController.text=fullname!);
     setState(() =>emailController.text=email!);
+    setState(() {
+      this.district=district;
+    });
 
 
   }
@@ -63,6 +97,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
       "newusername": nameController.text,
       "fullname": fulNameController.text,
       "email": emailController.text,
+      "district":district,
     };
     //print(registration);
     var response = await http.post(Uri.parse(update),
@@ -237,6 +272,44 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                       }
                       return null;
                     },
+                  ),
+                ),
+                SizedBox(
+                  height: height/10,
+                  child: DropdownButtonFormField<String>(
+                    value: district,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        district = newValue;
+                      });
+                    },
+                    decoration: InputDecoration(
+
+                      filled: true,
+                      //errorText: category == null ? 'This field is required' : null, // Add this line
+
+                      fillColor: HexColor.fromHex('#F3F1F1'),
+                      prefixIcon: const Icon(Icons.location_pin),
+                      labelText: "District",
+
+                      //labelText: 'Select an item',
+                      hintText: 'Choose your district',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Required Field';
+                      }
+                      return null;
+                    },
+                    items: _values.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
                 ),
                 TextButton(
