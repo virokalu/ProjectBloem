@@ -30,8 +30,8 @@ class _CustomStepperState extends State<CustomStepper> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: HexColor.fromHex('#4CD964'),
-        borderRadius: BorderRadius.circular(15),
+        color: HexColor.fromHex('#E7FFED'),
+        borderRadius: BorderRadius.circular(10),
       ),
       margin: const EdgeInsets.only(top: 10),
       padding: const EdgeInsets.all(8),
@@ -39,11 +39,11 @@ class _CustomStepperState extends State<CustomStepper> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GestureDetector(
-            child: const Padding(
-              padding: EdgeInsets.only(right: 2),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 2),
               child: Icon(
                 Icons.remove,
-                color: Colors.white,
+                color: HexColor.fromHex('#4CD964'),
                 size: 20,
               ),
             ),
@@ -59,23 +59,23 @@ class _CustomStepperState extends State<CustomStepper> {
           SizedBox(width: getProportionateScreenWidth(5),),
 
           SizedBox(
-            width: widget.iconSize,
+            width: widget.iconSize*2,
             child: Text(
               widget.value.toString(),
               style: TextStyle(
                 fontSize: widget.iconSize,
-                color: Colors.white,
+                color: HexColor.fromHex('#4CD964'),
               ),
               textAlign: TextAlign.center,
             ),
           ),
           SizedBox(width: getProportionateScreenWidth(5),),
           GestureDetector(
-            child: const Padding(
-              padding: EdgeInsets.only(right: 2),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 2),
               child: Icon(
                 Icons.add,
-                color: Colors.white,
+                color: HexColor.fromHex('#4CD964'),
                 size: 20,
               ),
             ),

@@ -24,6 +24,7 @@ class ItemsNotifier extends StateNotifier<ItemsState>{
         page: _page,
         pageSize: 10,
       ),
+      activestatus: "true",
     );
     final items = await _apiService.getItems(filterModel);
     final newItems = [...state.items,...items!];

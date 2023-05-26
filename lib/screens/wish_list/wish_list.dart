@@ -36,6 +36,7 @@ class _WishListScreenState extends State<WishListScreen> {
                 children: [
                   const ButtonText(
                       text: "Wish List", icon: Icons.favorite_border),
+                  const SizedBox(height: 30,),
                   SizedBox(
                     height: height * 0.38,
                     child: SingleChildScrollView(

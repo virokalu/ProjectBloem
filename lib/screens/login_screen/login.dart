@@ -73,6 +73,10 @@ class _LoginPageState extends State<LoginPage> {
       preference.setString('fullname', jsonResponse['fullname']);
       preference.setString('username', jsonResponse['username']);
       preference.setString('token', jsonResponse['token']);
+      preference.setString('email', jsonResponse['email']);
+      preference.setString('district', jsonResponse['district']);
+
+      preference.setBool('sellerStates', jsonResponse['sellerStates']);
       //String? token=preference.getString('token');
       //print(token);
 
@@ -141,6 +145,7 @@ class _LoginPageState extends State<LoginPage> {
         .size;
     var height = size.height;
     var width = size.width;
+    bool _isObscure = true;
     return Scaffold(
       //backgroundColor: Colors.white,
 
@@ -184,6 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: height / 10,
                 child: TextFormField(
                   controller: passwordController,
+                  obscureText: _isObscure,
                   //############################################password#############################################
                   decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock),
@@ -231,8 +237,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 //#################################################need to navigate to forget password#########
                 onPressed: (){
-
-
+                  Navigator.pushNamed(context, '/reset');
 
                 },
                 child: const Text(

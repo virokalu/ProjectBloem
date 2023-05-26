@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import '../config.dart';
 import '../models/cart.dart';
 import '../models/item.dart';
+import '../screens/share.dart';
 
 final apiService = Provider((ref) => APIService());
 
@@ -52,11 +53,18 @@ class APIService {
   }
 
   Future<Cart?> getCart() async{
+    String? username = await SharedPreferencesHelper.getUsername();
+    if (username == null) {
+      //print("username not available");
+      // Use the retrieved username
+    }
+
 
     Map<String,String> requestHeader={
       'Content-Type':'application/json',
     };
-    var url = Uri.http(apiURL,cartAPI);
+    //final url = Uri.parse(itemAdd + "/" );
+    var url = Uri.http(apiURL,"$cartAPI/${username!}");
     var response =  await http.get(url,headers: requestHeader);
 
     if(response.statusCode==200){
@@ -95,18 +103,18 @@ class APIService {
     Map<String,String> requestHeader={
       'Content-Type':'application/json',
     };
+    var JsonModel=jsonEncode({
+      "username":username,
+      "item":id,
+      "qty":qty,
+    });
+    print(JsonModel);
     var url = Uri.http(apiURL,cartAPI);
     var response =  await http.delete(
         url,
         headers: requestHeader,
-        body: jsonEncode({
-          "username":username,
-          "items":[
-            {"item":id,"qty":qty}
-          ]
-        })
+        body: JsonModel,
     );
-
     if(response.statusCode==200){
       return true;
     }else{

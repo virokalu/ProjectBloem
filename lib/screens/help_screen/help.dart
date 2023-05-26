@@ -1,8 +1,18 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/back_button_icon.dart';
 import '../../components/button_components.dart';
 import '../../components/color_components.dart';
 import '../../components/size.dart';
+
+import 'package:http/http.dart' as http;
+
+import '../../config.dart';
+
 
 class HelpScreen extends StatefulWidget{
   const HelpScreen({super.key});
@@ -14,8 +24,66 @@ class HelpScreen extends StatefulWidget{
 
 class _HelpScreenState extends State<HelpScreen> {
 
-  List<bool> expanded = [false, false];
+
+  late SharedPreferences preference;
+  String? username;
+
+
+
+  @override
+  void initState(){
+    super.initState();
+    init();
+  }
+  Future init() async{
+    preference = await SharedPreferences.getInstance();
+    String? username = preference.getString('username');
+    setState(() =>this.username=username!);
+  }
+  final _formField = GlobalKey<FormState>();
+
+  List<bool> expanded = [false, false, false, false, false];
   final queController = TextEditingController();
+
+  Future<void> sendQuestion(BuildContext context) async {
+    var passwordBody = {
+      "username": username,
+      "question": queController.text,
+    };
+    var response = await http.post(Uri.parse(question),
+        headers: {"Content-Type":"application/json"},
+        body: jsonEncode(passwordBody)
+    );
+    var jsonResponse = jsonDecode(response.body);
+    print(jsonResponse.toString());
+
+    if(jsonResponse['status']){
+      // ignore: use_build_context_synchronously
+      print("Question Sent");
+    }else{
+      print("Password Didn't Changed");
+    }
+    // else if(!jsonResponse['status']){
+    //   // ignore: use_build_context_synchronously
+    //   AwesomeDialog(
+    //     context: context,
+    //     dialogType: DialogType.warning,
+    //     //dialogBackgroundColor: Colors.black,
+    //     animType: AnimType.topSlide,
+    //
+    //     showCloseIcon: true,
+    //     title: "Incorrect Password",
+    //     desc: "Please Try Again!",
+    //
+    //     btnOkOnPress: (){
+    //
+    //     },
+    //     btnOkText: "OK",
+    //     btnOkColor: HexColor.fromHex('#4CD964'),
+    //   ).show();
+    //   return completer.future;
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +91,7 @@ class _HelpScreenState extends State<HelpScreen> {
     return  SafeArea(
         child: Scaffold(
           body: Container(
-            padding: const EdgeInsets.fromLTRB(10, 30, 0, 10),
+            padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
             child: ListView(
               children: [
                 const ButtonText(text: "Help", icon: Icons.help_center),
@@ -52,15 +120,15 @@ class _HelpScreenState extends State<HelpScreen> {
                     children:[
                       ExpansionPanel(
                           headerBuilder: (context, isOpen){
-                            return  Padding(
+                            return  const Padding(
                                 padding: EdgeInsets.all(15),
                                 child:
                                   Text(
                                       "How to sign in for BLOEM?",
                                       style: TextStyle(
                                         fontFamily: "Poppins",
-                                        fontSize: 20,
-                                        color: HexColor.fromHex('#4CD964'),
+                                        fontSize: 17,
+                                        color: Colors.grey,
                                      ),
                                   ),
                             );
@@ -81,15 +149,15 @@ class _HelpScreenState extends State<HelpScreen> {
 
                       ExpansionPanel(
                           headerBuilder: (context, isOpen){
-                            return  Padding(
+                            return  const Padding(
                                 padding: EdgeInsets.all(15),
                                 child:
                                   Text(
                                       "How can I change my account details?",
                                       style: TextStyle(
                                         fontFamily: "Poppins",
-                                        fontSize: 20,
-                                        color: HexColor.fromHex('#4CD964'),
+                                        fontSize: 17,
+                                        color: Colors.grey,
                                     ),
                                   )
                             );
@@ -105,12 +173,12 @@ class _HelpScreenState extends State<HelpScreen> {
                               ),
                             ),
                           ),
-                          isExpanded: expanded[0]
+                          isExpanded: expanded[1]
                       ),
 
                       ExpansionPanel(
                           headerBuilder: (context, isOpen){
-                            return  Padding(
+                            return  const Padding(
 
                               padding: EdgeInsets.all(15),
                               child:
@@ -118,8 +186,8 @@ class _HelpScreenState extends State<HelpScreen> {
                                 "How can I buy a product?",
                                 style: TextStyle(
                                   fontFamily: "Poppins",
-                                  fontSize: 20,
-                                  color: HexColor.fromHex('#4CD964'),
+                                  fontSize: 17,
+                                  color: Colors.grey,
                                 ),
                               ),
                             );
@@ -135,20 +203,20 @@ class _HelpScreenState extends State<HelpScreen> {
                               ),
                             ),
                           ),
-                          isExpanded: expanded[0]
+                          isExpanded: expanded[2]
                       ),
 
                       ExpansionPanel(
                           headerBuilder: (context, isOpen){
-                            return  Padding(
-                              padding: EdgeInsets.all(15),
+                            return  const Padding(
+                              padding:  EdgeInsets.all(15),
                               child:
                               Text(
                                 "Can I save a product to purchase in future?",
                                 style: TextStyle(
                                   fontFamily: "Poppins",
-                                  fontSize: 20,
-                                  color: HexColor.fromHex('#4CD964'),
+                                  fontSize: 17,
+                                  color: Colors.grey,
                                 ),
                               ),
                             );
@@ -164,20 +232,20 @@ class _HelpScreenState extends State<HelpScreen> {
                               ),
                             ),
                           ),
-                          isExpanded: expanded[0]
+                          isExpanded: expanded[3]
                       ),
 
                       ExpansionPanel(
                           headerBuilder: (context, isOpen){
-                            return  Padding(
+                            return  const Padding(
                               padding: EdgeInsets.all(15),
                               child:
                               Text(
                                 "How can I add a product to sell?",
                                 style: TextStyle(
                                   fontFamily: "Poppins",
-                                  fontSize: 20,
-                                  color: HexColor.fromHex('#4CD964'),
+                                  fontSize: 17,
+                                  color: Colors.grey,
                                 ),
                               ),
                             );
@@ -193,73 +261,78 @@ class _HelpScreenState extends State<HelpScreen> {
                               ),
                             ),
                           ),
-                          isExpanded: expanded[0]
+                          isExpanded: expanded[4]
                       ),
                     ],
                   ),
 
                 ),
 
-                SizedBox(height: getProportionateScreenWidth(20)),
+                SizedBox(height: getProportionateScreenHeight(20)),
 
                 TextButton(
                   style: greenButtonStyle,
-                    child:  Text(
+                    child:  const Text(
                         "Any other question?",
                         style: TextStyle(
-                          color: HexColor.fromHex('#ffffff'),
+                          color: Colors.white,
                           fontFamily: "Poppins",
-                          fontSize: 20,
+                          fontSize: 18,
                       ),
                     ),
                     onPressed: () {
                       showModalBottomSheet(
                           context: context,
                           builder: (BuildContext context) {
-                            var queController;
                             return Container(
                               height: 250,
-                                padding: EdgeInsets.all(15),
-
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    controller: queController,
-                                    decoration: InputDecoration(
-                                        prefixIcon: const Icon(Icons.person),
-                                        labelText: "Add your question here",
-                                        filled: true,
-                                        fillColor: HexColor.fromHex('#F3F1F1'),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(20),
-                                        )
-                                    ),
-                                    validator: (value){
-                                      if(value!.isEmpty){
-                                        return "";
-                                      }
-
-                                      return null;
-                                    },
-                                  ),
-
-                                  SizedBox(height: getProportionateScreenWidth(20)),
-
-                                  TextButton(
-                                    style: greenButtonStyle,
-                                      child:  Text(
-                                          "Submit",
-                                          style: TextStyle(
-                                            color: HexColor.fromHex('#ffffff'),
-                                            fontFamily: "Poppins",
-                                            fontSize: 20,
-                                        ),
+                                padding: const EdgeInsets.all(35),
+                              child: Form(
+                                key: _formField,
+                                child: Column(
+                                  children: [
+                                    TextFormField(
+                                      controller: queController,
+                                      decoration: InputDecoration(
+                                          prefixIcon: const Icon(Icons.person),
+                                          labelText: "Add your question here",
+                                          filled: true,
+                                          fillColor: HexColor.fromHex('#F3F1F1'),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(20),
+                                          )
                                       ),
-                                      onPressed: () {
-                                        Navigator.pop(context);
+                                      validator: (value){
+                                        if(value!.isEmpty){
+                                          return "";
+                                        }
+                                        return null;
                                       },
-                                  )
-                                ],
+                                    ),
+
+                                    SizedBox(height: getProportionateScreenHeight(20)),
+
+                                    TextButton(
+                                      style: greenButtonStyle,
+                                        child:  Text(
+                                            "Submit",
+                                            style: TextStyle(
+                                              color: HexColor.fromHex('#ffffff'),
+                                              fontFamily: "Poppins",
+                                              fontSize: 18,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          if (_formField.currentState!.validate()) {
+
+                                            sendQuestion(context);
+                                            Navigator.pop(context);
+                                          }
+                                          //Navigator.pop(context);
+                                        },
+                                    )
+                                  ],
+                                ),
                               )
                             );
 

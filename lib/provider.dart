@@ -11,6 +11,8 @@ import 'models/item.dart';
 
 final homeItemProvider = FutureProvider.family<List<Item>?, ItemFilterModel>(
     (ref,itemFilterModel){
+      //print("Here");
+
       final apiRespository = ref.watch(apiService);
       return apiRespository.getItems(itemFilterModel);
     }
@@ -29,7 +31,8 @@ final itemNotifierProvider =
     );
 
 final cartItemsProvider = StateNotifierProvider<CartNotifier,CartState>(
-        (ref) => CartNotifier(
-            ref.watch(apiService),
-        ),
+        (ref) {
+          return CartNotifier(ref.watch(apiService)) ;
+        },
 );
+

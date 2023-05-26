@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Model/chatmodel.dart';
 import '../../components/button_components.dart';
 import '../../components/color_components.dart';
@@ -19,20 +20,40 @@ class ChatList extends StatefulWidget {
 
 class _ChatListState extends State<ChatList> {
 
+  late SharedPreferences preference;
   //final _formField = GlobalKey<FormState>();
   final receiverController = TextEditingController();
   final senderController = TextEditingController();
   bool _isLoading = true;
 
   String user = UserDetails.username;
+  //bool correctReciver = true;
 
   late List<ChatModel> chats = [];
 
   @override
   void initState() {
     super.initState();
-    fetchData(user);
+    init();
     //registerChat();
+  }
+  Future init() async{
+    preference = await SharedPreferences.getInstance();
+    //String? fullname=preference.getString('fullname');
+    String? username=preference.getString('username');
+    //bool? sellerStates = preference.getBool('sellerStates');
+    //print(token);
+
+    // if(token==null){
+    //   //print(token);
+    //   // ignore: use_build_context_synchronously
+    //   Navigator.pushNamed(context, '/login');
+    // }
+    setState(() =>user=username!);
+    fetchData(user);
+
+    //setState(() =>this.fullname=fullname!);
+
   }
 
   Future<void> registerChat(BuildContext context) async {
@@ -40,19 +61,23 @@ class _ChatListState extends State<ChatList> {
     senderController.text=user;
     final reqbody = {
       "name" : receiverController.text,
-      "currentpage" : "jjj",
-      "users" : [user,receiverController.text],
+      "currentpage" : "I'am using Bloam app!",
+      "user1" : user,
+      "user2" : receiverController.text,
       "img" : "images/camera.jpg",
       "id" : "5",
     };
     //var response = await http.post(Uri.parse(insertchats),
-    await http.post(Uri.parse(insertchats),
+    final response = await http.post(Uri.parse(insertchats),
         headers: {"Content-Type":"application/json",
           "Access-Control-Allow-Origin": "*"
         },
         body: jsonEncode(reqbody),
     );
     //setState(() {});
+    // if(response.statusCode == 500){
+    //   correctReciver = false;
+    // }
   }
 
   Future<void> fetchData(String user) async {
@@ -157,82 +182,101 @@ class _ChatListState extends State<ChatList> {
   // }
 
    Widget bottomesheet(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height/2,
-      width: MediaQuery.of(context).size.width/2,
+    return Container(
+      height: MediaQuery.of(context).size.height / 2,
+      width: MediaQuery.of(context).size.width / 2,
       child: Card(
-        margin: EdgeInsets.all(MediaQuery.of(context).size.width/30),
-        child: ListView(
-          children: [Column(
-            children: [
-              const Text("Create new Chat"),
-              const SizedBox(height: 20,),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        const Text("From"),
-                        const SizedBox(height: 20,),
-                        TextFormField(
-                          enabled: false,
-                          initialValue: user,
-                          // controller: senderController,
-                          // decoration: InputDecoration(
-                          //   hintText: "04/03",
-                          //   border: OutlineInputBorder(
-                          //     borderRadius: BorderRadius.circular(20),
-                          //   )
-                          // ),
-                          // keyboardType: const TextInputType.numberWithOptions(),
-                        ),
-                      ],
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0), // Adjust the value to control the roundness of the corners
+        ),
+        //margin: EdgeInsets.all(MediaQuery.of(context).size.width/30),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            children: [Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(top:15.0),
+                  child: Text(
+                    "Create new Chat",
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(width: 80),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        const Text("To"),
-                        const SizedBox(height: 20,),
-                        TextFormField(
-                          controller: receiverController,
-                          decoration: InputDecoration(
-                            hintText: "Enter reciver username",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            )
+                ),
+                const SizedBox(height: 20,),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const Text("From"),
+                          const SizedBox(height: 20,),
+                          TextFormField(
+                            enabled: false,
+                            initialValue: user,
+                            // controller: senderController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              )
+                            ),
+                            // keyboardType: const TextInputType.numberWithOptions(),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20,),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextButton(
-                          style: greenButtonStyle,
-                          onPressed: () {
-                            registerChat(context);
-                            fetchData(user);
-                          },
-                          child: const Text(
-                                "Create New Chat",
-                                style: TextStyle(color: Colors.white, fontSize: 16.0,
-                                fontFamily: 'Poppins',),
+                    const SizedBox(width: 80),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const Text("To"),
+                          const SizedBox(height: 20,),
+                          TextFormField(
+                            controller: receiverController,
+                            decoration: InputDecoration(
+                              hintText: "Enter reciver username",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              )
+                            ),
                           ),
+                        ],
+                      ),
                     ),
-                  ),
-                  
-                ],
-              ),
+                  ],
+                ),
+                const SizedBox(height: 40,),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                            style: greenButtonStyle,
+                            onPressed: () {
+                              setState(() {
+                                registerChat(context);
+                                fetchData(user);
+                              });
+                              // if(correctReciver){
+                              //   print("x");
+                              // }
+                            },
+                            child: const Text(
+                                  "Create New Chat",
+                                  style: TextStyle(color: Colors.white, fontSize: 16.0,
+                                  fontFamily: 'Poppins',),
+                            ),
+                      ),
+                    ),
+                    
+                  ],
+                ),
+              ],
+            ),
             ],
           ),
-          ],
         ),
       ),
     );

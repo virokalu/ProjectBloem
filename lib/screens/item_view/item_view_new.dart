@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -10,6 +11,9 @@ import 'package:project_bloem/provider.dart';
 import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 
 import '../../components/size.dart';
 /////////////////////////////
@@ -44,9 +48,71 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   final cardnumberController = TextEditingController();
   final dateController = TextEditingController();
   final ccvController = TextEditingController();
-  int counter = 0;
+  int counter = 1;
   late SharedPreferences preference;
   String username = "";
+
+  bool showText = true;
+
+
+  //////////////////send email to seller ////////////////////////
+ 
+
+
+
+void sendEmail() async {
+  String username = 'bloemapp1@gmail.com'; // Replace with your email
+  String password = 'bloem1234'; // Replace with your password
+
+  final smtpServer = gmail(username, password);
+
+  // Create the email message
+  final message = Message()
+    ..from = 'bloemapp1@gmail.com' // Replace with your email
+    ..recipients.add('bloemappsecond@gmail.com') // Replace with the seller's email
+    ..subject = 'Your item has been sold'
+    ..text = 'Congratulations! Your item has been sold.';
+
+  try {
+    await send(message, smtpServer);
+    print('Message sent successfully');
+  } catch (e) {
+    print('Error occurred while sending email: $e');
+  }
+}
+
+
+  ///////////////////////////////////////////////////////////////
+
+
+  Future init() async{
+    preference = await SharedPreferences.getInstance();
+    //String? fullname=preference.getString('fullname');
+    String? token=preference.getString('token');
+    //sellerStates = preference.getBool('sellerStates');
+    //print(token);
+
+    if(token==null){
+      //print(token);
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamed(context, '/login');
+    }
+    //setState(() =>this.sellerStates=sellerStates!);
+    //setState(() =>this.fullname=fullname!);
+
+  }
+
+  void toggleTextAndIcon() {
+    setState(() {
+      showText = !showText;
+    });
+
+    Timer(const Duration(seconds: 2), () {
+      setState(() {
+        showText = true;
+      });
+    });
+  }
 
 
   Future<void> fetchItemData() async {
@@ -62,6 +128,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       final url = Uri.parse(itemAdd + "/" + widget.id);
       final response = await http.get(url);
       if (response.statusCode == 200) {
+        print(response.toString());
         data = jsonDecode(response.body);
       }
     } catch (e) {
@@ -79,8 +146,10 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       "street": streetController.text,
       "town": cityController.text,
       "postalCode": postalCodeController.text,
-      "username": data["data"]["username"],
-      "id": widget.id,
+      "sellername": data["data"]["username"],
+      "buyername" : username,
+      "itemid": widget.id,
+      "itemprice" : data["data"]["price"],
     };
 
     final url = Uri.parse(regBuyItem);
@@ -137,6 +206,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   @override
   void initState() {
     super.initState();
+    init();
     fetchItemData();
   }
 
@@ -309,8 +379,8 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                       constraints: BoxConstraints(
                         minWidth: width,
                         maxWidth: width,
-                        minHeight: 70,
-                        maxHeight: 70,
+                        minHeight: 170,
+                        maxHeight: 270,
                       ),
                       child: LimitedBox(
                         maxHeight: 4 * 20.0, // assuming font size is 20
@@ -318,7 +388,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             data["data"]["description"],
-                            style: const TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 18),
                           ),
                         ),
                       ),
@@ -431,6 +501,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                       style: greenButtonStyle,
                       //############################Save the view##########################################
                       onPressed: () {
+                        sendEmail();
                         openDialog();
                       },
                       child: const Text(
@@ -449,14 +520,21 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                       style: greenButtonBorderStyle,
                       //############################Add Basket##########################################
                       onPressed: () {
+
                         final cartViewModel = ref.read(cartItemsProvider.notifier);
                         cartViewModel.addCartItem(data["data"]["id"], counter, username);
+                        toggleTextAndIcon();
                       },
-                      child: Text(
+                      child: showText ? Text(
                         "Add Basket",
                         style: TextStyle(
                           color: HexColor.fromHex('#4CD964'), fontSize: 16.0,
                           fontFamily: 'Poppins',),
+                      ): Icon(
+                          Icons.check_circle,
+                          color: HexColor.fromHex('#4CD964'),
+                          size: 30,
+
                       ),
                     ),
 
@@ -485,64 +563,106 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     ));
   }
 
+  // Future openDialog() => showDialog(
+  //       builder: (context) => AlertDialog(
+  //         title: const Text("Enter your location for deliver"),
+  //         content: SizedBox(
+  //           height: MediaQuery.of(context).size.height / 4,
+  //           child: ListView(
+  //             children: [
+  //               TextFormField(
+  //                 controller: streetController,
+  //                 decoration: const InputDecoration(hintText: "Street Name"),
+  //               ),
+  //               TextFormField(
+  //                 controller: cityController,
+  //                 decoration: const InputDecoration(hintText: "Town Name"),
+  //               ),
+  //               TextFormField(
+  //                 controller: postalCodeController,
+  //                 decoration: const InputDecoration(hintText: "Postal Code"),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //               // onPressed: () {
+  //               //   setState(() {
+  //               //     registerBuyItem();
+  //               //   });
+  //               // streetController.clear();
+  //               // cityController.clear();
+  //               // postalCodeController.clear();
+  //               //   //open2Dialog();
+  //               // Navigator.of(context).pop();
+  //               //   // showModalBottomSheet(
+  //               //   //               context: context,
+  //               //   //               builder: (context) => bottomesheet(),
+  //               //   //               backgroundColor: Colors.white,
+  //               //   //             );
+  //               // },
+  //               onPressed: () {
+  //                 streetController.clear();
+  //                 cityController.clear();
+  //                 postalCodeController.clear();
+  //                 Navigator.of(context).pop();
+  //                 setState(() {
+  //                     // PaymentSheet payment = PaymentSheet(amount: (data["data"]["price"]*counter).toString(), context: context);
+  //                     // payment.makePayment();
+  //                     // if(payment.isSuccess){
+  //                     //   print("success");
+  //                     // }
+  //                     makePayment();
+  //                 });
+  //               },
+  //               child: const Text("Next")),
+  //         ],
+  //       ),
+  //       context: context,
+  //     );
+
   Future openDialog() => showDialog(
-        builder: (context) => AlertDialog(
-          title: const Text("Enter your location for deliver"),
-          content: SizedBox(
-            height: MediaQuery.of(context).size.height / 4,
-            child: ListView(
-              children: [
-                TextFormField(
-                  controller: streetController,
-                  decoration: const InputDecoration(hintText: "Street Name"),
-                ),
-                TextFormField(
-                  controller: cityController,
-                  decoration: const InputDecoration(hintText: "Town Name"),
-                ),
-                TextFormField(
-                  controller: postalCodeController,
-                  decoration: const InputDecoration(hintText: "Postal Code"),
-                ),
-              ],
+    builder: (context) => AlertDialog(
+      title: const Text("Enter your location for delivery"),
+      content: SizedBox(
+        height: MediaQuery.of(context).size.height / 4,
+        child: Column(
+          children: [
+            TextFormField(
+              controller: streetController,
+              decoration: const InputDecoration(hintText: "Street Name"),
             ),
-          ),
-          actions: [
-            TextButton(
-                // onPressed: () {
-                //   setState(() {
-                //     registerBuyItem();
-                //   });
-                // streetController.clear();
-                // cityController.clear();
-                // postalCodeController.clear();
-                //   //open2Dialog();
-                // Navigator.of(context).pop();
-                //   // showModalBottomSheet(
-                //   //               context: context,
-                //   //               builder: (context) => bottomesheet(),
-                //   //               backgroundColor: Colors.white,
-                //   //             );
-                // },
-                onPressed: () {
-                  streetController.clear();
-                  cityController.clear();
-                  postalCodeController.clear();
-                  Navigator.of(context).pop();
-                  setState(() {
-                      // PaymentSheet payment = PaymentSheet(amount: (data["data"]["price"]*counter).toString(), context: context);
-                      // payment.makePayment();
-                      // if(payment.isSuccess){
-                      //   print("success");
-                      // }
-                      makePayment();
-                  });
-                },
-                child: const Text("Next")),
+            TextFormField(
+              controller: cityController,
+              decoration: const InputDecoration(hintText: "Town Name"),
+            ),
+            TextFormField(
+              controller: postalCodeController,
+              decoration: const InputDecoration(hintText: "Postal Code"),
+            ),
           ],
         ),
-        context: context,
-      );
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            setState(() {
+              // registerBuyItem();
+              makePayment();
+            });
+            // streetController.clear();
+            // cityController.clear();
+            // postalCodeController.clear();
+            Navigator.of(context).pop();
+          },
+          child: const Text("Next"),
+        ),
+      ],
+    ),
+    context: context,
+  );
+
 
   Future<void> makePayment() async {
     try{
@@ -569,6 +689,8 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       await Stripe.instance.presentPaymentSheet(
       ).then((value) {
         //print("success");in here you can handle anything after successfull payments
+        registerBuyItem();
+        //sendEmail();
         showDialog(
           context: context, 
           builder: (_) => const AlertDialog(

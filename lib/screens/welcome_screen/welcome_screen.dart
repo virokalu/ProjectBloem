@@ -38,21 +38,27 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         color: Colors.white,
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(30, 20, 30, 6),
-              child: SizedBox(
+              SizedBox(
                 width: 350.0,
-                child: Text(
-                  'Get The Best Floriculture Products',
-                  textAlign:  TextAlign.left,
-                  style:  TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
-                  ),
-
+                child: Row(
+                  children: [
+                    const Text(
+                      'Get The Best Floriculture Products',
+                      textAlign:  TextAlign.left,
+                      style: TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/adminloginpage');
+                      }, 
+                      icon: Icon(Icons.login),
+                    )
+                  ],
                 ),
               ),
-            ),
             const Padding(
               padding: EdgeInsets.fromLTRB(30, 1, 30, 6),
               child: SizedBox(

@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_bloem/components/product_cards.dart';
@@ -7,16 +9,100 @@ import 'package:project_bloem/models/item_filter.dart';
 import 'package:project_bloem/models/pagination.dart';
 import 'package:project_bloem/provider.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../components/color_components.dart';
 import '../../components/size.dart';
+import '../../config.dart';
 import 'home_components/home_components.dart';
 
-
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  bool _isLoading=true;
+  List<Item> activeItems = [];
+  late SharedPreferences preference;
+  String district=" ";
+  String? token=" ";
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  Future init() async {
+    preference = await SharedPreferences.getInstance();
+    String? token = preference.getString('token');
+    if(token!=" "){
+      String? district = preference.getString('district');
+      setState(() => this.district = district!);
+      setState(() => this.token = token);
+
+      _fetchNews();
+    }else{
+      setState(() {
+        _isLoading=false;
+      });
+    }
+  }
+
+  Future<void> _fetchNews() async {
+    Map<String, String> requestHeader = {'Content-Type': 'application/json'};
+    Map<String, String> queryString = {
+      'district': district,
+      'activestatus': "true"
+    };
+    var url = Uri.http(apiURL, itemGet, queryString);
+    //print(url.toString());
+    var response = await http.get(url, headers: requestHeader);
+
+    // print(response.body);
+    // if (response.statusCode == 200) {
+    //   List<dynamic> activeItemList = jsonDecode(response.body)['data'];
+    //   //print('news?: $newsList');
+    //   List<Map<String, String>> newActiveItems =[];
+    //   for (var activeItemMap in activeItemList) {
+    //     Map<String, String> newsItem = {
+    //       'id': activeItemMap['id'],
+    //       'commonname': activeItemMap['commonname'],
+    //       'imgone': activeItemMap['imgone'],
+    //       //'date': activeItemMap['date'],
+    //     };
+    //     newActiveItems.add(newsItem);
+    //   }
+    //   setState(() {
+    //     activeItems = newActiveItems;
+    //     //_isLoading = false;
+    //   });
+    //
+    // } else {
+    //   print("Error");
+    //   // if (kDebugMode) {
+    //   //   print('Failed to fetch news: ${response.statusCode}');
+    //   // }
+    // }
+
+    var data = jsonDecode(response.body);
+    //print(data);
+    if (data["status"]) {
+      //print(data["data"]);
+      activeItems.addAll(itemsFromJson(data["data"]));
+      setState(() => _isLoading = false);
+      //print(activeItems.toString());
+    } else {
+      return;
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+
     // List<Item> list = List<Item>.empty(growable: true);
     // list.add(Item(
     //   username: "virokalu",
@@ -32,7 +118,7 @@ class HomeScreen extends ConsumerWidget {
     //   imgthree: "https://firebasestorage.googleapis.com/v0/b/projectbloem-1e1c5.appspot.com/o/itemImg%2Fvirokalu%2Fvirokalu2023-04-10%2021%3A09%3A32.358213scaled_Screenshot_20230407-213102.png?alt=media&token=45e03852-b2b4-417b-b048-3907395ff699",
     //
     // ));
-   // Item model =
+    // Item model =
     SizeConfig().init(context);
     return Scaffold(
 
@@ -44,10 +130,10 @@ class HomeScreen extends ConsumerWidget {
               const IconRow(),
               SizedBox(height: getProportionateScreenHeight(1)),
               const Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-                  child: Text("Hello, What do you want today?",
-                    style: TextStyle(fontSize: 20),
-                  ),
+                padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                child: Text("Hello, What do you want today?",
+                  style: TextStyle(fontSize: 20),
+                ),
 
               ),
               SizedBox(height: getProportionateScreenHeight(20)),
@@ -55,20 +141,20 @@ class HomeScreen extends ConsumerWidget {
               SizedBox(height: getProportionateScreenHeight(20)),
 
 
-          Column(
-            //mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding:
-                EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-                //################################################see more function###################################
-                child: SectionTitle(title: "Recommended Listing", press: () {}),
+              Column(
+                //mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                    //################################################see more function###################################
+                    child: SectionTitle(title: "Recommended Listing", press: () {}),
+                  ),
+                  SizedBox(height: getProportionateScreenWidth(5)),
+                  //#####################################################card here##############################################
+                  _itemsList(ref),
+                ],
               ),
-              SizedBox(height: getProportionateScreenWidth(5)),
-              //#####################################################card here##############################################
-              _itemsList(ref),
-            ],
-          ),
               SizedBox(height: getProportionateScreenHeight(20)),
               Column(
                 children: [
@@ -81,83 +167,133 @@ class HomeScreen extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                    Text(
-                      "Categories Here",
-                      style: TextStyle(
-                        fontSize: getProportionateScreenWidth(22),
-                        color: Colors.black,
-                      ),
+                        Text(
+                          "Categories Here",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenWidth(22),
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
-                    ],
-                  ),
                   ),
                   SizedBox(height: getProportionateScreenWidth(5)),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        //#####################################card start Here##########################################
+                    child: SizedBox(
+                      height: 200,
+                      child: Row(
+                        children: [
+                          //#####################################card start Here##########################################
 
 
-                        CategoryCardBox(
-                          colorName: HexColor.fromHex('#FFFAEB'),
-                          img: "images/cutFlowers.jpg",
-                          text: "Cut Flowers",
+                          CategoryCardBox(
+                            colorName: HexColor.fromHex('#FFFAEB'),
+                            img: "images/cutFlowers.jpg",
+                            text: "Cut Flowers",
 
 
-                        ),
-                        CategoryCardBox(
+                          ),
+                          CategoryCardBox(
                             colorName: HexColor.fromHex('#FEF0F0'),
-                          img: "images/foliage.jpg",
-                          text: "Foliage Plants",
-                        ),
-                        CategoryCardBox(
-                          colorName: HexColor.fromHex('#F1EFF6'),
-                          img: "images/potPlants.jpg",
-                          text: "Pot Plants",
-                        ),
-                        CategoryCardBox(
-                          colorName: HexColor.fromHex('#F1EFF6'),
-                          img: "images/lanscapingPlants.jpg",
-                          text: "Landscaping Plants",
-                        ),
-                        CategoryCardBox(
-                          colorName: HexColor.fromHex('#F1EFF6'),
-                          img: "images/beddingPlants.jpg",
-                          text: "Bedded Plants",
-                        ),
-                        CategoryCardBox(
-                          colorName: HexColor.fromHex('#F1EFF6'),
-                          img: "images/propagatoryPlant.jpg",
-                          text: "Propagatory Plants",
-                        ),
-                        CategoryCardBox(
-                          colorName: HexColor.fromHex('#F1EFF6'),
-                          img: "images/other.jpg",
-                          text: "Other",
-                        ),
+                            img: "images/foliage.jpg",
+                            text: "Foliage Plants",
+                          ),
+                          CategoryCardBox(
+                            colorName: HexColor.fromHex('#F1EFF6'),
+                            img: "images/potPlants.jpg",
+                            text: "Pot Plants",
+                          ),
+                          CategoryCardBox(
+                            colorName: HexColor.fromHex('#F1EFF6'),
+                            img: "images/lanscapingPlants.jpg",
+                            text: "Landscaping Plants",
+                          ),
+                          CategoryCardBox(
+                            colorName: HexColor.fromHex('#F1EFF6'),
+                            img: "images/beddingPlants.jpg",
+                            text: "Bedded Plants",
+                          ),
+                          CategoryCardBox(
+                            colorName: HexColor.fromHex('#F1EFF6'),
+                            img: "images/propagatoryPlant.jpg",
+                            text: "Propagatory Plants",
+                          ),
+                          CategoryCardBox(
+                            colorName: HexColor.fromHex('#F1EFF6'),
+                            img: "images/other.jpg",
+                            text: "Other",
+                          ),
 
-                        // ...List.generate(
-                        //   demoProducts.length,
-                        //       (index) {
-                        //     if (demoProducts[index].isPopular)
-                        //       return ProductCard(product: demoProducts[index]);
-                        //
-                        //     return SizedBox
-                        //         .shrink(); // here by default width and height is 0
-                        //   },
-                        // ),
-                        SizedBox(width: getProportionateScreenWidth(20)),
-                      ],
+                          // ...List.generate(
+                          //   demoProducts.length,
+                          //       (index) {
+                          //     if (demoProducts[index].isPopular)
+                          //       return ProductCard(product: demoProducts[index]);
+                          //
+                          //     return SizedBox
+                          //         .shrink(); // here by default width and height is 0
+                          //   },
+                          // ),
+                          SizedBox(width: getProportionateScreenWidth(20)),
+                        ],
+                      ),
                     ),
                   )
                 ],
               ),
+              SizedBox(height: getProportionateScreenHeight(20)),
+
+              Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                //################################################see more function###################################
+                child: SectionTitle(title: "Location Related Listing", press: () {}),
+              ),
+              SizedBox(height: getProportionateScreenWidth(5)),
+
+                token!=" " ? _buildDistrictList(activeItems) : const Padding(
+                  padding: EdgeInsets.all(30.0),
+                  child: Text("LogIn to Display District Related Items...."),
+                ),
             ],
+
           ),
         ),
       ),
     );
+  }
+  Widget _buildDistrictList(List<Item> items) {
+    if(_isLoading){
+      return const Center(child: LinearProgressIndicator());
+    }else{
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            //#####################################card start here#####################################################
+            if (items.isEmpty)
+              const Center(child: Padding(
+                padding: EdgeInsets.all(30.0),
+                child: Text('No item to Display in your District......'),
+              )),
+            ...List.generate(
+              items.length,
+                  (index) {
+                var data = items[index];
+                return SizedBox(
+                  height: 275,
+                  child: CardBox(model: data),
+                );
+              },
+            ),
+            SizedBox(width: getProportionateScreenWidth(20)),
+
+
+          ],
+        ),
+      );
+    }
   }
   Widget _itemsList(WidgetRef ref){
     final items = ref.watch(
@@ -196,11 +332,11 @@ class HomeScreen extends ConsumerWidget {
           ...List.generate(
             items.length,
                 (index) {
-                  var data = items[index];
-                  return SizedBox(
-                    height: 275,
-                    child: CardBox(model: data),
-                  );
+              var data = items[index];
+              return SizedBox(
+                height: 275,
+                child: CardBox(model: data),
+              );
 
             },
           ),
@@ -228,3 +364,4 @@ class HomeScreen extends ConsumerWidget {
     // );
   }
 }
+
