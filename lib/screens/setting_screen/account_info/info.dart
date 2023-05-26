@@ -138,6 +138,7 @@ class _UpdateDetailsState extends State<UpdateDetails> {
 
         btnOkColor: HexColor.fromHex('#4CD964'),
       ).show();
+      return completer.future;
     } else if (!jsonResponse['status']) {
       var myEmail = "email";
       var myUser = "user";
@@ -212,10 +213,11 @@ class _UpdateDetailsState extends State<UpdateDetails> {
                 SizedBox(
                   height: height / 10,
                   child: TextFormField(
+                    enabled: false,
                     controller: nameController,
                     decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.person),
-                        labelText: "Preferred Username",
+                        labelText: "Username",
                         filled: true,
                         fillColor: HexColor.fromHex('#F3F1F1'),
                         border: OutlineInputBorder(

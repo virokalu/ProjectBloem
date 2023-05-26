@@ -48,12 +48,12 @@ class _ForAdminState extends State<ForAdmin> {
             Expanded(
               child: ListView(
                 children: [
-                  RevCard(sellername: "manoj", amount: "20", skey: "2000000000000000000000000000000000000000000000000000", id: "3"),
-                  RevCard(sellername: "manoj", amount: "20", skey: "20000000000000000000", id: "3"),
-                  RevCard(sellername: "manoj", amount: "20", skey: "20000000000000000000", id: "3"),
-                  RevCard(sellername: "manoj", amount: "20", skey: "2000000000000000000000000000000000000000000000000000", id: "3"),
-                  RevCard(sellername: "manoj", amount: "20", skey: "20000000000000000000", id: "3"),
-                  RevCard(sellername: "manoj", amount: "20", skey: "20000000000000000000", id: "3"),
+                  RevCard(sellername: "Hashan", amount: "200", skey: "###################################################", id: "3024"),
+                  RevCard(sellername: "Janushan", amount: "2000", skey: "###################################################", id: "3543"),
+                  RevCard(sellername: "Manoj", amount: "120", skey: "###################################################", id: "3369"),
+                  RevCard(sellername: "Kavinda", amount: "500", skey: "###################################################", id: "3254"),
+                  RevCard(sellername: "Asanka", amount: "280", skey: "###################################################", id: "2563"),
+                  RevCard(sellername: "Viro", amount: "150", skey: "###################################################", id: "3254"),
                 ],
               ),
             ),
@@ -65,7 +65,7 @@ class _ForAdminState extends State<ForAdmin> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'App total fee: 3000.00',
+              'App total fee: 250.00',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16.0,

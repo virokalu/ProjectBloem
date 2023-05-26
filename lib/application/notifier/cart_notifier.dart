@@ -34,7 +34,7 @@ class CartNotifier extends StateNotifier<CartState>{
 
     var updatedItems = state.cartModel!;
 
-    updatedItems.items.remove(isCartItemExist);
+    var remove = updatedItems.items.remove(isCartItemExist);
     state=state.copyWith(cartModel: updatedItems);
   }
   // Future<void> removeCartItem(id, qty, username) async {

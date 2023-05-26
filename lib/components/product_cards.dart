@@ -494,7 +494,7 @@ class ActiveCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AspectRatio(
-                aspectRatio: 0.75,
+                aspectRatio: 0.65,
                 child: Container(
                   margin: const EdgeInsets.only(left:5,right:5,top:0),
                   padding: const EdgeInsets.only(left: 0,right: 0),

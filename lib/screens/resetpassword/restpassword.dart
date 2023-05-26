@@ -272,11 +272,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                               //print("success");
                               //emailCheck(context);
                               if(otpNumber==otpController.text){
-                                preference = await SharedPreferences.getInstance();
-                                preference.setString('username', username!);
-                                otpController.clear();
-                                otpNumber=null;
-                                Navigator.pushNamed(context, '/resetpassword');
+                                // preference = await SharedPreferences.getInstance();
+                                // preference.setString('username', username!);
+                                // otpController.clear();
+                                // otpNumber=null;
+                                Navigator.pushNamed(context, '/updatepassword');
 
                               }
                             }

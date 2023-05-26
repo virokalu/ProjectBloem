@@ -64,7 +64,7 @@ class _ChatListState extends State<ChatList> {
       "currentpage" : "I'am using Bloam app!",
       "user1" : user,
       "user2" : receiverController.text,
-      "img" : "images/camera.jpg",
+      "img" : "images/foliage.jpg",
       "id" : "5",
     };
     //var response = await http.post(Uri.parse(insertchats),

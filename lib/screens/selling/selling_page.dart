@@ -113,11 +113,11 @@ class _SellingPageState extends State<SellingPage> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    const SellingCard(),
-                    const SellingCard(),
-                    const SellingCard(),
-                    const SellingCard(),
-
+                    Text("Need to Buy a Product from you to Display......"),
+                    // const SellingCard(),
+                    // const SellingCard(),
+                    // const SellingCard(),
+                    // const SellingCard(),
                     SizedBox(width: getProportionateScreenWidth(20)),
                   ],
                 ),
@@ -240,7 +240,7 @@ class _SellingPageState extends State<SellingPage> {
                   (index) {
                 var data = items[index];
                 return SizedBox(
-                  height: 170,
+                  height: getProportionateScreenHeight(200),
                   child: ActiveCard(model: data),
                 );
               },
