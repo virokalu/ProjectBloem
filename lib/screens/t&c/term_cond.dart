@@ -33,7 +33,7 @@ class _TermAndConditionState extends State<TermAndCondition> {
               height: 16.0,
             ),
             Text(
-              'Welcome to our m-commerce app. By accessing and using this app, you agree to be bound by the following terms and conditions. Please read them carefully',
+              'Welcome to our bloem app. By accessing and using this app, you agree to be bound by the following terms and conditions. Please read them carefully',
               textAlign: TextAlign.justify,
               style: TextStyle(fontSize: 15),
             ),
@@ -97,16 +97,26 @@ class _TermAndConditionState extends State<TermAndCondition> {
                 '- Payments will be processed according to the selected method and any applicable fees.',
                 style: TextStyle(fontSize: 12)),
             SizedBox(height: 16.0),
-            Text(
-              '5. Transaction Fees:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            Container(
+              padding: EdgeInsets.all(width / 50),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.red, width: 3)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '5. Transaction Fees:',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                  ),
+                  Text(
+                      '- For the first \$5000 received by the seller, no transaction fees will be charged.',
+                      style: TextStyle(fontSize: 12)),
+                  Text(
+                      '- For any amount received by the seller above \$5000, a 5% transaction fee will be deducted.',
+                      style: TextStyle(fontSize: 12)),
+                ],
+              ),
             ),
-            Text(
-                '- For the first \$5000 received by the seller, no transaction fees will be charged.',
-                style: TextStyle(fontSize: 12)),
-            Text(
-                '- For any amount received by the seller above \$5000, a 5% transaction fee will be deducted.',
-                style: TextStyle(fontSize: 12)),
             SizedBox(height: 16.0),
             Text(
               '6. Product Listings and Descriptions:',
