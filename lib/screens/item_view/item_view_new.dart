@@ -54,52 +54,46 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
 
   bool showText = true;
 
-
   //////////////////send email to seller ////////////////////////
- 
 
+  void sendEmail() async {
+    String username = 'bloemapp1@gmail.com'; // Replace with your email
+    String password = 'bloem1234'; // Replace with your password
 
+    final smtpServer = gmail(username, password);
 
-void sendEmail() async {
-  String username = 'bloemapp1@gmail.com'; // Replace with your email
-  String password = 'bloem1234'; // Replace with your password
+    // Create the email message
+    final message = Message()
+      ..from = 'bloemapp1@gmail.com' // Replace with your email
+      ..recipients
+          .add('bloemappsecond@gmail.com') // Replace with the seller's email
+      ..subject = 'Your item has been sold'
+      ..text = 'Congratulations! Your item has been sold.';
 
-  final smtpServer = gmail(username, password);
-
-  // Create the email message
-  final message = Message()
-    ..from = 'bloemapp1@gmail.com' // Replace with your email
-    ..recipients.add('bloemappsecond@gmail.com') // Replace with the seller's email
-    ..subject = 'Your item has been sold'
-    ..text = 'Congratulations! Your item has been sold.';
-
-  try {
-    await send(message, smtpServer);
-    print('Message sent successfully');
-  } catch (e) {
-    print('Error occurred while sending email: $e');
+    try {
+      await send(message, smtpServer);
+      print('Message sent successfully');
+    } catch (e) {
+      print('Error occurred while sending email: $e');
+    }
   }
-}
-
 
   ///////////////////////////////////////////////////////////////
 
-
-  Future init() async{
+  Future init() async {
     preference = await SharedPreferences.getInstance();
     //String? fullname=preference.getString('fullname');
-    String? token=preference.getString('token');
+    String? token = preference.getString('token');
     //sellerStates = preference.getBool('sellerStates');
     //print(token);
 
-    if(token==null){
+    if (token == null) {
       //print(token);
       // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, '/login');
     }
     //setState(() =>this.sellerStates=sellerStates!);
     //setState(() =>this.fullname=fullname!);
-
   }
 
   void toggleTextAndIcon() {
@@ -113,7 +107,6 @@ void sendEmail() async {
       });
     });
   }
-
 
   Future<void> fetchItemData() async {
     // ignore: prefer_interpolation_to_compose_strings
@@ -147,9 +140,9 @@ void sendEmail() async {
       "town": cityController.text,
       "postalCode": postalCodeController.text,
       "sellername": data["data"]["username"],
-      "buyername" : username,
+      "buyername": username,
       "itemid": widget.id,
-      "itemprice" : data["data"]["price"],
+      "itemprice": data["data"]["price"],
     };
 
     final url = Uri.parse(regBuyItem);
@@ -228,18 +221,16 @@ void sendEmail() async {
     // ignore: no_leading_underscores_for_local_identifiers
     final PageController _pageController = PageController(initialPage: 0);
 
-
     return SafeArea(
         child: Scaffold(
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : Container(
               margin: EdgeInsets.all(width / 30),
-              child: ListView(
-                  children: [
-                    ItemViewComponents(
-                      text: " ",
-                      category: data["data"]["category"],
+              child: ListView(children: [
+                ItemViewComponents(
+                  text: " ",
+                  category: data["data"]["category"],
                 ),
                 // SizedBox(
                 //   height: getProportionateScreenHeight(),
@@ -311,41 +302,42 @@ void sendEmail() async {
                 SizedBox(
                   height: getProportionateScreenHeight(10),
                 ),
-                    SizedBox(
-                      width: width,
-                      child:Text(
-                        data["data"]["commonname"],
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: getProportionateScreenWidth(20),
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                SizedBox(
+                  width: width,
+                  child: Text(
+                    data["data"]["commonname"],
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: getProportionateScreenWidth(20),
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
                     ),
-                    SizedBox(
-                      width: width,
-                      child: Text(
-                        data["data"]["sciname"].isNotEmpty? data["data"]["sciname"] : '',
-                        style: TextStyle(
-                          fontSize: getProportionateScreenWidth(11),
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                  ),
+                ),
+                SizedBox(
+                  width: width,
+                  child: Text(
+                    data["data"]["sciname"].isNotEmpty
+                        ? data["data"]["sciname"]
+                        : '',
+                    style: TextStyle(
+                      fontSize: getProportionateScreenWidth(11),
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w600,
                     ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    SizedBox(
-                      width: width,
-                      child: const Text(
-                        "Description",
-                        textAlign: TextAlign.right,
-
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                SizedBox(
+                  width: width,
+                  child: const Text(
+                    "Description",
+                    textAlign: TextAlign.right,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
                 // Expanded(
                 //   flex: 3,
                 //   child: Container(
@@ -368,32 +360,31 @@ void sendEmail() async {
                 //     ),
                 //   ),
                 // ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.grey,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      constraints: BoxConstraints(
-                        minWidth: width,
-                        maxWidth: width,
-                        minHeight: 170,
-                        maxHeight: 270,
-                      ),
-                      child: LimitedBox(
-                        maxHeight: 4 * 20.0, // assuming font size is 20
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            data["data"]["description"],
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                        ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  constraints: BoxConstraints(
+                    minWidth: width,
+                    maxWidth: width,
+                    minHeight: 170,
+                    maxHeight: 270,
+                  ),
+                  child: LimitedBox(
+                    maxHeight: 4 * 20.0, // assuming font size is 20
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        data["data"]["description"],
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
-
+                  ),
+                ),
 
                 const SizedBox(
                   height: 10,
@@ -433,10 +424,9 @@ void sendEmail() async {
                         stepValue: 1,
                         iconSize: 22,
                         value: counter,
-                        onChanged: (value){
+                        onChanged: (value) {
                           counter = value["qty"];
-                        }
-                    )
+                        })
                   ],
                 ),
                 const SizedBox(
@@ -497,67 +487,73 @@ void sendEmail() async {
                 //   ),
                 // ),
 
-                    TextButton(
-                      style: greenButtonStyle,
-                      //############################Save the view##########################################
-                      onPressed: () {
-                        sendEmail();
-                        openDialog();
-                      },
-                      child: const Text(
-                        "Buy Now",
-                        style: TextStyle(
-                          color: Colors.white,fontSize: 16.0,
-                          fontFamily: 'Poppins',),
-                      ),
+                TextButton(
+                  style: greenButtonStyle,
+                  //############################Save the view##########################################
+                  onPressed: () {
+                    sendEmail();
+                    openDialog();
+                  },
+                  child: const Text(
+                    "Buy Now",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontFamily: 'Poppins',
                     ),
+                  ),
+                ),
 
-                    const SizedBox(
-                      height: 10,
-                    ),
+                const SizedBox(
+                  height: 10,
+                ),
 
-                    TextButton(
-                      style: greenButtonBorderStyle,
-                      //############################Add Basket##########################################
-                      onPressed: () {
-
-                        final cartViewModel = ref.read(cartItemsProvider.notifier);
-                        cartViewModel.addCartItem(data["data"]["id"], counter, username);
-                        toggleTextAndIcon();
-                      },
-                      child: showText ? Text(
-                        "Add Basket",
-                        style: TextStyle(
-                          color: HexColor.fromHex('#4CD964'), fontSize: 16.0,
-                          fontFamily: 'Poppins',),
-                      ): Icon(
+                TextButton(
+                  style: greenButtonBorderStyle,
+                  //############################Add Basket##########################################
+                  onPressed: () {
+                    final cartViewModel = ref.read(cartItemsProvider.notifier);
+                    cartViewModel.addCartItem(
+                        data["data"]["id"], counter, username);
+                    toggleTextAndIcon();
+                  },
+                  child: showText
+                      ? Text(
+                          "Add Basket",
+                          style: TextStyle(
+                            color: HexColor.fromHex('#4CD964'),
+                            fontSize: 16.0,
+                            fontFamily: 'Poppins',
+                          ),
+                        )
+                      : Icon(
                           Icons.check_circle,
                           color: HexColor.fromHex('#4CD964'),
                           size: 30,
+                        ),
+                ),
 
-                      ),
+                const SizedBox(
+                  height: 10,
+                ),
+
+                TextButton(
+                  style: data["data"]["chatactivate"]
+                      ? greenButtonBorderStyle
+                      : greyButtonStyle,
+                  //############################Chat#######################################
+                  onPressed: data["data"]["chatactivate"] ? () {} : null,
+                  child: Text(
+                    "Chat",
+                    style: TextStyle(
+                      color: data["data"]["chatactivate"]
+                          ? HexColor.fromHex('#4CD964')
+                          : Colors.grey,
+                      fontSize: 16.0,
+                      fontFamily: 'Poppins',
                     ),
-
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-
-                    TextButton(
-                      style: data["data"]["chatactivate"] ? greenButtonBorderStyle
-                          : greyButtonStyle,
-                      //############################Chat#######################################
-                      onPressed: data["data"]["chatactivate"]
-                          ? () {}
-                          : null,
-                      child: Text(
-                        "Chat",
-                        style: TextStyle(
-                          color: data["data"]["chatactivate"]? HexColor.fromHex('#4CD964') : Colors.grey,
-                          fontSize: 16.0,
-                          fontFamily: 'Poppins',),
-                      ),
-                    ),
+                  ),
+                ),
               ]),
             ),
     ));
@@ -623,143 +619,140 @@ void sendEmail() async {
   //     );
 
   Future openDialog() => showDialog(
-    builder: (context) => AlertDialog(
-      title: const Text("Enter your location for delivery"),
-      content: SizedBox(
-        height: MediaQuery.of(context).size.height / 4,
-        child: Column(
-          children: [
-            TextFormField(
-              controller: streetController,
-              decoration: const InputDecoration(hintText: "Street Name"),
+        builder: (context) => AlertDialog(
+          title: const Text("Enter your location for delivery"),
+          content: SizedBox(
+            height: MediaQuery.of(context).size.height / 4,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: streetController,
+                  decoration: const InputDecoration(hintText: "Street Name"),
+                ),
+                TextFormField(
+                  controller: cityController,
+                  decoration: const InputDecoration(hintText: "Town Name"),
+                ),
+                TextFormField(
+                  controller: postalCodeController,
+                  decoration: const InputDecoration(hintText: "Postal Code"),
+                ),
+              ],
             ),
-            TextFormField(
-              controller: cityController,
-              decoration: const InputDecoration(hintText: "Town Name"),
-            ),
-            TextFormField(
-              controller: postalCodeController,
-              decoration: const InputDecoration(hintText: "Postal Code"),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  // registerBuyItem();
+                  makePayment();
+                });
+                // streetController.clear();
+                // cityController.clear();
+                // postalCodeController.clear();
+                Navigator.of(context).pop();
+              },
+              child: const Text("Next"),
             ),
           ],
         ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            setState(() {
-              // registerBuyItem();
-              makePayment();
-            });
-            // streetController.clear();
-            // cityController.clear();
-            // postalCodeController.clear();
-            Navigator.of(context).pop();
-          },
-          child: const Text("Next"),
-        ),
-      ],
-    ),
-    context: context,
-  );
-
+        context: context,
+      );
 
   Future<void> makePayment() async {
-    try{
-      paymentIntent = await createPaymentIntent((data["data"]["price"]*counter).toString(),'USD');
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: paymentIntent['client_secret'],
-          // applePay: const PaymentSheetApplePay(merchantCountryCode: '+94'),
-          // googlePay: const PaymentSheetGooglePay(testEnv: true,currencyCode: 'USD',merchantCountryCode: '+94'),
-          style: ThemeMode.dark,
-          merchantDisplayName: 'manoj')).then((value){
-        });
+    try {
+      paymentIntent = await createPaymentIntent(
+          (data["data"]["price"] * counter).toString(), 'USD');
+      await Stripe.instance
+          .initPaymentSheet(
+              paymentSheetParameters: SetupPaymentSheetParameters(
+                  paymentIntentClientSecret: paymentIntent['client_secret'],
+                  // applePay: const PaymentSheetApplePay(merchantCountryCode: '+94'),
+                  // googlePay: const PaymentSheetGooglePay(testEnv: true,currencyCode: 'USD',merchantCountryCode: '+94'),
+                  style: ThemeMode.dark,
+                  merchantDisplayName: 'manoj'))
+          .then((value) {});
 
-        displayPaymentSheet();
-    }
-    catch(e){
+      displayPaymentSheet();
+    } catch (e) {
       // ignore: avoid_print
       print(e);
     }
   }
 
   displayPaymentSheet() async {
-    try{
-      await Stripe.instance.presentPaymentSheet(
-      ).then((value) {
+    try {
+      await Stripe.instance.presentPaymentSheet().then((value) {
         //print("success");in here you can handle anything after successfull payments
         registerBuyItem();
         //sendEmail();
         showDialog(
-          context: context, 
-          builder: (_) => const AlertDialog(
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.check_circle,color: Colors.green,),
-                    Text("payment Successfully"),
-                  ],
-                ),
-              ],
-            ),
-          )
-
-        );
+            context: context,
+            builder: (_) => const AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.check_circle,
+                            color: Colors.green,
+                          ),
+                          Text("payment Successfully"),
+                        ],
+                      ),
+                    ],
+                  ),
+                ));
       }).onError((error, stackTrace) {
-          // ignore: avoid_print
-          print("error=>>>$error $stackTrace");
-      } );
-    } on StripeException catch(e) {
+        // ignore: avoid_print
+        print("error=>>>$error $stackTrace");
+      });
+    } on StripeException catch (e) {
       // ignore: avoid_print
       print(e);
 
       showDialog(
-        context: context, 
-        builder: (_) => const AlertDialog(
-          content: Text("concelled"),
-        ));
-    }catch(e){
+          context: context,
+          builder: (_) => const AlertDialog(
+                content: Text("concelled"),
+              ));
+    } catch (e) {
       // ignore: avoid_print
       print(e);
     }
-    
   }
 
-  createPaymentIntent(String amount,String currency) async {
-    try{
-      Map<String,dynamic> body = {
-        'amount' : calculateAmount(amount),
-        'currency' : currency,
-        'payment_method_types[]' : 'card',
+  createPaymentIntent(String amount, String currency) async {
+    try {
+      Map<String, dynamic> body = {
+        'amount': calculateAmount(amount),
+        'currency': currency,
+        'payment_method_types[]': 'card',
       };
-  
+
       var response = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
         headers: {
-          'Authorization' : 'Bearer sk_test_51MlHd3KwlHMvGTglr20L5y1pZ4gFuriGRzxf6al9G0LIHQzAQyRX06PcLp54SG2TcAGtzku5ac6azSHgeEZB5TkV002PvcFuq0',
-          'Contert-Type' : 'application/x-www-form-urlencoded'
+          'Authorization':
+              'Bearer sk_test_51MlHd3KwlHMvGTglr20L5y1pZ4gFuriGRzxf6al9G0LIHQzAQyRX06PcLp54SG2TcAGtzku5ac6azSHgeEZB5TkV002PvcFuq0',
+          'Contert-Type': 'application/x-www-form-urlencoded'
         },
         body: body,
       );
       // ignore: avoid_print
       print('payment Intent body->>>${response.body.toString()}');
       return jsonDecode(response.body);
-    }
-    catch(e){
+    } catch (e) {
       // ignore: avoid_print
       print(e);
     }
   }
 
   calculateAmount(String amount) {
-    final calculateAmount = (int.parse(amount))*100 ;
+    final calculateAmount = (int.parse(amount)) * 100;
     return calculateAmount.toString();
   }
-
-  
 
 //button click action for buy now button
   // Widget bottomesheet() {
