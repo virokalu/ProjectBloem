@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 //import 'dart:html';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -59,11 +60,34 @@ class _RegisterPageState extends State<RegisterPage> {
   final conformPassController = TextEditingController();
   final fulNameController = TextEditingController();
   final districtController = TextEditingController();
+
+  final otpController = TextEditingController();
+  final _formField2 = GlobalKey<FormState>();
+
+
+
+
   String? district;
   bool passToggle = true;
 
-  bool emailVerified = false;
+  bool emailSent = false;
   bool wrongOTP = false;
+  bool emailVerified = false;
+  bool display = false;
+
+  bool noEmail = false;
+
+  Random random = Random();
+  String? otpNumber;
+
+
+  @override
+  void initState(){
+    super.initState();
+    setState(() {
+      emailVerified=false;
+    });
+  }
 
 
   void sendOTP(String sendEmail, String otp) async {
@@ -123,8 +147,8 @@ class _RegisterPageState extends State<RegisterPage> {
 </head>
 <body>
   <div class="container">
-    <h1>OTP Verification</h1>
-    <p>Please use the following OTP to verify your account:</p>
+    <h1>Email Verification</h1>
+    <p>Please use the following OTP to verify your email:</p>
     <div class="otp green">
       <center><p class="green">$otp</p><center>
       
@@ -138,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
     try {
       await send(message, smtpServer);
       setState(() {
-        emailVerified=true;
+        emailSent=true;
       });
     } catch (e) {
       print('Failed to send OTP: $e');
@@ -205,6 +229,12 @@ class _RegisterPageState extends State<RegisterPage> {
           desc: "${emailController.text} is already in use. Please try another email address or Login",
           btnCancelOnPress: (){
             emailController.clear();
+            setState(() {
+              emailVerified=false;
+              noEmail=false;
+              wrongOTP=false;
+              display=false;
+            });
             completer.complete();
 
           },
@@ -214,6 +244,7 @@ class _RegisterPageState extends State<RegisterPage> {
             //print("Inside Login");
             completer.complete();
           },
+
           btnOkText: "Login",
           btnCancelText: "OK",
           btnOkColor: HexColor.fromHex('#4CD964'),
@@ -315,9 +346,23 @@ class _RegisterPageState extends State<RegisterPage> {
           
                   ),
                 ),
+
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(23.0,0,23.0,0),
+                  child: Text(
+                    "Enter the email to create your account and we'll send you an email with OTP",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
           
                 SizedBox(
-                  height: height/10,
+                  height: height/12,
                   child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     controller: emailController,
@@ -346,7 +391,148 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
           
                   ),
+
                 ),
+                TextButton(
+                  style:  greenButtonStyle,
+                  //############################navigate to registration form##########################################
+                  onPressed: () {
+                    // Generate a random integer between 0 and 9
+                    if(emailController.text.isNotEmpty){
+                      int randomNumber = random.nextInt(9000)+1000;
+                      otpNumber = randomNumber.toString();
+                      sendOTP(emailController.text, otpNumber!);
+                      setState(() {
+                        emailSent=true;
+                        noEmail=false;
+                      });
+
+                    }else{
+                      setState(() {
+                        noEmail=true;
+                      });
+                    }
+
+                  },
+                  child: const Text(
+                    "Send OTP",
+                    style: TextStyle(
+                      color: Colors.white, fontSize: 16.0,
+                      fontFamily: 'Poppins',),
+                  ),
+                ),
+                Center(child: noEmail ? const Text(
+                  "Enter a Email to Verify",
+                  style: TextStyle(
+                    color: Colors.red,
+                    //fontSize: 20.0,
+                  ),
+                ) : const Text("")),
+
+                //
+
+                Row(
+                  children: [
+                    Form(
+                      key: _formField2,
+                      child: SizedBox(
+                        width: width/2.1,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.key),
+                              labelText: "Enter OTP",
+                              filled: true,
+                              fillColor: Colors.white38,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              )
+                          ),
+                          controller: otpController,
+                          validator: (value){
+                            if(value!.isEmpty){
+                              return "";
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: width/100,),
+                    SizedBox(
+                      width: width/2.3,
+                      child: TextButton(
+                        style: emailSent ? greenButtonStyle
+                            : greyButtonStyle,
+                        //################################################Preview#######################################
+                        onPressed: () async {
+
+                          if(emailSent){
+                            if(_formField2.currentState!.validate()){
+                              //print("success");
+                              //emailCheck(context);
+                              if(otpNumber==otpController.text){
+                                // preference = await SharedPreferences.getInstance();
+                                // preference.setString('username', username!);
+                                // otpController.clear();
+                                // otpNumber=null;
+                                //Navigator.pushNamed(context, '/updatepassword');
+                                setState(() {
+                                  emailVerified=true;
+                                  wrongOTP=false;
+                                  //noEmail=false;
+                                });
+
+                              }else{
+                                setState(() {
+                                  wrongOTP=true;
+                                });
+                              }
+                            }
+                          }
+                          //verify();
+
+                          // var inputOTP = otpController.text; //which is entered by client, after receive mail
+                          // await myAuth.verifyOTP(
+                          //     otp: inputOTP
+                          // );
+                        },
+                        child: const Text(
+                          "Verify Email",
+                          style: TextStyle(color:Colors.white, fontSize: 16.0,
+                            fontFamily: 'Poppins',),
+                        ),
+                      ),
+                    ),
+
+
+                  ],
+
+                ),
+                Column(
+                  children: [
+                    const SizedBox(height: 2),
+                    Center(child: wrongOTP ? const Text(
+                      "Wrong OTP Number!",
+                      style: TextStyle(
+                        color: Colors.red,
+                        //fontSize: 20.0,
+                      ),
+                    ) : const Text("")),
+                  ],
+                ) ,
+                Column(
+                  children: [
+                    const SizedBox(height: 2),
+                    Center(child: emailVerified ? const Text(
+                      "Email Verified!",
+                      style: TextStyle(
+                        color: Colors.green,
+                        //fontSize: 20.0,
+                      ),
+                    ) : const Text("")),
+                  ],
+                ) ,
+                const SizedBox(height:20,),
 
                 SizedBox(
                   height: height/10,
@@ -448,7 +634,21 @@ class _RegisterPageState extends State<RegisterPage> {
                   //################################################Create Account#######################################
                   onPressed: () {
                     if(_formField.currentState!.validate()){
+                      if(emailVerified){
+                        registerUser(context);
+                      }else{
+                        display=true;
+                      }
                       //print("success");
+
+                      //print('Random number: $randomNumber');
+                      // showModalBottomSheet(
+                      //   context: context,
+                      //   builder: (BuildContext context) {
+                      //     return Container();
+                      //
+                      //   },
+                      // );
 
 
                       //registerUser(context);
@@ -464,6 +664,18 @@ class _RegisterPageState extends State<RegisterPage> {
                       fontFamily: 'Poppins',),
                   ),
                 ),
+                Column(
+                  children: [
+                    const SizedBox(height: 2),
+                    Center(child: wrongOTP ? const Text(
+                      "Verify Your Email!",
+                      style: TextStyle(
+                        color: Colors.red,
+                        //fontSize: 20.0,
+                      ),
+                    ) : const Text("")),
+                  ],
+                ) ,
 
                 SizedBox(height: height / 30),
 
