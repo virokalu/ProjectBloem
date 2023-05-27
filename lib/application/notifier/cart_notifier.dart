@@ -39,7 +39,7 @@ class CartNotifier extends StateNotifier<CartState> {
     await _apiService.removeCartItem(id, qty, username);
 
     try {
-      var isCartItemExist = state.cartModel!.items.firstWhere(
+      var isCartItemExist = state.cartModel!.items!.firstWhere(
             (element) => element.item.id == id,
         //orElse: () => null,
       );
@@ -47,7 +47,7 @@ class CartNotifier extends StateNotifier<CartState> {
       // ignore: unnecessary_null_comparison
       if (isCartItemExist != null) {
         var updatedItems = List<CartItem>.from(
-            state.cartModel!.items); // Create a new modifiable list
+            state.cartModel!.items!); // Create a new modifiable list
 
         updatedItems.removeWhere((item) =>
         item.item.id == id); // Remove the item with a matching ID
@@ -103,8 +103,8 @@ class CartNotifier extends StateNotifier<CartState> {
     // }
 
     try {
-      var cItem = state.cartModel!.items.firstWhere((element) => element.item.id == id);
-      var updatedItems = state.cartModel!.copyWith(items: [...state.cartModel!.items]);
+      var cItem = state.cartModel!.items!.firstWhere((element) => element.item.id == id);
+      var updatedItems = state.cartModel!.copyWith(items: [...state.cartModel!.items!]);
 
       if (type == "-") {
         await _apiService.removeCartItem(id, 1, username);
@@ -113,10 +113,10 @@ class CartNotifier extends StateNotifier<CartState> {
             qty: cItem.qty - 1,
             item: cItem.item,
           );
-          updatedItems.items.remove(cItem);
-          updatedItems.items.add(cartItem);
+          updatedItems.items!.remove(cItem);
+          updatedItems.items!.add(cartItem);
         } else {
-          updatedItems.items.remove(cItem);
+          updatedItems.items!.remove(cItem);
         }
       } else {
         await _apiService.addCartItem(id, 1, username);
@@ -125,8 +125,8 @@ class CartNotifier extends StateNotifier<CartState> {
           qty: cItem.qty + 1,
           item: cItem.item,
         );
-        updatedItems.items.remove(cItem);
-        updatedItems.items.add(cartItem);
+        updatedItems.items!.remove(cItem);
+        updatedItems.items!.add(cartItem);
       }
 
       state = state.copyWith(cartModel: updatedItems);

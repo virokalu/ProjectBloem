@@ -509,13 +509,13 @@ class _MyBasketScreenState extends ConsumerState<MyBasketScreen> {
       return const LinearProgressIndicator();
     }
 
-    if (cartState.cartModel!.items.isEmpty) {
+    if (cartState.cartModel!.items!.isEmpty) {
       return const Center(
         child: Text("Basket Empty"),
       );
     }
 
-    return _buildCartItems(cartState.cartModel!.items, ref);
+    return _buildCartItems(cartState.cartModel!.items!, ref);
   }
 
 
@@ -525,7 +525,7 @@ class _CheckOutNavbar extends ConsumerWidget{
   Widget build(BuildContext context,WidgetRef ref){
     final cartProvider = ref.watch(cartItemsProvider);
     if(cartProvider.cartModel != null){
-      return cartProvider.cartModel!.items.isNotEmpty
+      return cartProvider.cartModel!.items!.isNotEmpty
           ? Column(
         children: [
           SizedBox(

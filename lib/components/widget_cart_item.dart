@@ -87,19 +87,34 @@ class CartItemWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CustomStepper(
-                      lowerLimit: 1,
-                      upperLimit: 20,
-                      stepValue: 1,
-                      iconSize: 15.0,
-                      value: model.qty.toInt(),
-                      onChanged: (value) {
-                        onQtyUpdate!(model, value["qty"], value["type"]);
-                      },
+                    // CustomStepper(
+                    //   lowerLimit: 1,
+                    //   upperLimit: 20,
+                    //   stepValue: 1,
+                    //   iconSize: 15.0,
+                    //   value: model.qty.toInt(),
+                    //   onChanged: (value) {
+                    //     onQtyUpdate!(model, value["qty"], value["type"]);
+                    //   },
+                    // ),
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: HexColor.fromHex('#E7FFED'),
+                      ),
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        model.qty.toInt().toString(),
+                        style: TextStyle(
+                          color: HexColor.fromHex('#4CD964'),
+                          fontSize: 16.0,
+                        ),
+                      ),
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    // Text(model.qty.toInt().toString()),
+                    // const SizedBox(
+                    //   width: 20,
+                    // ),
                     Padding(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: GestureDetector(
