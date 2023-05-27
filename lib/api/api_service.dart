@@ -108,7 +108,7 @@ class APIService {
       "item":id,
       "qty":qty,
     });
-    print(JsonModel);
+    //print(JsonModel);
     var url = Uri.http(apiURL,cartAPI);
     var response =  await http.delete(
         url,

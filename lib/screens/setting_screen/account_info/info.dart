@@ -114,9 +114,10 @@ class _UpdateDetailsState extends State<UpdateDetails> {
     //print(jsonResponse['status']);
     if (jsonResponse['status']) {
       preference.setString('fullname', jsonResponse['fullname']);
-      preference.setString('username', jsonResponse['username']);
+      //preference.setString('username', jsonResponse['username']);
       preference.setString('email', jsonResponse['email']);
       preference.setString('district', jsonResponse['district']);
+      print("true");
       // ignore: use_build_context_synchronously
       AwesomeDialog(
         context: context,
@@ -168,8 +169,6 @@ class _UpdateDetailsState extends State<UpdateDetails> {
           btnCancelText: "OK",
           btnOkColor: HexColor.fromHex('#4CD964'),
         ).show();
-        return completer.future;
-
         //print(jsonResponse['exist']);
       } else if (jsonResponse['exist'].contains(myUser)) {
         // ignore: use_build_context_synchronously

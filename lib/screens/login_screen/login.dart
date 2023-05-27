@@ -67,7 +67,6 @@ class _LoginPageState extends State<LoginPage> {
       var jsonResponseImg = jsonDecode(responseImg.body);
       if(jsonResponseImg['status']){
         preference.setString('imgPath', jsonResponseImg['img']);
-
       }
 
       preference.setString('fullname', jsonResponse['fullname']);
