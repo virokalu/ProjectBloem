@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_bloem/components/widget_custom_stepper.dart';
+//import 'package:project_bloem/components/widget_custom_stepper.dart';
 import 'package:project_bloem/models/cart_item.dart';
 
 import 'color_components.dart';
@@ -99,7 +99,7 @@ class CartItemWidget extends StatelessWidget {
                     // ),
                     Container(
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                        borderRadius: BorderRadius.circular(10.0), // Adjust the value as needed for the desired border radius
                         color: HexColor.fromHex('#E7FFED'),
                       ),
                       padding: const EdgeInsets.all(10.0),

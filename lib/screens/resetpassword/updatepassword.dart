@@ -32,13 +32,13 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   @override
   void initState(){
     super.initState();
-    init();
+    //init();
   }
-  Future init() async{
-    preference = await SharedPreferences.getInstance();
-    String? username = preference.getString('username');
-    setState(() =>this.username=username!);
-  }
+  // Future init() async{
+  //   preference = await SharedPreferences.getInstance();
+  //   String? username = preference.getString('username');
+  //   setState(() =>this.username=username!);
+  // }
 
   final _formField = GlobalKey<FormState>();
   final newPasswordController = TextEditingController();
@@ -276,5 +276,12 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
         ),
       ),
     );
+  }
+  @override
+  void didChangeDependencies() {
+    final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    username = arguments['username'];
+    //_fetchNews();
+    super.didChangeDependencies();
   }
 }

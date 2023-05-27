@@ -4,6 +4,8 @@ import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
 //import 'package:project_bloem/screens/login_screen/login.dart';
 
@@ -59,6 +61,89 @@ class _RegisterPageState extends State<RegisterPage> {
   final districtController = TextEditingController();
   String? district;
   bool passToggle = true;
+
+  bool emailVerified = false;
+  bool wrongOTP = false;
+
+
+  void sendOTP(String sendEmail, String otp) async {
+    // Create a SMTP server configuration
+    final smtpServer = SmtpServer('mail.smtp2go.com',
+        username: 'projectBloem',
+        password: '51NmMSln01HhBNRq',
+        port: 2525, // Use the appropriate port number for your SMTP server
+        ssl: false);
+
+    // Create the email message
+    final message = Message()
+      ..from = const Address(emailSender)
+      ..recipients.add(sendEmail)
+      ..subject = 'OTP Verification'
+      ..html = '''
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #F4F4F4;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #FFFFFF;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .green {
+      color: #4CD964;
+    }
+
+    .otp {
+      background-color: #E7E7E7;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    .otp.green {
+      background-color: #E7FFED;
+      font-size: 18px;
+    }
+
+    .username {
+      color: #333333;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>OTP Verification</h1>
+    <p>Please use the following OTP to verify your account:</p>
+    <div class="otp green">
+      <center><p class="green">$otp</p><center>
+      
+    </div>
+    
+  </div>
+</body>
+</html>''';
+    //..text = 'Your OTP: $otp for username: $username';
+
+    try {
+      await send(message, smtpServer);
+      setState(() {
+        emailVerified=true;
+      });
+    } catch (e) {
+      print('Failed to send OTP: $e');
+    }
+  }
 
 
 
@@ -364,7 +449,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   onPressed: () {
                     if(_formField.currentState!.validate()){
                       //print("success");
-                      registerUser(context);
+
+
+                      //registerUser(context);
 
 
                     }

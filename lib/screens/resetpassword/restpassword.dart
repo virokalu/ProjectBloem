@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:project_bloem/components/size.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/back_button_icon.dart';
 import '../../components/button_components.dart';
@@ -28,6 +29,8 @@ class _ResetPasswordState extends State<ResetPassword> {
   //OTP class Initialization
   //EmailOTP myAuth = EmailOTP();
   bool emailVerified = false;
+  bool wrongOTP = false;
+
   Random random = Random();
   String? otpNumber;
 
@@ -60,6 +63,60 @@ class _ResetPasswordState extends State<ResetPassword> {
   //   //setState(() =>this.fullname=fullname!);
   //
   // }
+//   String htmlCode = '''
+// <!DOCTYPE html>
+// <html>
+// <head>
+//   <style>
+//     body {
+//       background-color: #F4F4F4;
+//       font-family: Arial, sans-serif;
+//     }
+//
+//     .container {
+//       width: 400px;
+//       margin: 0 auto;
+//       padding: 20px;
+//       background-color: #FFFFFF;
+//       border-radius: 10px;
+//       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+//     }
+//
+//     .green {
+//       color: #4CD964;
+//     }
+//
+//     .otp {
+//       background-color: #E7E7E7;
+//       padding: 10px;
+//       border-radius: 5px;
+//       margin-top: 20px;
+//     }
+//
+//     .otp.green {
+//       background-color: #E7FFED;
+//     }
+//
+//     .username {
+//       color: #333333;
+//       font-weight: bold;
+//       margin-top: 20px;
+//     }
+//   </style>
+// </head>
+// <body>
+//   <div class="container">
+//     <h1>OTP Verification</h1>
+//     <p>Please use the following OTP to verify your account:</p>
+//     <div class="otp green">
+//       <p class="green">$otp</p>
+//
+//     </div>
+//     <p class="username">Username: JohnDoe</p>
+//   </div>
+// </body>
+// </html>
+// ''';
   void sendOTP(String sendEmail, String otp) async {
     // Create a SMTP server configuration
     final smtpServer = SmtpServer('mail.smtp2go.com',
@@ -70,10 +127,64 @@ class _ResetPasswordState extends State<ResetPassword> {
 
     // Create the email message
     final message = Message()
-      ..from = const Address('virokemin@gmail.com')
+      ..from = const Address(emailSender)
       ..recipients.add(sendEmail)
       ..subject = 'OTP Verification'
-      ..text = 'Your OTP: $otp';
+      ..html = '''
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #F4F4F4;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #FFFFFF;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .green {
+      color: #4CD964;
+    }
+
+    .otp {
+      background-color: #E7E7E7;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    .otp.green {
+      background-color: #E7FFED;
+      font-size: 18px;
+    }
+
+    .username {
+      color: #333333;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>OTP Verification</h1>
+    <p>Please use the following OTP to verify your account:</p>
+    <div class="otp green">
+      <center><p class="green">$otp</p><center>
+      
+    </div>
+    <p class="username">UserName: $username</p>
+  </div>
+</body>
+</html>''';
+      //..text = 'Your OTP: $otp for username: $username';
 
     try {
       await send(message, smtpServer);
@@ -276,8 +387,20 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 // preference.setString('username', username!);
                                 // otpController.clear();
                                 // otpNumber=null;
-                                Navigator.pushNamed(context, '/updatepassword');
+                                //Navigator.pushNamed(context, '/updatepassword');
+                                Navigator.of(context).pushNamed(
+                                    '/updatepassword',
 
+                                    arguments: {
+                                      'username':username,
+                                    }
+
+                                );
+
+                              }else{
+                                setState(() {
+                                  wrongOTP=true;
+                                });
                               }
                             }
                           }
@@ -295,8 +418,24 @@ class _ResetPasswordState extends State<ResetPassword> {
                         ),
                       ),
                     ),
+
+
                   ],
+
                 ),
+                Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    Center(child: wrongOTP ? const Text(
+                      "Wrong OTP Number!",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 20.0,
+                      ),
+                    ) : const Text("")),
+                  ],
+                ) ,
+
 
               ],
             ),

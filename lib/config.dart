@@ -36,3 +36,4 @@ const regBuyItem = "${url}item/regbuyitem";
 const itemGet = "item";
 const String appName = "Project Bloem";
 const int pageSize = 10;
+const emailSender = "virokemin@gmail.com";
