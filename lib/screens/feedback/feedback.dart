@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_bloem/components/back_button_icon.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:lottie/lottie.dart';
+//import 'package:lottie/lottie.dart';
 
 class FeedBackPage extends StatefulWidget {
   const FeedBackPage({super.key});
@@ -90,12 +90,12 @@ class _FeedBackPageState extends State<FeedBackPage> {
               SizedBox(
                 height: 15,
               ),
-              Lottie.asset(
-                'animations/cusFB.json',
-                height: 300,
-                reverse: true,
-                repeat: true,
-              ),
+              // Lottie.asset(
+              //   'animations/cusFB.json',
+              //   height: 300,
+              //   reverse: true,
+              //   repeat: true,
+              // ),
             ],
           ),
         ),

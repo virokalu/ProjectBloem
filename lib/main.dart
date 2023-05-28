@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project_bloem/revenue.dart';
 import 'package:project_bloem/revenuecard.dart';
 import 'package:project_bloem/screens/about_us/aboutus.dart';
+import 'package:project_bloem/screens/feedback/feedback.dart';
 import 'package:project_bloem/screens/login_screen/adminlogin.dart';
 import 'package:project_bloem/screens/resetpassword/updatepassword.dart';
 import 'package:project_bloem/screens/search_screen/categorypage.dart';
@@ -28,6 +29,7 @@ import 'package:project_bloem/screens/place_a_listing/place_a_listing.dart';
 import 'package:project_bloem/screens/register_form/registerform.dart';
 import 'package:project_bloem/screens/resetpassword/restpassword.dart';
 import 'package:project_bloem/screens/selling/selling_page.dart';
+import 'package:project_bloem/screens/t&c/term_cond.dart';
 import 'package:project_bloem/screens/user_profile/profile.dart';
 import 'package:project_bloem/screens/welcome_screen/welcome_screen.dart';
 import 'package:project_bloem/screens/wish_list/wish_list.dart';
@@ -111,12 +113,12 @@ class MyApp extends StatelessWidget {
         '/policy': (context) => const PolicyScreen(),
         '/password': (context) => const PasswordScreen(),
         '/sellerreg' : (context) => const SellerRegister(),
-        '/reset': (context)=> ResetPassword(),
+        '/reset': (context)=> const ResetPassword(),
         '/adminpage' :(context) => const ForAdmin(),
         '/wishlist' :(context) => const WishListScreen(),
-        '/updatepassword': (context)=> UpdatePasswordScreen(),
-
-
+        '/updatepassword': (context)=> const UpdatePasswordScreen(),
+        '/termandcondition' : (context)=> const TermAndCondition(),
+        '/feedbackpage' : (context)=> const FeedBackPage(),
         '/adminloginpage' : (context) => const AdminLoginPage(),
       },
     );

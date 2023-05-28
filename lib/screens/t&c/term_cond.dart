@@ -175,7 +175,10 @@ class _TermAndConditionState extends State<TermAndCondition> {
             Container(
               margin: EdgeInsets.only(top: 10),
               child: MaterialButton(
-                onPressed: isChecked ? printMsg : null,
+                onPressed: () {
+                    isChecked ? printMsg : null;
+                    Navigator.pushNamed(context, '/sellerreg');
+                },
                 child: Text('Agree'),
                 height: 60,
                 minWidth: 350,
