@@ -7,6 +7,7 @@ const urlforsocket = 'http://192.168.43.194:3001/';
 const registration = "${url}registration";
 const login = "${url}login";
 const email = "${url}email";
+const getEmailURL = "${url}getEmail";
 const question = "${url}question";
 
 const password = "${url}password";

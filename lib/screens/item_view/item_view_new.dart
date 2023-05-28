@@ -12,7 +12,7 @@ import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:mailer/mailer.dart';
+import 'package:mailer/mailer.dart' as mail;
 import 'package:mailer/smtp_server.dart';
 
 import '../../components/size.dart';
@@ -51,31 +51,109 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   int counter = 1;
   late SharedPreferences preference;
   String username = "";
+  String? sellerEmail;
+  String? sellerName;
+  String? sellerUsername;
 
   bool showText = true;
 
   //////////////////send email to seller ////////////////////////
 
   void sendEmail() async {
-    String username = 'bloemapp1@gmail.com'; // Replace with your email
-    String password = 'bloem1234'; // Replace with your password
-
-    final smtpServer = gmail(username, password);
+    final smtpServer = SmtpServer('mail.smtp2go.com',
+        username: 'projectBloem',
+        password: '51NmMSln01HhBNRq',
+        port: 2525, // Use the appropriate port number for your SMTP server
+        ssl: false);
 
     // Create the email message
-    final message = Message()
-      ..from = 'bloemapp1@gmail.com' // Replace with your email
-      ..recipients
-          .add('bloemappsecond@gmail.com') // Replace with the seller's email
-      ..subject = 'Your item has been sold'
-      ..text = 'Congratulations! Your item has been sold.';
+    final message = mail.Message()
+      ..from = const mail.Address(emailSender)
+      ..recipients.add('virokemin@gmail.com')
+      ..subject = 'OTP Verification'
+      ..html = '''
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #F4F4F4;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #FFFFFF;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .green {
+      color: #4CD964;
+    }
+
+    .otp {
+      background-color: #E7E7E7;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    .otp.green {
+      background-color: #E7FFED;
+      font-size: 18px;
+    }
+
+    .username {
+      color: #333333;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Email Verification</h1>
+    <p>Please use the following OTP to verify your email:</p>
+    <div class="otp green">
+      <center><p class="green">otp</p><center>
+      
+    </div>
+    
+  </div>
+</body>
+</html>''';
 
     try {
-      await send(message, smtpServer);
-      print('Message sent successfully');
+      await mail.send(message, smtpServer);
+      setState(() {
+        //emailSent=true;
+      });
     } catch (e) {
-      print('Error occurred while sending email: $e');
+      print('Failed to send OTP: $e');
     }
+
+    // String username = 'bloemapp1@gmail.com'; // Replace with your email
+    // String password = 'bloem1234'; // Replace with your password
+    //
+    // final smtpServer = gmail(username, password);
+    //
+    // // Create the email message
+    // final message = Message()
+    //   ..from = 'bloemapp1@gmail.com' // Replace with your email
+    //   ..recipients
+    //       .add('bloemappsecond@gmail.com') // Replace with the seller's email
+    //   ..subject = 'Your item has been sold'
+    //   ..text = 'Congratulations! Your item has been sold.';
+    //
+    // try {
+    //   await send(message, smtpServer);
+    //   print('Message sent successfully');
+    // } catch (e) {
+    //   print('Error occurred while sending email: $e');
+    // }
   }
 
   ///////////////////////////////////////////////////////////////
@@ -107,6 +185,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       });
     });
   }
+
 
   Future<void> fetchItemData() async {
     // ignore: prefer_interpolation_to_compose_strings
@@ -164,6 +243,30 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     // else{
     //   print("not success");
     // }
+  }  Future<void> getEmail() async {
+    var emailBody = {
+      "username": data["data"]["id"],
+    };
+
+    final url = Uri.parse(getEmailURL);
+    // ignore: unused_local_variable
+    var response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: jsonEncode(emailBody),
+    );
+
+    var jsonResponse = jsonDecode(response.body);
+
+    if(jsonResponse.status){
+      print("success");
+      setState(() {
+
+      });
+    }
   }
 
   Future<void> registeCard() async {
