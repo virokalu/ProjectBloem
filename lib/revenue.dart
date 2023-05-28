@@ -14,6 +14,9 @@ class ForAdmin extends StatefulWidget {
 }
 
 List<RevenueDataModel> data = [];
+var Totalfee=0;
+late var appvalue=0;
+late var Totaltransaction=0;
 
 
 Future<void> fetchData() async {
@@ -21,9 +24,16 @@ Future<void> fetchData() async {
     //   _isLoading = true;
     // });
     try{
-      final response = await http.get(Uri.parse(getbuydata+"/a"));
-    final List<dynamic> responseData = jsonDecode(response.body);
-    data = responseData
+      final response = await http.get(Uri.parse(getbuydata));
+      if(response.statusCode == 200){
+        print("ok");
+        print(response.body);
+        print("test");
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final List<dynamic> buyItems = responseData['regbuyitems'];
+        print(buyItems);
+
+    data = buyItems
         .map((json) => RevenueDataModel(
               street: json['street'],
               town: json['town'],
@@ -35,24 +45,34 @@ Future<void> fetchData() async {
               app_fee: json['app_fee'],
               seller_amount: json['seller_amount'],
               apps_Total_amount: json['apps_Total_amount'],
+              stid : json['stid']
             ))
         .toList();
+      }
+
+      print(data[0].street);
+    
     }
     catch(e){
       // setState(() {
       //   _isLoading = true;
       // });
+      print(e);
     }
     // setState(() {
     //     _isLoading = false;
     //   });
     //print(data);
-    print(data);
+    //print(data[1]);
   }
-  
-  
 
 class _ForAdminState extends State<ForAdmin> {
+
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,21 +81,42 @@ class _ForAdminState extends State<ForAdmin> {
           title: Text("Payments with details"),
           leading: IconButton(onPressed: () {Navigator.pushNamed(context, '/');}, icon: Icon(Icons.back_hand)),
           actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.payment_outlined)),
+            IconButton(onPressed: () {
+              setState(() {
+                fetchData();
+              });
+            }, icon: Icon(Icons.payment_outlined)),
           ],
         ),
         body: Column(
           children: [
             Expanded(
-              child: ListView(
-                children: [
-                  RevCard(sellername: "Hashan", amount: "200", skey: "###################################################", id: "3024"),
-                  RevCard(sellername: "Janushan", amount: "2000", skey: "###################################################", id: "3543"),
-                  RevCard(sellername: "Manoj", amount: "120", skey: "###################################################", id: "3369"),
-                  RevCard(sellername: "Kavinda", amount: "500", skey: "###################################################", id: "3254"),
-                  RevCard(sellername: "Asanka", amount: "280", skey: "###################################################", id: "2563"),
-                  RevCard(sellername: "Viro", amount: "150", skey: "###################################################", id: "3254"),
-                ],
+              child: ListView.builder(
+                itemCount: data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  RevenueDataModel item = data[index];
+                  Totalfee += item.app_fee;
+                  appvalue = Totalfee;
+                  Totalfee = 0;
+
+                  if(index == data.length -1){
+                    Totaltransaction = item.apps_Total_amount;
+                    return RevCard(
+                      sellername: item.sellername,
+                      amount: item.seller_amount.toString(),
+                      appPee: item.app_fee.toString(),
+                      id: item.stid,
+                    );
+                  }else{
+                    return RevCard(
+                      sellername: item.sellername,
+                      amount: item.seller_amount.toString(),
+                      appPee: item.app_fee.toString(),
+                      id: item.stid,
+                    );
+                  }
+
+                },
               ),
             ),
             Card(
@@ -86,14 +127,14 @@ class _ForAdminState extends State<ForAdmin> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'App total fee: 250.00',
+              "Bloem total app fee: +appvalue.toString()",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16.0,
               ),
             ),
             SizedBox(height: 8.0),
-            Text('Total transaction Amount: 100000.00'),
+            Text('Total transaction Amount: +Totaltransaction.toString()'),
           ],
         ),
       ),
