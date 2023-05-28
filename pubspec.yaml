@@ -70,7 +70,7 @@ dependencies:
   #stripe_payment: ^1.1.4
   flutter_stripe: ^9.1.1
   carousel_slider: ^4.2.1
-  lottie: ^2.3.2+
+  lottie:
 
 
 dev_dependencies:
