@@ -133,6 +133,18 @@ class _UserProfileState extends State<UserProfile> {
               const Divider(color: Color.fromARGB(255, 243, 236, 236)),
 
               ClickableBar(
+                icon: Icons.feedback ,
+                name: 'Feed Back',
+                onPressed: () {
+                  Navigator.pushNamed(context, '/feedbackpage');
+                  //Navigator.pushNamed(context, '/selling');
+                  // Do something when the bar is clicked
+                },
+              ),
+              //IconWithText(icon: Icons.sell, text: "Shell", address: "address"),
+              const Divider(color: Color.fromARGB(255, 243, 236, 236)),
+
+              ClickableBar(
                 icon: Icons.logout,
                 name: 'Logout',
                 onPressed: () {
