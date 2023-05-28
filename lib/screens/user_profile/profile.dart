@@ -67,7 +67,7 @@ class _UserProfileState extends State<UserProfile> {
                 icon: Icons.favorite_border,
                 name: 'WishList',
                 onPressed: () {
-                  Navigator.pushNamed(context, '/wishlist');
+                  Navigator.pushNamed(context, '/feedbackpage');
                 },
               ),
 
@@ -88,7 +88,7 @@ class _UserProfileState extends State<UserProfile> {
                 icon: Icons.sell ,
                 name: 'Sell',
                 onPressed: () {
-                  sellerStates == true ? Navigator.pushNamed(context, '/selling') : Navigator.pushNamed(context, '/sellerreg');
+                  sellerStates == true ? Navigator.pushNamed(context, '/selling') : Navigator.pushNamed(context, '/termandcondition');
                   //Navigator.pushNamed(context, '/selling');
                   // Do something when the bar is clicked
                 },

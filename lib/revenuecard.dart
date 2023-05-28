@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 
 class RevCard extends StatelessWidget {
-  const RevCard({required this.sellername,required this.amount,required this.skey,required this.id});
+  const RevCard({required this.sellername,required this.amount,required this.appPee,required this.id});
   final String sellername;
   final String amount;
-  final String skey;
+  final String appPee;
   final String id;
 
   
@@ -29,7 +29,7 @@ class RevCard extends StatelessWidget {
             SizedBox(height: 8.0),
             Text('Seller Amount: $amount'),
             SizedBox(height: 8.0),
-            Text('Seller Stripe key: $skey'),
+            Text('Seller Stripe key: $appPee'),
             SizedBox(height: 8.0),
             Text('Seller Stripe Id: $id'),
           ],
