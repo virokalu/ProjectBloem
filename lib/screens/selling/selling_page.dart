@@ -101,27 +101,7 @@ class _SellingPageState extends State<SellingPage> {
           child: ListView(
             children: [
               const ButtonText(text: "Sell", icon: Icons.list),
-              const Text(
-                "To Delivery",
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Divider(color: Color.fromARGB(255, 243, 236, 236)),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Text("Need to Buy a Product from you to Display......"),
-                    // const SellingCard(),
-                    // const SellingCard(),
-                    // const SellingCard(),
-                    // const SellingCard(),
-                    SizedBox(width: getProportionateScreenWidth(20)),
-                  ],
-                ),
-              ),
+              
               const SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
