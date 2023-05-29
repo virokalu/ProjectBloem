@@ -14,24 +14,21 @@ class ForAdmin extends StatefulWidget {
 }
 
 List<RevenueDataModel> data = [];
-var Totalfee=0;
-late var appvalue=0;
-late var Totaltransaction=0;
+int Totalfee=0;
+int appvalue=0;
+int Totaltransaction=0;
 
 
 Future<void> fetchData() async {
-    // setState(() {
-    //   _isLoading = true;
-    // });
     try{
       final response = await http.get(Uri.parse(getbuydata));
       if(response.statusCode == 200){
-        print("ok");
-        print(response.body);
-        print("test");
+        // print("ok");
+        // print(response.body);
+        // print("test");
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         final List<dynamic> buyItems = responseData['regbuyitems'];
-        print(buyItems);
+        // print(buyItems);
 
     data = buyItems
         .map((json) => RevenueDataModel(
@@ -78,14 +75,15 @@ class _ForAdminState extends State<ForAdmin> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Payments with details"),
-          leading: IconButton(onPressed: () {Navigator.pushNamed(context, '/');}, icon: Icon(Icons.back_hand)),
+          backgroundColor: Colors.green,
+          title: const Text("Payments with details"),
+          leading: IconButton(onPressed: () {Navigator.pushNamed(context, '/');}, icon: const Icon(Icons.arrow_back)),
           actions: [
             IconButton(onPressed: () {
               setState(() {
                 fetchData();
               });
-            }, icon: Icon(Icons.payment_outlined)),
+            }, icon: const Icon(Icons.payment_outlined)),
           ],
         ),
         body: Column(
@@ -95,9 +93,9 @@ class _ForAdminState extends State<ForAdmin> {
                 itemCount: data.length,
                 itemBuilder: (BuildContext context, int index) {
                   RevenueDataModel item = data[index];
-                  Totalfee += item.app_fee;
-                  appvalue = Totalfee;
-                  Totalfee = 0;
+                  appvalue += item.app_fee.toInt();
+                  //appvalue = Totalfee;
+                  //Totalfee = 0;
 
                   if(index == data.length -1){
                     Totaltransaction = item.apps_Total_amount;
@@ -118,6 +116,7 @@ class _ForAdminState extends State<ForAdmin> {
 
                 },
               ),
+              
             ),
             Card(
       elevation: 2.0,
@@ -126,15 +125,16 @@ class _ForAdminState extends State<ForAdmin> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            
             Text(
-              "Bloem total app fee: +appvalue.toString()",
+              "Bloem total app fee: "+appvalue.toString(),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16.0,
               ),
             ),
             SizedBox(height: 8.0),
-            Text('Total transaction Amount: +Totaltransaction.toString()'),
+            Text("Total transaction Amount: "+Totaltransaction.toString()),
           ],
         ),
       ),
