@@ -102,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final message = Message()
       ..from = const Address(emailSender)
       ..recipients.add(sendEmail)
-      ..subject = 'OTP Verification'
+      ..subject = 'OTP Verification for Email Verification from ProjectBloem'
       ..html = '''
 <!DOCTYPE html>
 <html>

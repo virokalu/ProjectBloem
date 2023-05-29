@@ -12,7 +12,7 @@ import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:mailer/mailer.dart';
+import 'package:mailer/mailer.dart' as mail;
 import 'package:mailer/smtp_server.dart';
 
 import '../../components/size.dart';
@@ -51,31 +51,155 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   int counter = 1;
   late SharedPreferences preference;
   String username = "";
+  String? sellerEmail;
+  String? sellerName;
+  String? sellerUsername;
 
   bool showText = true;
 
   //////////////////send email to seller ////////////////////////
 
   void sendEmail() async {
-    String username = 'bloemapp1@gmail.com'; // Replace with your email
-    String password = 'bloem1234'; // Replace with your password
-
-    final smtpServer = gmail(username, password);
+    final smtpServer = SmtpServer('mail.smtp2go.com',
+        username: 'projectBloem',
+        password: '51NmMSln01HhBNRq',
+        port: 2525, // Use the appropriate port number for your SMTP server
+        ssl: false);
 
     // Create the email message
-    final message = Message()
-      ..from = 'bloemapp1@gmail.com' // Replace with your email
-      ..recipients
-          .add('bloemappsecond@gmail.com') // Replace with the seller's email
-      ..subject = 'Your item has been sold'
-      ..text = 'Congratulations! Your item has been sold.';
+    final message = mail.Message()
+      ..from = const mail.Address(emailSender)
+      ..recipients.add('virokemin@gmail.com')
+      ..subject = 'OTP Verification'
+      ..html = '''
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #ffffff;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+    
+    .card-box {
+      width: 190px;
+      height: 250px;
+      margin-left: 5px;
+      margin-bottom: 5px;
+      background-color: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0px 25px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-box__image {
+      position: relative;
+      width: 100%;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    
+    .card-box__image img {
+      display: block;
+      width: 100%;
+      border-radius: 10px;
+    }
+    
+    .card-box__content {
+      padding: 10px 15px;
+    }
+    
+    .card-box__title {
+      font-size: 17px;
+      font-weight: bold;
+      color: #000000;
+      margin-top: 10px;
+    }
+    
+    .card-box__price {
+      font-size: 17px;
+      font-weight: 400;
+      color: #4cd964;
+      margin-top: 10px;
+    }
+    
+    .card-box__button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #e7ffed;
+      text-align: center;
+    }
+    
+    .card-box__button i {
+      color: #4cd964;
+      font-size: 20px;
+    }
+    
+    .details {
+      margin-top: 20px;
+    }
+    
+    .details__item {
+      font-size: 14px;
+      color: #808080;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card-box">
+    <div class="card-box__image">
+      <img src="image_url_here" alt="Product Image">
+    </div>
+    <div class="card-box__content">
+      <h3 class="card-box__title">Product Title</h3>
+      <p class="card-box__price">Price: Rs. 100</p>
+      <div class="card-box__button">
+        <i class="material-icons">shopping_cart</i>
+      </div>
+    </div>
+  </div>
+  
+  <div class="details">
+    <p class="details__item">Seller: John Doe</p>
+    <p class="details__item">Buyer: Jane Smith</p>
+    <p class="details__item">Delivery Address: 123 Main St, City, Country</p>
+  </div>
+</body>
+</html>''';
 
     try {
-      await send(message, smtpServer);
-      print('Message sent successfully');
+      await mail.send(message, smtpServer);
+      setState(() {
+        //emailSent=true;
+      });
     } catch (e) {
-      print('Error occurred while sending email: $e');
+      print('Failed to send OTP: $e');
     }
+
+    // String username = 'bloemapp1@gmail.com'; // Replace with your email
+    // String password = 'bloem1234'; // Replace with your password
+    //
+    // final smtpServer = gmail(username, password);
+    //
+    // // Create the email message
+    // final message = Message()
+    //   ..from = 'bloemapp1@gmail.com' // Replace with your email
+    //   ..recipients
+    //       .add('bloemappsecond@gmail.com') // Replace with the seller's email
+    //   ..subject = 'Your item has been sold'
+    //   ..text = 'Congratulations! Your item has been sold.';
+    //
+    // try {
+    //   await send(message, smtpServer);
+    //   print('Message sent successfully');
+    // } catch (e) {
+    //   print('Error occurred while sending email: $e');
+    // }
   }
 
   ///////////////////////////////////////////////////////////////
@@ -108,6 +232,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     });
   }
 
+
   Future<void> fetchItemData() async {
     // ignore: prefer_interpolation_to_compose_strings
     setState(() {
@@ -121,7 +246,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       final url = Uri.parse(itemAdd + "/" + widget.id);
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        print(response.toString());
+        //print(response.toString());
         data = jsonDecode(response.body);
       }
     } catch (e) {
@@ -165,6 +290,30 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     // else{
     //   print("not success");
     // }
+  }  Future<void> getEmail() async {
+    var emailBody = {
+      "username": data["data"]["id"],
+    };
+
+    final url = Uri.parse(getEmailURL);
+    // ignore: unused_local_variable
+    var response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: jsonEncode(emailBody),
+    );
+
+    var jsonResponse = jsonDecode(response.body);
+
+    if(jsonResponse.status){
+      print("success");
+      setState(() {
+
+      });
+    }
   }
 
   Future<void> registeCard() async {
@@ -492,7 +641,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                   style: greenButtonStyle,
                   //############################Save the view##########################################
                   onPressed: () {
-                    sendEmail();
+                    //sendEmail();
                     openDialog();
                   },
                   child: const Text(
@@ -543,7 +692,10 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                       ? greenButtonBorderStyle
                       : greyButtonStyle,
                   //############################Chat#######################################
-                  onPressed: data["data"]["chatactivate"] ? () {} : null,
+                  onPressed: data["data"]["chatactivate"] ? () {
+
+
+                  } : null,
                   child: Text(
                     "Chat",
                     style: TextStyle(
@@ -672,7 +824,10 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                   // googlePay: const PaymentSheetGooglePay(testEnv: true,currencyCode: 'USD',merchantCountryCode: '+94'),
                   style: ThemeMode.dark,
                   merchantDisplayName: 'manoj'))
-          .then((value) {});
+          .then((value) {
+            sendEmail();
+      }
+      );
 
       displayPaymentSheet();
     } catch (e) {

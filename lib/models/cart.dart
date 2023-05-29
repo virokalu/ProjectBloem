@@ -8,7 +8,7 @@ part 'cart.g.dart';
 abstract class Cart with _$Cart{
   factory Cart({
     required String username,
-    List<CartItem>? items,
+    required List<CartItem> items,
     required String cartId,
   }) = _Cart;
   factory Cart.fromJson(Map<String,dynamic>json)=>_$CartFromJson(json);
@@ -16,7 +16,7 @@ abstract class Cart with _$Cart{
 
 extension CartExt on Cart {
   double? get grandTotal {
-    return items?.map((e)=>e.item.price * e.qty)
+    return items.map((e)=>e.item.price * e.qty)
         .fold(0,(p,c)=>p!+c);
   }
 }

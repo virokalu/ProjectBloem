@@ -58,6 +58,7 @@ class APIService {
       //print("username not available");
       // Use the retrieved username
     }
+    //print("here");
 
 
     Map<String,String> requestHeader={
@@ -67,9 +68,16 @@ class APIService {
     var url = Uri.http(apiURL,"$cartAPI/${username!}");
     var response =  await http.get(url,headers: requestHeader);
 
+    //print(response.statusCode);
     if(response.statusCode==200){
       var data=jsonDecode(response.body);
-      return Cart.fromJson(data["data"]);
+      //print(jsonDecode(response.body));
+      if(data["data"] != null){
+        //print(data["data"].runtimeType);
+        return Cart.fromJson(data["data"]);
+      }else{
+        return null;
+      }
     }else{
       return null;
     }

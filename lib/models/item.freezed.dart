@@ -29,6 +29,7 @@ mixin _$Item {
   String get description => throw _privateConstructorUsedError;
   bool get cashondelivery => throw _privateConstructorUsedError;
   bool get chatactivate => throw _privateConstructorUsedError;
+  String get district => throw _privateConstructorUsedError;
   String get imgone => throw _privateConstructorUsedError;
   String get imgtwo => throw _privateConstructorUsedError;
   String get imgthree => throw _privateConstructorUsedError;
@@ -53,6 +54,7 @@ abstract class $ItemCopyWith<$Res> {
       String description,
       bool cashondelivery,
       bool chatactivate,
+      String district,
       String imgone,
       String imgtwo,
       String imgthree});
@@ -80,6 +82,7 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
     Object? description = null,
     Object? cashondelivery = null,
     Object? chatactivate = null,
+    Object? district = null,
     Object? imgone = null,
     Object? imgtwo = null,
     Object? imgthree = null,
@@ -121,6 +124,10 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
           ? _value.chatactivate
           : chatactivate // ignore: cast_nullable_to_non_nullable
               as bool,
+      district: null == district
+          ? _value.district
+          : district // ignore: cast_nullable_to_non_nullable
+              as String,
       imgone: null == imgone
           ? _value.imgone
           : imgone // ignore: cast_nullable_to_non_nullable
@@ -153,6 +160,7 @@ abstract class _$$_ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
       String description,
       bool cashondelivery,
       bool chatactivate,
+      String district,
       String imgone,
       String imgtwo,
       String imgthree});
@@ -176,6 +184,7 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
     Object? description = null,
     Object? cashondelivery = null,
     Object? chatactivate = null,
+    Object? district = null,
     Object? imgone = null,
     Object? imgtwo = null,
     Object? imgthree = null,
@@ -217,6 +226,10 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
           ? _value.chatactivate
           : chatactivate // ignore: cast_nullable_to_non_nullable
               as bool,
+      district: null == district
+          ? _value.district
+          : district // ignore: cast_nullable_to_non_nullable
+              as String,
       imgone: null == imgone
           ? _value.imgone
           : imgone // ignore: cast_nullable_to_non_nullable
@@ -246,6 +259,7 @@ class _$_Item implements _Item {
       required this.description,
       required this.cashondelivery,
       required this.chatactivate,
+      required this.district,
       required this.imgone,
       required this.imgtwo,
       required this.imgthree});
@@ -271,6 +285,8 @@ class _$_Item implements _Item {
   @override
   final bool chatactivate;
   @override
+  final String district;
+  @override
   final String imgone;
   @override
   final String imgtwo;
@@ -279,7 +295,7 @@ class _$_Item implements _Item {
 
   @override
   String toString() {
-    return 'Item(id: $id, username: $username, category: $category, commonname: $commonname, sciname: $sciname, price: $price, description: $description, cashondelivery: $cashondelivery, chatactivate: $chatactivate, imgone: $imgone, imgtwo: $imgtwo, imgthree: $imgthree)';
+    return 'Item(id: $id, username: $username, category: $category, commonname: $commonname, sciname: $sciname, price: $price, description: $description, cashondelivery: $cashondelivery, chatactivate: $chatactivate, district: $district, imgone: $imgone, imgtwo: $imgtwo, imgthree: $imgthree)';
   }
 
   @override
@@ -302,6 +318,8 @@ class _$_Item implements _Item {
                 other.cashondelivery == cashondelivery) &&
             (identical(other.chatactivate, chatactivate) ||
                 other.chatactivate == chatactivate) &&
+            (identical(other.district, district) ||
+                other.district == district) &&
             (identical(other.imgone, imgone) || other.imgone == imgone) &&
             (identical(other.imgtwo, imgtwo) || other.imgtwo == imgtwo) &&
             (identical(other.imgthree, imgthree) ||
@@ -321,6 +339,7 @@ class _$_Item implements _Item {
       description,
       cashondelivery,
       chatactivate,
+      district,
       imgone,
       imgtwo,
       imgthree);
@@ -350,6 +369,7 @@ abstract class _Item implements Item {
       required final String description,
       required final bool cashondelivery,
       required final bool chatactivate,
+      required final String district,
       required final String imgone,
       required final String imgtwo,
       required final String imgthree}) = _$_Item;
@@ -374,6 +394,8 @@ abstract class _Item implements Item {
   bool get cashondelivery;
   @override
   bool get chatactivate;
+  @override
+  String get district;
   @override
   String get imgone;
   @override

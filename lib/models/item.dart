@@ -18,6 +18,7 @@ abstract class Item with _$Item {
     required String description,
     required bool cashondelivery,
     required bool chatactivate,
+    required String district,
     required String imgone,
     required String imgtwo,
     required String imgthree,

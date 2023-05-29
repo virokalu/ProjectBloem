@@ -8,8 +8,8 @@ part of 'cart.dart';
 
 _$_Cart _$$_CartFromJson(Map<String, dynamic> json) => _$_Cart(
       username: json['username'] as String,
-      items: (json['items'] as List<dynamic>?)
-          ?.map((e) => CartItem.fromJson(e as Map<String, dynamic>))
+      items: (json['items'] as List<dynamic>)
+          .map((e) => CartItem.fromJson(e as Map<String, dynamic>))
           .toList(),
       cartId: json['cartId'] as String,
     );
