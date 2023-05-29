@@ -1395,6 +1395,7 @@ Future<void> addListing(BuildContext context) async {
     "imgthree":imgThree,
     "district":district,
     "activestatus":true,
+    "quantity": noOfItemsController.text,
   };
   //print(registration);
   var response = await http.post(Uri.parse(itemAdd),

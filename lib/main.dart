@@ -8,6 +8,7 @@ import 'package:project_bloem/screens/feedback/feedback.dart';
 import 'package:project_bloem/screens/login_screen/adminlogin.dart';
 import 'package:project_bloem/screens/resetpassword/updatepassword.dart';
 import 'package:project_bloem/screens/search_screen/categorypage.dart';
+import 'package:project_bloem/screens/search_screen/locationbased.dart';
 import 'package:project_bloem/screens/search_screen/sresult.dart';
 import 'package:project_bloem/screens/selling/registersellerform.dart';
 
@@ -120,6 +121,7 @@ class MyApp extends StatelessWidget {
         '/termandcondition' : (context)=> const TermAndCondition(),
         '/feedbackpage' : (context)=> const FeedBackPage(),
         '/adminloginpage' : (context) => const AdminLoginPage(),
+        '/location' : (context) => const LocationBased(),
       },
     );
   }

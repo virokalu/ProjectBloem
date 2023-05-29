@@ -2,7 +2,7 @@
 //const url = 'http://localhost:3000/';
 //const url = 'http://192.168.42.216:3000/';
 const url = 'http://192.168.3.194:3000/';
-const urlforsocket = 'http://192.168.8.124:3001/';
+const urlforsocket = 'http://192.168.3.194:3001/';
 //const url = 'http://192.168.1.10:3000/';//sulani's router
 const registration = "${url}registration";
 const login = "${url}login";

@@ -248,7 +248,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 padding:
                 EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
                 //################################################see more function###################################
-                child: SectionTitle(title: "Location Related Listing", press: () {}),
+                child: SectionTitle(title: "Location Related Listing", press: () {
+                  Navigator.pushNamed(context, '/location');
+                }),
               ),
               SizedBox(height: getProportionateScreenWidth(5)),
 
