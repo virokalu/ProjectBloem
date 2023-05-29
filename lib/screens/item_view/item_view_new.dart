@@ -41,6 +41,8 @@ class ItemViewNew extends ConsumerStatefulWidget {
 class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   // ignore: prefer_typing_uninitialized_variables
   var data;
+  var userinfo;
+
   final streetController = TextEditingController();
   final cityController = TextEditingController();
   final postalCodeController = TextEditingController();
@@ -51,9 +53,12 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   int counter = 1;
   late SharedPreferences preference;
   String username = "";
-  String? sellerEmail;
-  String? sellerName;
-  String? sellerUsername;
+  String? fullname;
+  String? email;
+  //
+  // String? sellerEmail;
+  // String? sellerName;
+  // String? sellerUsername;
 
   bool showText = true;
 
@@ -67,10 +72,11 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
         ssl: false);
 
     // Create the email message
+    print(userinfo["email"]);
     final message = mail.Message()
       ..from = const mail.Address(emailSender)
-      ..recipients.add('virokemin@gmail.com')
-      ..subject = 'OTP Verification'
+      ..recipients.add(userinfo["email"])
+      ..subject = 'Buyer Information by Project_Bloem'
       ..html = '''
 <!DOCTYPE html>
 <html>
@@ -102,6 +108,8 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     .card-box__image img {
       display: block;
       width: 100%;
+      height: 100%;
+      object-fit: cover;
       border-radius: 10px;
     }
     
@@ -151,23 +159,28 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   </style>
 </head>
 <body>
+
+  <div class="details">
+     <p class="details__item">Hello <b>${userinfo["fullname"]}</b> Your Product <b>${data["data"]["commonname"]}</b> just Purchased by <b>$fullname</b></p>
+  </div>
   <div class="card-box">
     <div class="card-box__image">
-      <img src="image_url_here" alt="Product Image">
+      <img src="${data["data"]["imgone"]}" alt="Product Image">
     </div>
     <div class="card-box__content">
-      <h3 class="card-box__title">Product Title</h3>
-      <p class="card-box__price">Price: Rs. 100</p>
-      <div class="card-box__button">
-        <i class="material-icons">shopping_cart</i>
-      </div>
+      <h3 class="card-box__title">${data["data"]["commonname"]}</h3>
+      <p class="card-box__price">Price: Rs. ${data["data"]["price"]}</p>
+      
     </div>
   </div>
   
   <div class="details">
-    <p class="details__item">Seller: John Doe</p>
-    <p class="details__item">Buyer: Jane Smith</p>
-    <p class="details__item">Delivery Address: 123 Main St, City, Country</p>
+    
+    <p class="details__item">Buyer UserName: <b>$username</b></p>
+    <p class="details__item">Delivery Address: <b>${streetController.text}, ${cityController.text}, ${postalCodeController.text}</b></p>
+    <p class="details__item">Buyer Email: <b>$email</b></p>
+    <p class="details__item">Please make Further arrangements to Deliver this item</p>
+    
   </div>
 </body>
 </html>''';
@@ -215,6 +228,9 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       //print(token);
       // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, '/login');
+    }else{
+      fetchItemData();
+
     }
     //setState(() =>this.sellerStates=sellerStates!);
     //setState(() =>this.fullname=fullname!);
@@ -241,14 +257,19 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     try {
       preference = await SharedPreferences.getInstance();
       String? username = preference.getString('username');
+      String? fullname = preference.getString('fullname');
+      String? email = preference.getString('email');
       setState(() => this.username = username!);
+      setState(() => this.fullname = fullname!);
+      setState(() => this.email = email!);
       // ignore: prefer_interpolation_to_compose_strings
       final url = Uri.parse(itemAdd + "/" + widget.id);
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        //print(response.toString());
         data = jsonDecode(response.body);
+        print(data.toString());
       }
+      getEmail();
     } catch (e) {
       // ignore: avoid_print
       print(e);
@@ -291,7 +312,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     // }
   }  Future<void> getEmail() async {
     var emailBody = {
-      "username": data["data"]["id"],
+      "username": data["data"]["username"],
     };
 
     final url = Uri.parse(getEmailURL);
@@ -305,14 +326,17 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       body: jsonEncode(emailBody),
     );
 
-    var jsonResponse = jsonDecode(response.body);
+    userinfo = jsonDecode(response.body);
 
-    if(jsonResponse.status){
-      print("success");
-      setState(() {
+    print(userinfo.toString());
 
-      });
-    }
+    // if(userDetails.status){
+    //
+    //     sellerEmail=jsonResponse['email'].toString();
+    //     sellerName=jsonResponse['fullname'];
+    //     sellerUsername=jsonResponse['username'];
+    //
+    // }
   }
 
   Future<void> registeCard() async {
@@ -349,7 +373,8 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   void initState() {
     super.initState();
     init();
-    fetchItemData();
+    //fetchItemData();
+    //getEmail();
   }
 
   late Map<String, dynamic> paymentIntent;
@@ -825,10 +850,11 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                   merchantDisplayName: 'manoj'))
           .then((value) {
             sendEmail();
+            displayPaymentSheet();
       }
       );
 
-      displayPaymentSheet();
+
     } catch (e) {
       // ignore: avoid_print
       print(e);
@@ -908,6 +934,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     final calculateAmount = (int.parse(amount)) * 100;
     return calculateAmount.toString();
   }
+
 
 //button click action for buy now button
   // Widget bottomesheet() {
