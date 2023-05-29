@@ -42,14 +42,14 @@ class SettingScreen extends StatelessWidget {
                 },
               ),
               const Divider(color: Color.fromARGB(255, 243, 236, 236)),
-              ClickableBar(
-                icon: Icons.policy,
-                name: 'Policies',
-                onPressed: () {
-                  Navigator.pushNamed(context, '/policy');
-                },
-              ),
-              const Divider(color: Color.fromARGB(255, 243, 236, 236)),
+              // ClickableBar(
+              //   icon: Icons.policy,
+              //   name: 'Policies',
+              //   onPressed: () {
+              //     Navigator.pushNamed(context, '/policy');
+              //   },
+              // ),
+              // const Divider(color: Color.fromARGB(255, 243, 236, 236)),
               /*ClickableBar(
                 icon: Icons.help,
                 name: 'Help',

@@ -251,6 +251,7 @@ class _ProfileCardState extends State<ProfileCard> {
           GestureDetector(
             onTap: () {
               // Implement edit functionality here
+              Navigator.pushNamed(context, '/changeinfo');
             },
             child:  const Icon(
               Icons.edit,
