@@ -236,6 +236,32 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     //setState(() =>this.fullname=fullname!);
   }
 
+////////////////////////////////////////////////////////////////
+
+  // Future<void> updateItemQty(String itemid,String qty) async {
+  //       final Map<String,dynamic> requestBody = {
+  //         "quantity" : qty,
+  //       };
+
+
+  //       final String encodeBody = jsonEncode(requestBody);
+  //       print(encodeBody);
+
+  //       final response = await http.put(
+  //           // ignore: prefer_interpolation_to_compose_strings
+  //           Uri.parse(updQty+itemid),
+  //           headers: {
+  //               'Content-Type': 'application/json',
+  //           },
+
+  //       body: encodeBody,
+  //       );
+
+  //       preference.setBool("sellerStates", true);
+  //   }
+
+////////////////////////////////////////////////////////////////
+
   void toggleTextAndIcon() {
     setState(() {
       showText = !showText;
@@ -595,7 +621,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
 
                     CustomStepper(
                         lowerLimit: 1,
-                        upperLimit: 5,
+                        upperLimit: int.parse(data["data"]["quantity"]),
                         stepValue: 1,
                         iconSize: 22,
                         value: counter,
