@@ -289,6 +289,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       "buyername": username,
       "itemid": widget.id,
       "itemprice": data["data"]["price"],
+      "category" : data["data"]["category"],
     };
 
     final url = Uri.parse(regBuyItem);
