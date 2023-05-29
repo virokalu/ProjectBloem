@@ -21,7 +21,7 @@ Cart _$CartFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Cart {
   String get username => throw _privateConstructorUsedError;
-  List<CartItem>? get items => throw _privateConstructorUsedError;
+  List<CartItem> get items => throw _privateConstructorUsedError;
   String get cartId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -34,7 +34,7 @@ abstract class $CartCopyWith<$Res> {
   factory $CartCopyWith(Cart value, $Res Function(Cart) then) =
       _$CartCopyWithImpl<$Res, Cart>;
   @useResult
-  $Res call({String username, List<CartItem>? items, String cartId});
+  $Res call({String username, List<CartItem> items, String cartId});
 }
 
 /// @nodoc
@@ -51,7 +51,7 @@ class _$CartCopyWithImpl<$Res, $Val extends Cart>
   @override
   $Res call({
     Object? username = null,
-    Object? items = freezed,
+    Object? items = null,
     Object? cartId = null,
   }) {
     return _then(_value.copyWith(
@@ -59,10 +59,10 @@ class _$CartCopyWithImpl<$Res, $Val extends Cart>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      items: freezed == items
+      items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<CartItem>?,
+              as List<CartItem>,
       cartId: null == cartId
           ? _value.cartId
           : cartId // ignore: cast_nullable_to_non_nullable
@@ -77,7 +77,7 @@ abstract class _$$_CartCopyWith<$Res> implements $CartCopyWith<$Res> {
       __$$_CartCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String username, List<CartItem>? items, String cartId});
+  $Res call({String username, List<CartItem> items, String cartId});
 }
 
 /// @nodoc
@@ -90,7 +90,7 @@ class __$$_CartCopyWithImpl<$Res> extends _$CartCopyWithImpl<$Res, _$_Cart>
   @override
   $Res call({
     Object? username = null,
-    Object? items = freezed,
+    Object? items = null,
     Object? cartId = null,
   }) {
     return _then(_$_Cart(
@@ -98,10 +98,10 @@ class __$$_CartCopyWithImpl<$Res> extends _$CartCopyWithImpl<$Res, _$_Cart>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      items: freezed == items
+      items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<CartItem>?,
+              as List<CartItem>,
       cartId: null == cartId
           ? _value.cartId
           : cartId // ignore: cast_nullable_to_non_nullable
@@ -115,7 +115,7 @@ class __$$_CartCopyWithImpl<$Res> extends _$CartCopyWithImpl<$Res, _$_Cart>
 class _$_Cart implements _Cart {
   _$_Cart(
       {required this.username,
-      final List<CartItem>? items,
+      required final List<CartItem> items,
       required this.cartId})
       : _items = items;
 
@@ -123,14 +123,12 @@ class _$_Cart implements _Cart {
 
   @override
   final String username;
-  final List<CartItem>? _items;
+  final List<CartItem> _items;
   @override
-  List<CartItem>? get items {
-    final value = _items;
-    if (value == null) return null;
+  List<CartItem> get items {
     if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_items);
   }
 
   @override
@@ -174,7 +172,7 @@ class _$_Cart implements _Cart {
 abstract class _Cart implements Cart {
   factory _Cart(
       {required final String username,
-      final List<CartItem>? items,
+      required final List<CartItem> items,
       required final String cartId}) = _$_Cart;
 
   factory _Cart.fromJson(Map<String, dynamic> json) = _$_Cart.fromJson;
@@ -182,7 +180,7 @@ abstract class _Cart implements Cart {
   @override
   String get username;
   @override
-  List<CartItem>? get items;
+  List<CartItem> get items;
   @override
   String get cartId;
   @override

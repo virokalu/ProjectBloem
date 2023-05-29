@@ -51,7 +51,7 @@ dependencies:
   image_cropper_for_web:
   flutter_riverpod:
   freezed_annotation:
-  json_annotation:
+  json_annotation: ^4.8.1
   font_awesome_flutter: ^10.4.0
   url_launcher: ^6.1.10
   dotted_line:
@@ -85,7 +85,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner:
   freezed:
-  json_serializable:
+  json_serializable: ^6.6.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

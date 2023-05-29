@@ -77,51 +77,97 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
 <head>
   <style>
     body {
-      background-color: #F4F4F4;
+      background-color: #ffffff;
+      padding: 20px;
       font-family: Arial, sans-serif;
     }
-
-    .container {
-      width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #FFFFFF;
+    
+    .card-box {
+      width: 190px;
+      height: 250px;
+      margin-left: 5px;
+      margin-bottom: 5px;
+      background-color: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0px 25px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-box__image {
+      position: relative;
+      width: 100%;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    
+    .card-box__image img {
+      display: block;
+      width: 100%;
       border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-
-    .green {
-      color: #4CD964;
+    
+    .card-box__content {
+      padding: 10px 15px;
     }
-
-    .otp {
-      background-color: #E7E7E7;
-      padding: 10px;
-      border-radius: 5px;
-      margin-top: 20px;
-    }
-
-    .otp.green {
-      background-color: #E7FFED;
-      font-size: 18px;
-    }
-
-    .username {
-      color: #333333;
+    
+    .card-box__title {
+      font-size: 17px;
       font-weight: bold;
+      color: #000000;
+      margin-top: 10px;
+    }
+    
+    .card-box__price {
+      font-size: 17px;
+      font-weight: 400;
+      color: #4cd964;
+      margin-top: 10px;
+    }
+    
+    .card-box__button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #e7ffed;
+      text-align: center;
+    }
+    
+    .card-box__button i {
+      color: #4cd964;
+      font-size: 20px;
+    }
+    
+    .details {
       margin-top: 20px;
+    }
+    
+    .details__item {
+      font-size: 14px;
+      color: #808080;
+      margin-bottom: 5px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Email Verification</h1>
-    <p>Please use the following OTP to verify your email:</p>
-    <div class="otp green">
-      <center><p class="green">otp</p><center>
-      
+  <div class="card-box">
+    <div class="card-box__image">
+      <img src="image_url_here" alt="Product Image">
     </div>
-    
+    <div class="card-box__content">
+      <h3 class="card-box__title">Product Title</h3>
+      <p class="card-box__price">Price: Rs. 100</p>
+      <div class="card-box__button">
+        <i class="material-icons">shopping_cart</i>
+      </div>
+    </div>
+  </div>
+  
+  <div class="details">
+    <p class="details__item">Seller: John Doe</p>
+    <p class="details__item">Buyer: Jane Smith</p>
+    <p class="details__item">Delivery Address: 123 Main St, City, Country</p>
   </div>
 </body>
 </html>''';
@@ -200,7 +246,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
       final url = Uri.parse(itemAdd + "/" + widget.id);
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        print(response.toString());
+        //print(response.toString());
         data = jsonDecode(response.body);
       }
     } catch (e) {
@@ -594,7 +640,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                   style: greenButtonStyle,
                   //############################Save the view##########################################
                   onPressed: () {
-                    sendEmail();
+                    //sendEmail();
                     openDialog();
                   },
                   child: const Text(
@@ -645,7 +691,10 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                       ? greenButtonBorderStyle
                       : greyButtonStyle,
                   //############################Chat#######################################
-                  onPressed: data["data"]["chatactivate"] ? () {} : null,
+                  onPressed: data["data"]["chatactivate"] ? () {
+
+
+                  } : null,
                   child: Text(
                     "Chat",
                     style: TextStyle(
@@ -774,7 +823,10 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                   // googlePay: const PaymentSheetGooglePay(testEnv: true,currencyCode: 'USD',merchantCountryCode: '+94'),
                   style: ThemeMode.dark,
                   merchantDisplayName: 'manoj'))
-          .then((value) {});
+          .then((value) {
+            sendEmail();
+      }
+      );
 
       displayPaymentSheet();
     } catch (e) {
