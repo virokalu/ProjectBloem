@@ -38,4 +38,4 @@ const apiURL = "192.168.3.194:3000";
 const itemGet = "item";
 const String appName = "Project Bloem";
 const int pageSize = 10;
-const emailSender = "virokemin@gmail.com";
+const emailSender = "bloemapp1@gmail.com";
