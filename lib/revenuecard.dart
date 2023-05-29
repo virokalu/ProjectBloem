@@ -29,7 +29,7 @@ class RevCard extends StatelessWidget {
             SizedBox(height: 8.0),
             Text('Seller Amount: $amount'),
             SizedBox(height: 8.0),
-            Text('Seller Stripe key: $appPee'),
+            Text('app fee from this seller: $appPee'),
             SizedBox(height: 8.0),
             Text('Seller Stripe Id: $id'),
           ],
