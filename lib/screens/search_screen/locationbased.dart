@@ -2,12 +2,44 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/back_button_icon.dart';
+import '../../components/color_components.dart';
 import '../../components/product_cards.dart';
 import '../../components/size.dart';
 import '../../config.dart';
 import '../../models/item.dart';
 import 'package:http/http.dart' as http;
+
+import '../place_a_listing/place_a_listing.dart';
+
+var _values = [
+  "Ampara",
+  "Anuradhapura",
+  "Badulla",
+  "Batticaloa",
+  "Colombo",
+  "Galle",
+  "Gampaha",
+  "Hambantota",
+  "Jaffna",
+  "Kalutara",
+  "Kandy",
+  "Kegalle",
+  "Kilinochchi",
+  "Kurunegala",
+  "Mannar",
+  "Matale",
+  "Matara",
+  "Monaragala",
+  "Mullativu",
+  "Nuwara Eliya",
+  "Polonnaruwa",
+  "Puttalam",
+  "Ratnapura",
+  "Trincomalee",
+  "Vavuniya"
+];
 
 class LocationBased extends StatefulWidget {
   const LocationBased({super.key});
@@ -19,13 +51,44 @@ class LocationBased extends StatefulWidget {
 
 class _LocationBasedState extends State<LocationBased> {
 
-  final districtController = TextEditingController();
+  String? district;
   bool _isLoading=true;
   List<Item> locationItems = [];
   //String? commonname;
   List<bool> expanded = [false, false];
 
+  late SharedPreferences preference;
+
+
   //int i=1;
+
+  void initState(){
+    super.initState();
+    init();
+  }
+
+  Future init() async {
+    preference = await SharedPreferences.getInstance();
+    String? district=preference.getString('district');
+    String? token = preference.getString('token');
+    //sellerStates = preference.getBool('sellerStates');
+    //print(token);
+    //setState(() =>this.district=district!);
+
+    if (token == null) {
+      //print(token);
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamed(context, '/login');
+    }else{
+      this.district=district;
+      _fetchNews();
+
+    }
+    //
+    //setState(() =>this.fullname=fullname!);
+  }
+
+
 
   Future<void> _fetchNews() async {
     setState(() {
@@ -38,7 +101,7 @@ class _LocationBasedState extends State<LocationBased> {
     Map<String, String> requestHeader = {'Content-Type': 'application/json'};
     Map<String, String> queryString = {
 
-      'district': districtController.text,
+      'district': district!,
     };
 
     var url = Uri.http(apiURL, itemSearch, queryString);
@@ -94,6 +157,46 @@ class _LocationBasedState extends State<LocationBased> {
             children: [
               const BackButtonNHome(),
               SizedBox(height: getProportionateScreenHeight(20)),
+
+              SizedBox(
+                height: height/10,
+                child: DropdownButtonFormField<String>(
+                  value: district,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      district = newValue;
+                      _fetchNews();
+                    });
+                  },
+                  decoration: InputDecoration(
+
+                    filled: true,
+                    //errorText: category == null ? 'This field is required' : null, // Add this line
+
+                    fillColor: HexColor.fromHex('#F3F1F1'),
+                    prefixIcon: const Icon(Icons.location_pin),
+                    labelText: "District",
+
+                    //labelText: 'Select an item',
+                    hintText: 'Choose your district',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Required Field';
+                    }
+                    return null;
+                  },
+                  items: _values.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ),
               //const SearchBar(),
               SizedBox(height: getProportionateScreenHeight(20)),
               Flexible(
@@ -105,7 +208,7 @@ class _LocationBasedState extends State<LocationBased> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _ItemFilters(commonname: districtController.text),
+                        _ItemFilters(commonname: district),
                         _buildItemList(locationItems),
                       ],
                     ),
