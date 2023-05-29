@@ -57,7 +57,8 @@ class _UserProfileState extends State<UserProfile> {
           child: ListView(
 
             children:  [
-              const ButtonText(text: "My Profile", icon: Icons.person_outline),
+              const ButtonTextLogin(text: "My Profile", icon: Icons.person_outline),
+              //const ButtonText(text: "My Profile", icon: ),
               const SizedBox(height: 30,),
               const ProfileCard(),
               const SizedBox(height: 10,),
