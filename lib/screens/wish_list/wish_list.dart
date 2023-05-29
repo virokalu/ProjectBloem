@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_bloem/components/size.dart';
 import '../../components/back_button_icon.dart';
 //import '../../components/button_components.dart';
 
@@ -39,143 +40,163 @@ class _WishListScreenState extends State<WishListScreen> {
                   const SizedBox(height: 30,),
                   SizedBox(
                     height: height * 0.38,
-                    child: SingleChildScrollView(
+                    child: const SingleChildScrollView(
                       child: Column(children: [
-                        SafeArea(
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              height: height / 7,
-                              width: width / 7,
-                              child: const Image(
-                                image: AssetImage('image/112.jpg'),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            SizedBox(
-                              height: height / 7,
-                              child: const Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'Name here',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Rs.1000",
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.add_circle)),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.remove_circle_outline)),
-                          ],
-                        )),
-                        const Divider(
-                          height: 0.1,
+
+                        SizedBox(height:20),
+
+                        Icon(
+                          Icons.construction_outlined,
+                          color: Colors.grey,
+                          size: 60,
                         ),
-                        SafeArea(
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              height: height / 7,
-                              width: width / 7,
-                              child: const Image(
-                                image: AssetImage('image/112.jpg'),
-                                fit: BoxFit.fill,
-                              ),
+                        SizedBox(height:20),
+                        Center(
+                          child: Text(
+                            "Under Construction !!!",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'poppins',
+                              color: Colors.grey,
                             ),
-                            SizedBox(
-                              height: height / 7,
-                              child: const Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'Name here',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Rs.2000",
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.add_circle)),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.remove_circle_outline)),
-                          ],
-                        )),
-                        const Divider(
-                          height: 0.1,
+                          ),
+
                         ),
-                        SafeArea(
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              height: height / 7,
-                              width: width / 7,
-                              child: const Image(
-                                image: AssetImage('image/112.jpg'),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            SizedBox(
-                              height: height / 7,
-                              child: const Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'Name here',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Rs.2000",
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.add_circle)),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.remove_circle_outline)),
-                          ],
-                        )),
+                        // SafeArea(
+                        //     child: Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     SizedBox(
+                        //       height: height / 7,
+                        //       width: width / 7,
+                        //       child: const Image(
+                        //         image: AssetImage('image/112.jpg'),
+                        //         fit: BoxFit.fill,
+                        //       ),
+                        //     ),
+                        //     SizedBox(
+                        //       height: height / 7,
+                        //       child: const Column(
+                        //         mainAxisAlignment:
+                        //             MainAxisAlignment.spaceAround,
+                        //         children: [
+                        //           Text(
+                        //             'Name here',
+                        //             textAlign: TextAlign.left,
+                        //             style: TextStyle(
+                        //               fontSize: 20.0,
+                        //               fontWeight: FontWeight.bold,
+                        //             ),
+                        //           ),
+                        //           Text(
+                        //             "Rs.1000",
+                        //             style: TextStyle(
+                        //               fontSize: 18.0,
+                        //             ),
+                        //           )
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     IconButton(
+                        //         onPressed: () {},
+                        //         icon: const Icon(Icons.add_circle)),
+                        //     IconButton(
+                        //         onPressed: () {},
+                        //         icon: const Icon(Icons.remove_circle_outline)),
+                        //   ],
+                        // )),
+                        // const Divider(
+                        //   height: 0.1,
+                        // ),
+                        // SafeArea(
+                        //     child: Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     SizedBox(
+                        //       height: height / 7,
+                        //       width: width / 7,
+                        //       child: const Image(
+                        //         image: AssetImage('image/112.jpg'),
+                        //         fit: BoxFit.fill,
+                        //       ),
+                        //     ),
+                        //     SizedBox(
+                        //       height: height / 7,
+                        //       child: const Column(
+                        //         mainAxisAlignment:
+                        //             MainAxisAlignment.spaceAround,
+                        //         children: [
+                        //           Text(
+                        //             'Name here',
+                        //             textAlign: TextAlign.left,
+                        //             style: TextStyle(
+                        //               fontSize: 20.0,
+                        //               fontWeight: FontWeight.bold,
+                        //             ),
+                        //           ),
+                        //           Text(
+                        //             "Rs.2000",
+                        //             style: TextStyle(
+                        //               fontSize: 18.0,
+                        //             ),
+                        //           )
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     IconButton(
+                        //         onPressed: () {},
+                        //         icon: const Icon(Icons.add_circle)),
+                        //     IconButton(
+                        //         onPressed: () {},
+                        //         icon: const Icon(Icons.remove_circle_outline)),
+                        //   ],
+                        // )),
+                        // const Divider(
+                        //   height: 0.1,
+                        // ),
+                        // SafeArea(
+                        //     child: Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     SizedBox(
+                        //       height: height / 7,
+                        //       width: width / 7,
+                        //       child: const Image(
+                        //         image: AssetImage('image/112.jpg'),
+                        //         fit: BoxFit.fill,
+                        //       ),
+                        //     ),
+                        //     SizedBox(
+                        //       height: height / 7,
+                        //       child: const Column(
+                        //         mainAxisAlignment:
+                        //             MainAxisAlignment.spaceAround,
+                        //         children: [
+                        //           Text(
+                        //             'Name here',
+                        //             textAlign: TextAlign.left,
+                        //             style: TextStyle(
+                        //               fontSize: 20.0,
+                        //               fontWeight: FontWeight.bold,
+                        //             ),
+                        //           ),
+                        //           Text(
+                        //             "Rs.2000",
+                        //             style: TextStyle(
+                        //               fontSize: 18.0,
+                        //             ),
+                        //           )
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     IconButton(
+                        //         onPressed: () {},
+                        //         icon: const Icon(Icons.add_circle)),
+                        //     IconButton(
+                        //         onPressed: () {},
+                        //         icon: const Icon(Icons.remove_circle_outline)),
+                        //   ],
+                        // )),
                       ]),
                     ),
                   )

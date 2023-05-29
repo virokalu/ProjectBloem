@@ -68,7 +68,7 @@ class _UserProfileState extends State<UserProfile> {
                 icon: Icons.favorite_border,
                 name: 'WishList',
                 onPressed: () {
-                  Navigator.pushNamed(context, '/feedbackpage');
+                  Navigator.pushNamed(context, '/wishlist');
                 },
               ),
 
