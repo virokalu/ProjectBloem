@@ -198,7 +198,7 @@ class _LocationBasedState extends State<LocationBased> {
                 ),
               ),
               //const SearchBar(),
-              SizedBox(height: getProportionateScreenHeight(20)),
+              //SizedBox(height: getProportionateScreenHeight(20)),
               Flexible(
                 child: Container(
                   color: Colors.white,
@@ -224,7 +224,7 @@ class _LocationBasedState extends State<LocationBased> {
   Widget _buildItemList(List<Item> items) {
     if(_isLoading){
       return const Center(child: LinearProgressIndicator());
-    }else{
+    }else if(items.isNotEmpty) {
       return GridView.count(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -243,6 +243,10 @@ class _LocationBasedState extends State<LocationBased> {
 
         //SizedBox(width: getProportionateScreenWidth(20)),
       );
+    }else {
+      return const Center(child: Text("No Items to View"));
+
+    }
 
       //   SingleChildScrollView(
       //   scrollDirection: Axis.horizontal,
@@ -295,7 +299,7 @@ class _LocationBasedState extends State<LocationBased> {
   //   }
   // }
 
-}
+
 
 class _ItemFilters extends ConsumerWidget {
   // final _sortByOptions = [
