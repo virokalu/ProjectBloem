@@ -55,7 +55,7 @@ class APIService {
   Future<Cart?> getCart() async{
     String? username = await SharedPreferencesHelper.getUsername();
     if (username == null) {
-      print("username not available");
+      //print("username not available");
       // Use the retrieved username
     }
     //print("here");
@@ -71,9 +71,9 @@ class APIService {
     //print(response.statusCode);
     if(response.statusCode==200){
       var data=jsonDecode(response.body);
-      print(jsonDecode(response.body));
+      //print(jsonDecode(response.body));
       if(data["data"] != null){
-        print(data["data"].runtimeType);
+        //print(data["data"].runtimeType);
         return Cart.fromJson(data["data"]);
       }else{
         return null;
