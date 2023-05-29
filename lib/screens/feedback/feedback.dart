@@ -22,7 +22,7 @@ class _FeedBackPageState extends State<FeedBackPage> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    //var height = MediaQuery.of(context).size.height;
 
     return SafeArea(
       child: Scaffold(
@@ -96,6 +96,10 @@ class _FeedBackPageState extends State<FeedBackPage> {
               //   reverse: true,
               //   repeat: true,
               // ),
+              Image.asset(
+                "images/feedback.jpg",
+                fit: BoxFit.cover,
+              ),
             ],
           ),
         ),
