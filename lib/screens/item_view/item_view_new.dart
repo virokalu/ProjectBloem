@@ -11,18 +11,10 @@ import 'package:project_bloem/provider.dart';
 import 'package:project_bloem/screens/item_view/item_view_component.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:mailer/mailer.dart' as mail;
 import 'package:mailer/smtp_server.dart';
-
 import '../../components/size.dart';
-/////////////////////////////
-//import 'package:stripe_payment/stripe_payment.dart';
-/////////////////////////////
-
 import '../../config.dart';
-//import '../../payment.dart';
-//import '../../models/item.dart';
 
 String? imgOne;
 String? imgTwo;
@@ -55,11 +47,6 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
   String username = "";
   String? fullname;
   String? email;
-  //
-  // String? sellerEmail;
-  // String? sellerName;
-  // String? sellerUsername;
-
   bool showText = true;
 
   //////////////////send email to seller ////////////////////////
@@ -193,39 +180,15 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     } catch (e) {
       print('Failed to send OTP: $e');
     }
-
-    // String username = 'bloemapp1@gmail.com'; // Replace with your email
-    // String password = 'bloem1234'; // Replace with your password
-    //
-    // final smtpServer = gmail(username, password);
-    //
-    // // Create the email message
-    // final message = Message()
-    //   ..from = 'bloemapp1@gmail.com' // Replace with your email
-    //   ..recipients
-    //       .add('bloemappsecond@gmail.com') // Replace with the seller's email
-    //   ..subject = 'Your item has been sold'
-    //   ..text = 'Congratulations! Your item has been sold.';
-    //
-    // try {
-    //   await send(message, smtpServer);
-    //   print('Message sent successfully');
-    // } catch (e) {
-    //   print('Error occurred while sending email: $e');
-    // }
   }
 
   ///////////////////////////////////////////////////////////////
 
   Future init() async {
     preference = await SharedPreferences.getInstance();
-    //String? fullname=preference.getString('fullname');
     String? token = preference.getString('token');
-    //sellerStates = preference.getBool('sellerStates');
-    //print(token);
 
     if (token == null) {
-      //print(token);
       // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, '/login');
     }else{
@@ -539,28 +502,6 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                // Expanded(
-                //   flex: 3,
-                //   child: Container(
-                //     padding: EdgeInsets.all(width / 30),
-                //     alignment: Alignment.center,
-                //     decoration: BoxDecoration(
-                //       border: Border.all(color: Colors.black),
-                //       borderRadius: BorderRadius.circular(10),
-                //     ),
-                //     child: Column(
-                //       children: [
-                //         const Text(
-                //           "Description",
-                //           style: TextStyle(fontWeight: FontWeight.bold),
-                //         ),
-                //         Text(
-                //           data["data"]["description"],
-                //         )
-                //       ],
-                //     ),
-                //   ),
-                // ),
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -599,26 +540,7 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
                       textAlign: TextAlign.left,
                     ),
                     const Spacer(),
-                    // TextButton(
-                    //     onPressed: () {
-                    //       if (counter > 1) {
-                    //         setState(() {
-                    //           counter--;
-                    //         });
-                    //       }
-                    //     },
-                    //     child: const Text("-")),
-                    // Text(counter.toString()),
-                    // TextButton(
-                    //     onPressed: () {
-                    //       if (counter < 5) {
-                    //         setState(() {
-                    //           counter++;
-                    //         });
-                    //       }
-                    //     },
-                    //     child: const Text("+")),
-
+                    
                     CustomStepper(
                         lowerLimit: 1,
                         upperLimit: int.parse(data["data"]["quantity"]),
@@ -763,64 +685,6 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     ));
   }
 
-  // Future openDialog() => showDialog(
-  //       builder: (context) => AlertDialog(
-  //         title: const Text("Enter your location for deliver"),
-  //         content: SizedBox(
-  //           height: MediaQuery.of(context).size.height / 4,
-  //           child: ListView(
-  //             children: [
-  //               TextFormField(
-  //                 controller: streetController,
-  //                 decoration: const InputDecoration(hintText: "Street Name"),
-  //               ),
-  //               TextFormField(
-  //                 controller: cityController,
-  //                 decoration: const InputDecoration(hintText: "Town Name"),
-  //               ),
-  //               TextFormField(
-  //                 controller: postalCodeController,
-  //                 decoration: const InputDecoration(hintText: "Postal Code"),
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: [
-  //           TextButton(
-  //               // onPressed: () {
-  //               //   setState(() {
-  //               //     registerBuyItem();
-  //               //   });
-  //               // streetController.clear();
-  //               // cityController.clear();
-  //               // postalCodeController.clear();
-  //               //   //open2Dialog();
-  //               // Navigator.of(context).pop();
-  //               //   // showModalBottomSheet(
-  //               //   //               context: context,
-  //               //   //               builder: (context) => bottomesheet(),
-  //               //   //               backgroundColor: Colors.white,
-  //               //   //             );
-  //               // },
-  //               onPressed: () {
-  //                 streetController.clear();
-  //                 cityController.clear();
-  //                 postalCodeController.clear();
-  //                 Navigator.of(context).pop();
-  //                 setState(() {
-  //                     // PaymentSheet payment = PaymentSheet(amount: (data["data"]["price"]*counter).toString(), context: context);
-  //                     // payment.makePayment();
-  //                     // if(payment.isSuccess){
-  //                     //   print("success");
-  //                     // }
-  //                     makePayment();
-  //                 });
-  //               },
-  //               child: const Text("Next")),
-  //         ],
-  //       ),
-  //       context: context,
-  //     );
 
   Future openDialog() => showDialog(
         builder: (context) => AlertDialog(
@@ -962,132 +826,4 @@ class _ItemViewNewState extends ConsumerState<ItemViewNew> {
     return calculateAmount.toString();
   }
 
-
-//button click action for buy now button
-  // Widget bottomesheet() {
-  //   return SizedBox(
-  //     height: MediaQuery.of(context).size.height / 2,
-  //     width: MediaQuery.of(context).size.width,
-  //     child: Card(
-  //       margin: EdgeInsets.all(MediaQuery.of(context).size.width / 30),
-  //       child: ListView(
-  //         children: [
-  //           Column(
-  //             children: [
-  //               const Text("Card Holder name"),
-  //               const SizedBox(
-  //                 height: 20,
-  //               ),
-  //               TextFormField(
-  //                 controller : cardholderController,
-  //                 decoration: InputDecoration(
-  //                     hintText: "Manoj Lakshan",
-  //                     border: OutlineInputBorder(
-  //                       borderRadius: BorderRadius.circular(20),
-  //                     )),
-  //               ),
-  //               const SizedBox(
-  //                 height: 20,
-  //               ),
-  //               const Text("Card Number"),
-  //               const SizedBox(
-  //                 height: 20,
-  //               ),
-  //               TextFormField(
-  //                 controller : cardnumberController,
-  //                 decoration: InputDecoration(
-  //                     hintText: "1234 5678 9012",
-  //                     border: OutlineInputBorder(
-  //                       borderRadius: BorderRadius.circular(20),
-  //                     )),
-  //                 keyboardType: TextInputType.number,
-  //               ),
-  //               const SizedBox(height: 20),
-  //               Row(
-  //                 children: [
-  //                   Expanded(
-  //                     child: Column(
-  //                       children: [
-  //                         const Text("Date"),
-  //                         const SizedBox(
-  //                           height: 20,
-  //                         ),
-  //                         TextFormField(
-  //                           controller : dateController,
-  //                           decoration: InputDecoration(
-  //                               hintText: "04/03",
-  //                               border: OutlineInputBorder(
-  //                                 borderRadius: BorderRadius.circular(20),
-  //                               )),
-  //                           keyboardType:
-  //                               const TextInputType.numberWithOptions(),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                   const SizedBox(width: 80),
-  //                   Expanded(
-  //                     child: Column(
-  //                       children: [
-  //                         const Text("CCV"),
-  //                         const SizedBox(
-  //                           height: 20,
-  //                         ),
-  //                         TextFormField(
-  //                           controller : ccvController,
-  //                           decoration: InputDecoration(
-  //                               hintText: "123",
-  //                               border: OutlineInputBorder(
-  //                                 borderRadius: BorderRadius.circular(20),
-  //                               )),
-  //                           keyboardType: TextInputType.number,
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //               const SizedBox(
-  //                 height: 20,
-  //               ),
-  //               Row(
-  //                 children: [
-  //                   Expanded(
-  //                     child: TextButton(
-  //                       style: greenButtonStyle,
-  //                       onPressed: () {},
-  //                       child: const Text(
-  //                         "Cash on Delivery",
-  //                         style: TextStyle(
-  //                           color: Colors.white,
-  //                           fontSize: 16.0,
-  //                           fontFamily: 'Poppins',
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                   const SizedBox(width: 20),
-  //                   Expanded(
-  //                     child: TextButton(
-  //                       style: greenButtonBorderStyle,
-  //                       onPressed: () {},
-  //                       child: Text(
-  //                         "Complete Order",
-  //                         style: TextStyle(
-  //                           color: HexColor.fromHex('#4CD964'),
-  //                           fontSize: 16.0,
-  //                           fontFamily: 'Poppins',
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ],
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }

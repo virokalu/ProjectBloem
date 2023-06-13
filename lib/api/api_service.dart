@@ -111,6 +111,7 @@ class APIService {
     Map<String,String> requestHeader={
       'Content-Type':'application/json',
     };
+    // ignore: non_constant_identifier_names
     var JsonModel=jsonEncode({
       "username":username,
       "item":id,

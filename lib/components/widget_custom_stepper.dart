@@ -3,6 +3,7 @@ import 'package:project_bloem/components/size.dart';
 
 import 'color_components.dart';
 
+// ignore: must_be_immutable
 class CustomStepper extends StatefulWidget {
   CustomStepper({
     Key? key,

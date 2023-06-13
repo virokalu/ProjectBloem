@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_bloem/components/size.dart';
@@ -509,13 +511,13 @@ class _MyBasketScreenState extends ConsumerState<MyBasketScreen> {
       return const LinearProgressIndicator();
     }
 
-    if (cartState.cartModel!.items!.isEmpty) {
+    if (cartState.cartModel!.items.isEmpty) {
       return const Center(
         child: Text("Basket Empty"),
       );
     }
 
-    return _buildCartItems(cartState.cartModel!.items!, ref);
+    return _buildCartItems(cartState.cartModel!.items, ref);
   }
 
 
@@ -525,7 +527,7 @@ class _CheckOutNavbar extends ConsumerWidget{
   Widget build(BuildContext context,WidgetRef ref){
     final cartProvider = ref.watch(cartItemsProvider);
     if(cartProvider.cartModel != null){
-      return cartProvider.cartModel!.items!.isNotEmpty
+      return cartProvider.cartModel!.items.isNotEmpty
           ? Column(
         children: [
           SizedBox(
